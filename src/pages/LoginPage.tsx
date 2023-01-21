@@ -15,7 +15,7 @@ const LoginPage = () => {
           <p>비밀번호</p>
           <input />
           <LoginButton>로그인</LoginButton>
-          <button>구글로 로그인</button>
+          <GoogleLoginButton>구글로 로그인</GoogleLoginButton>
         </div>
       </LoginContainer>
     </>
@@ -41,5 +41,10 @@ const Login = styled.h2`
 
 //로그인버튼
 const LoginButton = styled.button`
-  background-color: orange;
+  background-color: #3b615b;
+`;
+
+//구글로그인버튼
+const GoogleLoginButton = styled.button`
+  background-color: #3b615b;
 `;
