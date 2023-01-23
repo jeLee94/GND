@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay} from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
@@ -18,7 +18,7 @@ const Slide = () => {
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{ "delay:": 1000 }}
+      // autoplay={{ delay: 1000 }}
       loop={true}
     >
       <SwiperSlide className='slide'>Slide 1</SwiperSlide>
