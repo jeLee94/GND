@@ -5,7 +5,7 @@ import DashboardPage from '../pages/DashboardPage';
 import LecturePage from '../pages/LecturePage';
 import LoginPage from '../pages/LoginPage';
 import Header from '../components/header/Header';
-import InsertData from '../util/img/data/insertData';
+import InsertData from '../util/data/insertData';
 
 const Router = () => {
   return (

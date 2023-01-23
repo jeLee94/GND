@@ -1,5 +1,5 @@
 //로그인 회원가입 화면
-import { dbService } from '../../../firebase';
+import { dbService } from '../../firebase';
 import { addDoc, collection } from 'firebase/firestore';
 import axios from 'axios';
 import { useState } from 'react';
