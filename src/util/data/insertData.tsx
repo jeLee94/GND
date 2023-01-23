@@ -6,12 +6,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const InsertData = () => {
-  const [playlist, setPlaylist] = useState([]);
+  const [playlist, setPlaylist] = useState();
   const onClickHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
       .get(
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=100&q=리액트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
         // 'localhost:3000/dashboard'
         //i.id.videoId
       )
