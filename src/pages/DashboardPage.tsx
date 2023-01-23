@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import Button from "../components/button/LogoutButton";
-import ToggleButton from "../components/button/ToggleButton";
+import styled from 'styled-components';
+import Button from '../components/button/LogoutButton';
+import ToggleButton from '../components/button/ToggleButton';
 function App() {
   return (
     <>
