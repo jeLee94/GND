@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 import './Myslide.css';
 import { on } from 'events';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 const Slide = () => {
   return (
@@ -18,14 +18,25 @@ const Slide = () => {
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
-      // autoplay={{ delay: 1000 }}
+      autoplay={{ delay: 2000 }}
       loop={true}
     >
-      <SwiperSlide className='slide'>Slide 1</SwiperSlide>
-      <SwiperSlide className='slide'>Slide 2</SwiperSlide>
-      <SwiperSlide className='slide'>Slide 3</SwiperSlide>
+      <SlideBanner className='slide'>
+        <img src='banner_01.png' alt='slide banner' />
+        Slide 1
+      </SlideBanner>
+      <SwiperSlide className='slide'>
+        <img src='banner_02.png' alt='slide banner' />
+        Slide 2
+      </SwiperSlide>
+      <SwiperSlide className='slide'>
+        <img src='banner_03.png' alt='slide banner' />
+        Slide 3
+      </SwiperSlide>
       <SwiperSlide className='slide'>Slide 4</SwiperSlide>
     </Swiper>
   );
 };
 export default Slide;
+
+const SlideBanner = styled(SwiperSlide)``;
