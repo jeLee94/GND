@@ -25,7 +25,7 @@ const InsertData = () => {
         //단일 영상용
         // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
         //플레이리스트용
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트네이티브&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=타입스크립트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
       )
       .then((res) => {
         console.log('API요청 완료', res);
@@ -41,7 +41,7 @@ const InsertData = () => {
           console.log(i, idx);
           if (i?.id?.playlistId) {
             addDoc(collection(dbService, 'CLASS'), {
-              category: 'app',
+              category: 'typescript',
               channelId: i?.snippet?.channelId,
               channelTitle: i?.snippet?.channelTitle,
               title: i?.snippet?.title,
