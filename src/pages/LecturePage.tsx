@@ -2,9 +2,14 @@
 
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
+import { useParams } from 'react-router-dom';
+
 // import ReactPlayer from 'react-player';
 
 const LecturePage = () => {
+  const param = useParams<string>();
+  console.log(param);
+
   return (
     <Container>
       <LectureHeader>
@@ -12,7 +17,7 @@ const LecturePage = () => {
         <BackButton>Back to Course</BackButton>
       </LectureHeader>
       <YouTube
-        videoId='O61vtXSM6C8' //임시로 아이디값 하드코딩
+        videoId={param?.id} //임시로 아이디값 하드코딩
         opts={{
           width: 900,
           height: 510,
