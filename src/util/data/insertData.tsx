@@ -23,9 +23,9 @@ const InsertData = () => {
     axios
       .get(
         //단일 영상용
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
         //플레이리스트용
-        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=타입스크립트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트네이티브&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
       )
       .then((res) => {
         console.log('API요청 완료', res);
@@ -41,7 +41,7 @@ const InsertData = () => {
           console.log(i, idx);
           if (i?.id?.playlistId) {
             addDoc(collection(dbService, 'CLASS'), {
-              category: 'cs',
+              category: 'app',
               channelId: i?.snippet?.channelId,
               channelTitle: i?.snippet?.channelTitle,
               title: i?.snippet?.title,
@@ -139,18 +139,20 @@ const InsertData = () => {
     let k = 0;
     while (k < playlistIdList.length) {
       const docRef = doc(dbService, 'CLASS', playlistIdList[k].id);
-      console.log('p', playlist);
-      console.log('p2', playlistIdList);
+      // console.log('p', playlist.id.videoId);
+      // console.log('p2', playlistIdList.videoId);
       playlist &&
         playlist.map((i: any) => {
-          // if (playlistIdList[k]?.playlistId === i?.snippet?.playlistId) {
-          //   updateDoc(docRef, {
-          //     videotitle: arrayUnion(i?.snippet?.title),
-          //     description: arrayUnion(i?.snippet?.description ?? '없음'),
-          //     videoId: arrayUnion(i?.snippet?.resourceId?.videoId),
-          //     thumbnail: arrayUnion(i?.snippet?.thumbnails.high.url ?? '없음'),
-          //   });
-          // }
+          if (playlistIdList[k]?.videoId === i?.id?.videoId) {
+            updateDoc(docRef, {
+              videotitle: arrayUnion(i?.snippet?.title),
+              description: arrayUnion(i?.snippet?.description ?? '없음'),
+              videoId: arrayUnion(i?.id?.videoId),
+              thumbnail: arrayUnion(i?.snippet?.thumbnails?.high.url ?? '없음'),
+            })
+              .then(() => console.log('완료!'))
+              .catch((err) => console.log(err));
+          }
         });
       k++;
     }
@@ -158,16 +160,19 @@ const InsertData = () => {
 
   return (
     <div>
-      <H2>개발자 전용 페이지 클릭주의!</H2>
+      <H2>!!!개발자 전용 페이지 클릭주의!!!</H2>
+      <H3>버튼 클릭 전 API 요청 URL맞는지 확인하기</H3>
+      <H3>플레이리스트 1, 2, 3-1</H3>
+      <H3>단일영상 1, 2, 3-2</H3>
       <Button onClick={getPlaylistIdHandler}>
         1.플레이리스트 ID 얻기 위한 API요청
       </Button>
       <Button onClick={getPlaylistId}>2.플레이리스트ID 리스트로 추출</Button>
       <Button onClick={getVideoDataHandler}>
-        3.플레이리스트API요청하여 비디오 데이터 배열만들기
+        3-1.플레이리스트API요청하여 비디오 데이터 배열만들기
       </Button>
       <Button onClick={videoUpdateDocHandler}>
-        4.단일 비디오일 경우 length=1인 리스트 만들기
+        3-2.단일 비디오일 경우 length=1인 배열 만들기
       </Button>
     </div>
   );
@@ -179,6 +184,12 @@ const H2 = styled.h2`
   margin-top: 60px;
   text-align: center;
   color: red;
+`;
+
+const H3 = styled.h3`
+  margin-top: 20px;
+  text-align: center;
+  color: purple;
 `;
 
 const Button = styled.button`

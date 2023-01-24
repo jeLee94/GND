@@ -22,8 +22,8 @@ const MainPage = () => {
     let list: object[] = [];
     const q = query(
       collection(dbService, 'CLASS'),
-      where('category', '==', 'javascript'),
-      limit(4)
+      // where('category', '==', 'cs'),
+      limit(10)
     );
     // const countSnap = await getCountFromServer(
     //   collection(dbService, 'CLASS')
@@ -221,6 +221,7 @@ const LectureTitle = styled.div`
   font-size: 15px;
   margin-bottom: 10px;
   margin-top: 10px;
+  font-weight: bold;
 `;
 
 //* 강의 내용
