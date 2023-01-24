@@ -5,9 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css";
 import "./Myslide.css";
 import { on } from "events";
-import reactnativebanner from "../util/img/reactnativethumbnail.png";
-import reactbanner from "../util/img/react1.png";
-// import styled from 'styled-components';
+import styled from "styled-components";
 
 const Slide = () => {
   return (
@@ -20,22 +18,31 @@ const Slide = () => {
       slidesPerView={1}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
-      // autoplay={{ delay: 1000 }}
+      autoplay={{ delay: 2000 }}
       loop={true}
     >
-      <SwiperSlide className="slide">
-        <a href="http://localhost:3000/lecture/scZI19SE0_4">
-          <img width={2000} src={reactnativebanner} />
+      <SlideBanner className="slide">
+        <a href="http://localhost:3000/lecture/8YIwaO6Cojw">
+          <img src="banner_01.png" alt="slide banner" />
         </a>
+        Slide 1
+      </SlideBanner>
+      <SwiperSlide className="slide">
+        <a href="http://localhost:3000/lecture/NcI-WJSWdv8">
+          <img src="banner_02.png" alt="slide banner" />
+        </a>
+        Slide 2
       </SwiperSlide>
       <SwiperSlide className="slide">
-        <a href="http://localhost:3000/lecture/Qb8Oiy8i9IY">
-          <img width={1000} height={500} src={reactbanner} />
+        <a href="http://localhost:3000/lecture/2AMRTAFSh98">
+          <img src="banner_03.png" alt="slide banner" />
         </a>
+        Slide 3
       </SwiperSlide>
-      <SwiperSlide className="slide">Slide 3</SwiperSlide>
       <SwiperSlide className="slide">Slide 4</SwiperSlide>
     </Swiper>
   );
 };
 export default Slide;
+
+const SlideBanner = styled(SwiperSlide)``;

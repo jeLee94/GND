@@ -15,6 +15,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
+  const [text, setText] = useState<string>('');
+
+  // 전체 영상 불러오기
   const getData = async () => {
     let list: object[] = [];
     const q = query(
@@ -35,6 +38,27 @@ const MainPage = () => {
     return list;
   };
 
+  // 영상 검색
+  const searchVideoRequest = async (text: string) => {
+    const q = query(
+      collection(dbService, 'CLASS'),
+      where('channelTitle', '>=', text),
+      where('channelTitle', '<=', text + '\uf8ff')
+    );
+    const querySnapshot = await getDocs(q);
+    const searchItem: any[] = [];
+    querySnapshot.docs.forEach((doc) => {
+      searchItem.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(searchItem);
+    return searchItem;
+  };
+
+  const handleOnClick = async () => {
+    const res = await searchVideoRequest(text);
+    setDatas(res);
+  };
+
   //promise 데이터 리스트로 변환
   const promise = getData();
   const [datas, setDatas] = useState<any>([]);
@@ -52,9 +76,29 @@ const MainPage = () => {
   return (
     <>
       <header>헤더공간</header>
+      {/* 검색 인풋창 */}
+
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
+      <div
+        className='input__wrapper'
+        style={{ width: '100', textAlign: 'center' }}
+      >
+        <input
+          type='text'
+          placeholder='Search Lecture Video'
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            // setVideoList(videos);
+            setDatas(datas);
+          }}
+        />
+        <button disabled={!text} onClick={handleOnClick}>
+          Search
+        </button>
+      </div>
       <MainPageWrap>
         <Category>
           <CategoryBotton>프로그래밍</CategoryBotton>
@@ -65,20 +109,25 @@ const MainPage = () => {
         </Category>
 
         <CantentWrap>
-          {datas.map((data: any) => {
-            return (
-              <Link to={`/dashboard/${data.id}`}>
-                <CantentBox key={data.id}>
-                  <Thumbnail src={data.thumbnail} />
-                  <LectureWrap>
-                    <LectureTitle>{data.title}</LectureTitle>
-                    <LectureContent>{data.description}</LectureContent>
-                  </LectureWrap>
-                  <Lecturer>{data.channelTitle}</Lecturer>
-                </CantentBox>
-              </Link>
-            );
-          })}
+          {/* 검색 결과 없을 때 */}
+          {datas && datas?.length === 0 && <div>해당하는 영상이 없습니다.</div>}
+          {/* 검색 결과 있을 때 */}
+          {datas &&
+            datas?.length > 0 &&
+            datas.map((data: any) => {
+              return (
+                <Link to={`/dashboard/${data.id}`} key={data.id}>
+                  <CantentBox key={data.id}>
+                    <Thumbnail src={data.thumbnail} />
+                    <LectureWrap>
+                      <LectureTitle>{data.title}</LectureTitle>
+                      <LectureContent>{data.description}</LectureContent>
+                    </LectureWrap>
+                    <Lecturer>{data.channelTitle}</Lecturer>
+                  </CantentBox>
+                </Link>
+              );
+            })}
         </CantentWrap>
       </MainPageWrap>
     </>
