@@ -15,21 +15,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
-  const videos = [
-    {
-      category: 'react',
-      title:
-        '네이티브 앱, 리액트 네이티브 앱 으로! 개발자와 PM의 진짜 이야기 | RIDIBOOKS app 1부 | 리디 RIDI dev.',
-      thumbnail: 'https://i.ytimg.com/vi/scZI19SE0_4/hqdefault.jpg',
-    },
-  ];
-
   const [text, setText] = useState<string>('');
-  const [searchVideos, setSearchVideos] = useState([]);
-  const [videoList, setVideoList] = useState<
-    { category: string; title: string; thumbnail: string }[] | undefined
-  >(videos);
 
+  // 전체 영상 불러오기
   const getData = async () => {
     let list: object[] = [];
     const q = query(
@@ -50,12 +38,12 @@ const MainPage = () => {
     return list;
   };
 
-  // FB에서 영상 검색
-  const searchBookRequest = async (text: string) => {
+  // 영상 검색
+  const searchVideoRequest = async (text: string) => {
     const q = query(
       collection(dbService, 'CLASS'),
-      where('title', '>=', text),
-      where('title', '<=', text + '\uf8ff')
+      where('channelTitle', '>=', text),
+      where('channelTitle', '<=', text + '\uf8ff')
     );
     const querySnapshot = await getDocs(q);
     const searchItem: any[] = [];
@@ -67,8 +55,8 @@ const MainPage = () => {
   };
 
   const handleOnClick = async () => {
-    const res = await searchBookRequest(text);
-    setVideoList(res);
+    const res = await searchVideoRequest(text);
+    setDatas(res);
   };
 
   //promise 데이터 리스트로 변환
@@ -103,7 +91,8 @@ const MainPage = () => {
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            setVideoList(videos);
+            // setVideoList(videos);
+            setDatas(datas);
           }}
         />
         <button disabled={!text} onClick={handleOnClick}>
@@ -120,20 +109,25 @@ const MainPage = () => {
         </Category>
 
         <CantentWrap>
-          {datas.map((data: any) => {
-            return (
-              <Link to={`/dashboard/${data.id}`}>
-                <CantentBox key={data.id}>
-                  <Thumbnail src={data.thumbnail} />
-                  <LectureWrap>
-                    <LectureTitle>{data.title}</LectureTitle>
-                    <LectureContent>{data.description}</LectureContent>
-                  </LectureWrap>
-                  <Lecturer>{data.channelTitle}</Lecturer>
-                </CantentBox>
-              </Link>
-            );
-          })}
+          {/* 검색 결과 없을 때 */}
+          {datas && datas?.length === 0 && <div>해당하는 영상이 없습니다.</div>}
+          {/* 검색 결과 있을 때 */}
+          {datas &&
+            datas?.length > 0 &&
+            datas.map((data: any) => {
+              return (
+                <Link to={`/dashboard/${data.id}`} key={data.id}>
+                  <CantentBox key={data.id}>
+                    <Thumbnail src={data.thumbnail} />
+                    <LectureWrap>
+                      <LectureTitle>{data.title}</LectureTitle>
+                      <LectureContent>{data.description}</LectureContent>
+                    </LectureWrap>
+                    <Lecturer>{data.channelTitle}</Lecturer>
+                  </CantentBox>
+                </Link>
+              );
+            })}
         </CantentWrap>
       </MainPageWrap>
     </>
