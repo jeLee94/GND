@@ -1,73 +1,67 @@
 //메인 페이지
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
 import Myslide from './Myslide';
-import { useState, useEffect } from 'react';
-// 회수 수정
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  getDocs,
-} from 'firebase/firestore';
+import { getDocs, where, query, collection, limit } from 'firebase/firestore';
 import { dbService } from '../firebase';
+import { useEffect } from 'react';
 
 const MainPage = () => {
-  const [videos, setVideos] = useState([]);
+  const [text, onChangeText] = useState('');
+  const [searchVideo, setSearchVideo] = useState([]);
 
-  // 회수 수정
-  // FB에서 영상 불러오기
-  // const getVideoRequest = (setVideos) => {
-  //   const q = query(
-  //     collection(dbService, 'CLASS')
-  //     // orderBy('createdAt', 'desc')
-  //   );
+  const getData = async () => {
+    let list: object[] = [];
+    const q = query(
+      collection(dbService, 'CLASS'),
+      where('category', '==', 'react'),
+      limit(5)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const obj = {
+        id: doc.id,
+        ...doc.data(),
+      };
+      list.push(obj);
+    });
+    return list;
+  };
 
-  //   onSnapshot(q, (snapshot) => {
-  //     const newVideos = snapshot.docs.map((doc) => {
-  //       const newVideo = {
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       };
-  //       // console.log(newVideo);
-  //       return newVideo;
-  //     });
-  //     setVideos(newVideos);
-  //     console.log(newVideos);
-  //   });
-  //   // console.log(videos);
-  // };
+  // 영상 검색하기
 
-  const getVideoRequest = () => {
-    const q = query(collection(dbService, 'CLASS'));
-
-    getDocs(q).then((querySnapshot) => {
-      const videoList = [];
-      querySnapshot.forEach((doc) => {
-        videoList.push({
-          channelTitle: doc.data().channelTitle,
-          description: doc.data().description,
-          thumbnail: doc.data().thumbnail,
-          title: doc.data().title,
-        });
-      });
-      setVideos(videoList);
-      console.log(videoList);
+  //promise 데이터 리스트로 변환
+  const promise = getData();
+  const [datas, setDatas] = useState<any>([]);
+  const get = async () => {
+    await promise.then((data) => {
+      setDatas(data);
     });
   };
 
-  useEffect(getVideoRequest, []);
+  useEffect(() => {
+    get();
+    console.log(datas);
+  }, []);
 
   return (
     <>
       <header>헤더공간</header>
+      {/* 검색 인풋창 */}
+
       <MainPageSlideBanner>
-        <Myslide></Myslide>
+        <Myslide />
       </MainPageSlideBanner>
+      <div
+        className='input__wrapper'
+        style={{ width: '100', textAlign: 'center' }}
+      >
+        <input type='text' placeholder='Search Lecture Video' value={text} />
+        <button>Search</button>
+      </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton>프로그래밍</CategoryBotton>
+          <CategoryBotton onClick={get}>프로그래밍</CategoryBotton>
           <CategoryBotton>웹 개발</CategoryBotton>
           <CategoryBotton>앱 개발</CategoryBotton>
           <CategoryBotton>디자인</CategoryBotton>
@@ -75,27 +69,18 @@ const MainPage = () => {
         </Category>
 
         <CantentWrap>
-          <div>
-            {videos.map((video) => (
-              <div key={video.id}>{video.channelTitle}</div>
-            ))}
-          </div>
-          <CantentBox>
-            <Thumbnail>이미지 들어갈 공간</Thumbnail>
-            <LectureWrap>
-              <LectureTitle>LectureTitle</LectureTitle>
-              <LectureContent>
-                LectureContent LectureContent LectureContent LectureContent
-                LectureContent LectureContent LectureContent LectureContent
-                LectureContent LectureContent LectureContent LectureContent
-                LectureContent LectureContent LectureContent LectureContent
-                LectureContent LectureContent LectureContent LectureContent
-                LectureContent LectureContent LectureContent LectureContent
-              </LectureContent>
-            </LectureWrap>
-            <Lecturer>나상욱 강사</Lecturer>
-            <LectureDate>2023.01.01</LectureDate>
-          </CantentBox>
+          {datas.map((data: any) => {
+            return (
+              <CantentBox>
+                <Thumbnail key={data.id} src={data.thumbnail} />
+                <LectureWrap>
+                  <LectureTitle>{data.title}</LectureTitle>
+                  <LectureContent>{data.description}</LectureContent>
+                </LectureWrap>
+                <Lecturer>{data.channelTitle}</Lecturer>
+              </CantentBox>
+            );
+          })}
         </CantentWrap>
       </MainPageWrap>
     </>
@@ -161,11 +146,14 @@ const CantentWrap = styled.div`
 `;
 
 //* 썸네일
-const Thumbnail = styled.div`
+const Thumbnail = styled.img`
   width: 100%;
-  padding-bottom: 50%;
+  height: 70%;
+  /* padding-bottom: 50%; */
   background-color: beige;
   box-shadow: 0 10px 4px -4px #e3e3e3;
+  display: flex;
+
   /* ::before {
       width: 100%;
       height: 0;

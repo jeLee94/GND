@@ -4,7 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
 import './Myslide.css';
-// import { on } from 'events';
+import { on } from 'events';
 // import styled from 'styled-components';
 
 const Slide = () => {
@@ -16,9 +16,9 @@ const Slide = () => {
       navigation
       spaceBetween={50}
       slidesPerView={1}
-      // onSlideChange={() => console.log('slide change')}
-      // onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{ 'delay:': 1000 }}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+      // autoplay={{ delay: 1000 }}
       loop={true}
     >
       <SwiperSlide className='slide'>Slide 1</SwiperSlide>

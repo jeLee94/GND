@@ -11,7 +11,7 @@ const InsertData = () => {
     e.preventDefault();
     axios
       .get(
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=자바스크립트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
         // 'localhost:3000/dashboard'
         //i.id.videoId
       )
