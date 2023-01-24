@@ -9,12 +9,15 @@ import {
   collection,
   limit,
   getCountFromServer,
+  orderBy,
 } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
+  const [category, setCategory] = useState('react');
+
   const [text, setText] = useState<string>('');
 
   // 전체 영상 불러오기
@@ -22,8 +25,11 @@ const MainPage = () => {
     let list: object[] = [];
     const q = query(
       collection(dbService, 'CLASS'),
-      // where('category', '==', 'cs'),
-      limit(10)
+      category !== ''
+        ? where('category', '==', category)
+        : where('category', '!=', category),
+      // orderBy('title', 'desc'),
+      limit(3)
     );
     // const countSnap = await getCountFromServer(
     //   collection(dbService, 'CLASS')
@@ -36,6 +42,7 @@ const MainPage = () => {
         ...doc.data(),
       };
       list.push(obj);
+      // console.log(obj)
     });
     return list;
   };
@@ -68,12 +75,13 @@ const MainPage = () => {
     await promise.then((data) => {
       setDatas(data);
     });
+    // console.log(datas)
   };
 
   useEffect(() => {
     get();
-    console.log(datas);
-  }, []);
+    // console.log(datas);
+  }, [category]);
 
   return (
     <>
@@ -103,11 +111,41 @@ const MainPage = () => {
       </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton>프로그래밍</CategoryBotton>
-          <CategoryBotton>웹 개발</CategoryBotton>
-          <CategoryBotton>앱 개발</CategoryBotton>
-          <CategoryBotton>디자인</CategoryBotton>
-          <CategoryBotton>생활코딩</CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('');
+            }}
+          >
+            All
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('react');
+            }}
+          >
+            React
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('javascript');
+            }}
+          >
+            Javascript
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('typescript');
+            }}
+          >
+            Typescript
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('cs');
+            }}
+          >
+            CS전공지식
+          </CategoryBotton>
         </Category>
 
         <CantentWrap>
@@ -147,7 +185,7 @@ const MainPageWrap = styled.div`
 //* 배너
 const MainPageSlideBanner = styled.div`
   /* width: 100%; */
-  margin-top: 50px;
+  margin-top: 30px;
   /* height: 400px; */
   background-color: #e3e3e3;
   align-items: center;
@@ -222,6 +260,11 @@ const LectureTitle = styled.div`
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; //보여질 줄 수
+  -webkit-box-orient: vertical;
 `;
 
 //* 강의 내용
@@ -243,10 +286,4 @@ const Lecturer = styled.span`
   font-size: 10px;
   font-weight: bold;
   /* border-right: 1px solid; */
-`;
-
-//* 강의 날짜
-const LectureDate = styled.span`
-  font-size: 10px;
-  font-weight: bold;
 `;

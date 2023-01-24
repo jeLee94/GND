@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
 import './Myslide.css';
+// import styled from 'styled-components';
 import { on } from 'events';
 import styled from 'styled-components';
 
@@ -18,7 +19,7 @@ const Slide = () => {
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{ delay: 2000 }}
+      autoplay={{ delay: 3000 }}
       loop={true}
     >
       <SlideBanner className='slide'>
