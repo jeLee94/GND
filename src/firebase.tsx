@@ -8,12 +8,12 @@ import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyClfU4LhUElDLP2_d_wiCDiX5JKS_OzCk8',
-  authDomain: 'gnd-project-864c1.firebaseapp.com',
-  projectId: 'gnd-project-864c1',
-  storageBucket: 'gnd-project-864c1.appspot.com',
-  messagingSenderId: '962932000525',
-  appId: '1:962932000525:web:6eebfc8c01c1c188985244',
+  apiKey: "AIzaSyAk3vmimpiYM_WXej3V5li-sl5M9_j-KTQ",
+  authDomain: "gnd-test01.firebaseapp.com",
+  projectId: "gnd-test01",
+  storageBucket: "gnd-test01.appspot.com",
+  messagingSenderId: "395962895012",
+  appId: "1:395962895012:web:35ab7fd918773f516a3431"
 };
 
 // Initialize Firebase

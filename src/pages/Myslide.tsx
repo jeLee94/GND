@@ -4,7 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
 import './Myslide.css';
-import { on } from 'events';
+import catbanner from '../util/img/IMG_0790.jpg'
 // import styled from 'styled-components';
 
 const Slide = () => {
@@ -16,15 +16,15 @@ const Slide = () => {
       navigation
       spaceBetween={50}
       slidesPerView={1}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-      // autoplay={{ delay: 1000 }}
+      // onSlideChange={() => console.log('slide change')}
+      // onSwiper={(swiper) => console.log(swiper)}
+      autoplay={{ delay: 1000 }}
       loop={true}
     >
-      <SwiperSlide className='slide'>Slide 1</SwiperSlide>
-      <SwiperSlide className='slide'>Slide 2</SwiperSlide>
-      <SwiperSlide className='slide'>Slide 3</SwiperSlide>
-      <SwiperSlide className='slide'>Slide 4</SwiperSlide>
+      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
+      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
+      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
+      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
     </Swiper>
   );
 };
