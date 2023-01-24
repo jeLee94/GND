@@ -15,8 +15,20 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
-  const [text, onChangeText] = useState('');
-  const [searchVideo, setSearchVideo] = useState([]);
+  const videos = [
+    {
+      category: 'react',
+      title:
+        '네이티브 앱, 리액트 네이티브 앱 으로! 개발자와 PM의 진짜 이야기 | RIDIBOOKS app 1부 | 리디 RIDI dev.',
+      thumbnail: 'https://i.ytimg.com/vi/scZI19SE0_4/hqdefault.jpg',
+    },
+  ];
+
+  const [text, setText] = useState<string>('');
+  const [searchVideos, setSearchVideos] = useState([]);
+  const [videoList, setVideoList] = useState<
+    { category: string; title: string; thumbnail: string }[] | undefined
+  >(videos);
 
   const getData = async () => {
     let list: object[] = [];
@@ -38,7 +50,26 @@ const MainPage = () => {
     return list;
   };
 
-  // 영상 검색하기
+  // FB에서 영상 검색
+  const searchBookRequest = async (text: string) => {
+    const q = query(
+      collection(dbService, 'CLASS'),
+      where('title', '>=', text),
+      where('title', '<=', text + '\uf8ff')
+    );
+    const querySnapshot = await getDocs(q);
+    const searchItem: any[] = [];
+    querySnapshot.docs.forEach((doc) => {
+      searchItem.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(searchItem);
+    return searchItem;
+  };
+
+  const handleOnClick = async () => {
+    const res = await searchBookRequest(text);
+    setVideoList(res);
+  };
 
   //promise 데이터 리스트로 변환
   const promise = getData();
@@ -66,8 +97,18 @@ const MainPage = () => {
         className='input__wrapper'
         style={{ width: '100', textAlign: 'center' }}
       >
-        <input type='text' placeholder='Search Lecture Video' value={text} />
-        <button>Search</button>
+        <input
+          type='text'
+          placeholder='Search Lecture Video'
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            setVideoList(videos);
+          }}
+        />
+        <button disabled={!text} onClick={handleOnClick}>
+          Search
+        </button>
       </div>
       <MainPageWrap>
         <Category>

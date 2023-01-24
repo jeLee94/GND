@@ -6,7 +6,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const InsertData = () => {
-  const [playlist, setPlaylist] = useState<any[]>();
+  const [playlist, setPlaylist] = useState([]);
   const onClickHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
