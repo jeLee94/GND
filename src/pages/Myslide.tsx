@@ -22,23 +22,33 @@ const Slide = () => {
       loop={true}
     >
       <SlideBanner className='slide'>
-        <img src='banner_01.png' alt='slide banner' />
+        <a href='http://localhost:3000/lecture/8YIwaO6Cojw'>
+          <img src='banner_01.png' alt='slide banner' />
+        </a>
         Slide 1
       </SlideBanner>
       <SwiperSlide className='slide'>
-        <img src='banner_02.png' alt='slide banner' />
+        <a href='http://localhost:3000/lecture/NcI-WJSWdv8'>
+          <img src='banner_02.png' alt='slide banner' />
+        </a>
         Slide 2
       </SwiperSlide>
       <SwiperSlide className='slide'>
-        <img src='banner_03.png' alt='slide banner' />
+        <a href='http://localhost:3000/lecture/2AMRTAFSh98'>
+          <img src='banner_03.png' alt='slide banner' />
+        </a>
         Slide 3
       </SwiperSlide>
       <SwiperSlide className='slide'>
-        <img src='banner_04.png' alt='slide banner' />
+        <a href='http://localhost:3000/lecture/xkpcNolC270'>
+          <img src='banner_04.png' alt='slide banner' />
+        </a>
         Slide 4
       </SwiperSlide>
       <SwiperSlide className='slide'>
-        <img src='banner_05.png' alt='slide banner' />
+        <a href='http://localhost:3000/lecture/4_WLS9Lj6n4'>
+          <img src='banner_05.png' alt='slide banner' />
+        </a>
         Slide 5
       </SwiperSlide>
     </Swiper>
