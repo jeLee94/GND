@@ -22,11 +22,13 @@ const MainPage = () => {
     let list: object[] = [];
     const q = query(
       collection(dbService, 'CLASS'),
-      where('category', '==', 'react'),
-      limit(5)
+      where('category', '==', 'javascript'),
+      limit(4)
     );
-    const countSnap = await getCountFromServer(collection(dbService, 'CLASS'));
-    console.log('count', countSnap.data().count);
+    // const countSnap = await getCountFromServer(
+    //   collection(dbService, 'CLASS')
+    // );
+    // console.log('count', countSnap.data().count);
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const obj = {
@@ -109,25 +111,23 @@ const MainPage = () => {
         </Category>
 
         <CantentWrap>
-          {/* 검색 결과 없을 때 */}
-          {datas && datas?.length === 0 && <div>해당하는 영상이 없습니다.</div>}
-          {/* 검색 결과 있을 때 */}
-          {datas &&
-            datas?.length > 0 &&
-            datas.map((data: any) => {
-              return (
-                <Link to={`/dashboard/${data.id}`} key={data.id}>
-                  <CantentBox key={data.id}>
-                    <Thumbnail src={data.thumbnail} />
-                    <LectureWrap>
-                      <LectureTitle>{data.title}</LectureTitle>
-                      <LectureContent>{data.description}</LectureContent>
-                    </LectureWrap>
-                    <Lecturer>{data.channelTitle}</Lecturer>
-                  </CantentBox>
-                </Link>
-              );
-            })}
+          {datas.map((data: any) => {
+            console.log(data);
+            return (
+              <Link
+                to={`/dashboard/${data.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+                <CantentBox key={data.id}>
+                  <Thumbnail src={data.thumbnail[0]} />
+                  <LectureWrap>
+                    <LectureTitle>{data.title}</LectureTitle>
+                  </LectureWrap>
+                  <Lecturer>{data.channelTitle}</Lecturer>
+                </CantentBox>
+              </Link>
+            );
+          })}
         </CantentWrap>
       </MainPageWrap>
     </>
