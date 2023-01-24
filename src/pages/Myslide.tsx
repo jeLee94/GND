@@ -33,7 +33,14 @@ const Slide = () => {
         <img src='banner_03.png' alt='slide banner' />
         Slide 3
       </SwiperSlide>
-      <SwiperSlide className='slide'>Slide 4</SwiperSlide>
+      <SwiperSlide className='slide'>
+        <img src='banner_04.png' alt='slide banner' />
+        Slide 4
+      </SwiperSlide>
+      <SwiperSlide className='slide'>
+        <img src='banner_05.png' alt='slide banner' />
+        Slide 5
+      </SwiperSlide>
     </Swiper>
   );
 };
