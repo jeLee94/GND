@@ -35,15 +35,24 @@ function App() {
   return (
     <>
       <Main>
-        <ThumbNailImg src={data?.thumbnail} />
+        <ThumbNailImg src={data?.thumbnail[0]} />
         <LectureTitle>{data?.title}</LectureTitle>
         <LectureCotents>{data?.description}</LectureCotents>
         <LectureListLogoAndToggle>
-          <Link to={`/lecture/${data?.videoId}`}>
-            <LectureList>강의 보러가기</LectureList>
-          </Link>
+          <LectureList>강의 목록</LectureList>
+
           <ToggleButton />
         </LectureListLogoAndToggle>
+        <div>
+          {data?.videotitle?.map((vTitle: any, idx: number) => {
+            return (
+              <Link to={`/lecture/${data?.videoId[idx]}`}>
+                {' '}
+                <div>{vTitle}</div>
+              </Link>
+            );
+          })}
+        </div>
       </Main>
     </>
   );
@@ -54,6 +63,8 @@ export default App;
 const Main = styled.div`
   margin-top: 100px;
 `;
+//임시로
+
 const Header = styled.div`
   width: 100%;
   height: 33px;

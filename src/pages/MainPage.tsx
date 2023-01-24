@@ -9,27 +9,43 @@ import {
   collection,
   limit,
   getCountFromServer,
+  orderBy,
+  startAfter,
 } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
-  const [category, setCategory] = useState('react')
+  const [category, setCategory] = useState('react');
 
   const [text, setText] = useState<string>('');
 
   // 전체 영상 불러오기
   const getData = async () => {
     let list: object[] = [];
-    const q = query(
+    const firstPage = query(
       collection(dbService, 'CLASS'),
-      where('category', '==', category),
-      // limit(5)
+
+      category !== ''
+        ? where('category', '==', category)
+        : where('category', '!=', category),
+      // orderBy('title', 'desc'),
+      limit(16)
     );
-    const countSnap = await getCountFromServer(collection(dbService, 'CLASS'));
-    console.log('count', countSnap.data().count);
-    const querySnapshot = await getDocs(q);
+    // const countSnap = await getCountFromServer(
+    //   collection(dbService, 'CLASS')
+    // );
+    // console.log('count', countSnap.data().count);
+    const querySnapshot = await getDocs(firstPage);
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    // console.log('l', lastVisible);
+    const next = query(
+      collection(dbService, 'CLASS'),
+      orderBy('title', 'desc'),
+      startAfter(lastVisible),
+      limit(16)
+    );
     querySnapshot.forEach((doc) => {
       const obj = {
         id: doc.id,
@@ -105,41 +121,63 @@ const MainPage = () => {
       </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton onClick={()=>{
-            setCategory('')
-          }}>All</CategoryBotton>
-          <CategoryBotton onClick={()=>{
-            setCategory('react')
-          }}>React</CategoryBotton>
-          <CategoryBotton onClick={()=>{
-            setCategory('javascript')
-          }}>Javascript</CategoryBotton>
-          <CategoryBotton onClick={()=>{
-            setCategory('tpytscript')
-          }}>Tpytscript</CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('');
+            }}
+          >
+            All
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('react');
+            }}
+          >
+            React
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('javascript');
+            }}
+          >
+            Javascript
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('typescript');
+            }}
+          >
+            typescript
+          </CategoryBotton>
+          <CategoryBotton
+            onClick={() => {
+              setCategory('cs');
+            }}
+          >
+            CS전공지식
+          </CategoryBotton>
         </Category>
 
         <CantentWrap>
-          {/* 검색 결과 없을 때 */}
-          {datas && datas?.length === 0 && <div>해당하는 영상이 없습니다.</div>}
-          {/* 검색 결과 있을 때 */}
-          {datas &&
-            datas?.length > 0 &&
-            datas.map((data: any) => {
-              return (
-                <Link to={`/dashboard/${data.id}`} key={data.id}>
-                  <CantentBox key={data.id}>
-                    <Thumbnail src={data.thumbnail} />
-                    <LectureWrap>
-                      <LectureTitle>{data.title}</LectureTitle>
-                      <LectureContent>{data.description}</LectureContent>
-                    </LectureWrap>
-                    <Lecturer>{data.channelTitle}</Lecturer>
-                  </CantentBox>
-                </Link>
-              );
-            })}
+          {datas.map((data: any) => {
+            console.log(data);
+            return (
+              <Link
+                to={`/dashboard/${data.id}`}
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+                <CantentBox key={data.id}>
+                  <Thumbnail src={data.thumbnail[0]} />
+                  <LectureWrap>
+                    <LectureTitle>{data.title}</LectureTitle>
+                  </LectureWrap>
+                  <Lecturer>{data.channelTitle}</Lecturer>
+                </CantentBox>
+              </Link>
+            );
+          })}
         </CantentWrap>
+        {/* <button onClick={next}>test</button> */}
       </MainPageWrap>
     </>
   );
@@ -232,6 +270,7 @@ const LectureTitle = styled.div`
   font-size: 15px;
   margin-bottom: 10px;
   margin-top: 10px;
+  font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

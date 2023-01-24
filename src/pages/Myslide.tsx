@@ -4,7 +4,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css';
 import './Myslide.css';
-import catbanner from '../util/img/IMG_0790.jpg'
 // import styled from 'styled-components';
 import { on } from 'events';
 import styled from 'styled-components';
@@ -18,19 +17,9 @@ const Slide = () => {
       navigation
       spaceBetween={50}
       slidesPerView={1}
-      // onSlideChange={() => console.log('slide change')}
-      // onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{ delay: 1000 }}
-      loop={true}
-    >
-      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
-      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
-      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
-      <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
-
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
-      autoplay={{ delay: 2000 }}
+      autoplay={{ delay: 3000 }}
       loop={true}
     >
       <SlideBanner className='slide'>
