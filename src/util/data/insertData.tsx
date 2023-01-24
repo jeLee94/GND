@@ -6,12 +6,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const InsertData = () => {
-  const [playlist, setPlaylist] = useState();
+  const [playlist, setPlaylist] = useState<any[]>();
   const onClickHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
       .get(
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=자바스크립트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=타입스크립트&order=relevance&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
         // 'localhost:3000/dashboard'
         //i.id.videoId
       )
@@ -29,7 +29,7 @@ const InsertData = () => {
           console.log(i, idx);
           if (i?.id?.videoId) {
             addDoc(collection(dbService, 'CLASS'), {
-              category: 'react',
+              category: 'typescript',
               channelId: i?.snippet?.channelId,
               channelTitle: i?.snippet?.channelTitle,
               title: i?.snippet?.title,

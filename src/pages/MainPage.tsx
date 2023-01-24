@@ -2,9 +2,17 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Myslide from './Myslide';
-import { getDocs, where, query, collection, limit } from 'firebase/firestore';
+import {
+  getDocs,
+  where,
+  query,
+  collection,
+  limit,
+  getCountFromServer,
+} from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const MainPage = () => {
   const [text, onChangeText] = useState('');
@@ -17,6 +25,8 @@ const MainPage = () => {
       where('category', '==', 'react'),
       limit(5)
     );
+    const countSnap = await getCountFromServer(collection(dbService, 'CLASS'));
+    console.log('count', countSnap.data().count);
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const obj = {
@@ -61,7 +71,7 @@ const MainPage = () => {
       </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton onClick={get}>프로그래밍</CategoryBotton>
+          <CategoryBotton>프로그래밍</CategoryBotton>
           <CategoryBotton>웹 개발</CategoryBotton>
           <CategoryBotton>앱 개발</CategoryBotton>
           <CategoryBotton>디자인</CategoryBotton>
@@ -71,14 +81,16 @@ const MainPage = () => {
         <CantentWrap>
           {datas.map((data: any) => {
             return (
-              <CantentBox>
-                <Thumbnail key={data.id} src={data.thumbnail} />
-                <LectureWrap>
-                  <LectureTitle>{data.title}</LectureTitle>
-                  <LectureContent>{data.description}</LectureContent>
-                </LectureWrap>
-                <Lecturer>{data.channelTitle}</Lecturer>
-              </CantentBox>
+              <Link to={`/dashboard/${data.id}`}>
+                <CantentBox key={data.id}>
+                  <Thumbnail src={data.thumbnail} />
+                  <LectureWrap>
+                    <LectureTitle>{data.title}</LectureTitle>
+                    <LectureContent>{data.description}</LectureContent>
+                  </LectureWrap>
+                  <Lecturer>{data.channelTitle}</Lecturer>
+                </CantentBox>
+              </Link>
             );
           })}
         </CantentWrap>
@@ -191,10 +203,10 @@ const LectureContent = styled.div`
 const Lecturer = styled.span`
   width: 50px;
   margin: 10px 10px 0 10px;
-  padding-right: 10px;
+  /* padding-right: 10px; */
   font-size: 10px;
   font-weight: bold;
-  border-right: 1px solid;
+  /* border-right: 1px solid; */
 `;
 
 //* 강의 날짜
