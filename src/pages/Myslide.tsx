@@ -6,6 +6,8 @@ import 'swiper/css';
 import './Myslide.css';
 import catbanner from '../util/img/IMG_0790.jpg'
 // import styled from 'styled-components';
+import { on } from 'events';
+import styled from 'styled-components';
 
 const Slide = () => {
   return (
@@ -25,7 +27,45 @@ const Slide = () => {
       <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
       <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
       <SwiperSlide className='slide'><img src={catbanner}/></SwiperSlide>
+
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+      autoplay={{ delay: 2000 }}
+      loop={true}
+    >
+      <SlideBanner className='slide'>
+        <a href='http://localhost:3000/lecture/8YIwaO6Cojw'>
+          <img src='banner_01.png' alt='slide banner' />
+        </a>
+        Slide 1
+      </SlideBanner>
+      <SwiperSlide className='slide'>
+        <a href='http://localhost:3000/lecture/NcI-WJSWdv8'>
+          <img src='banner_02.png' alt='slide banner' />
+        </a>
+        Slide 2
+      </SwiperSlide>
+      <SwiperSlide className='slide'>
+        <a href='http://localhost:3000/lecture/2AMRTAFSh98'>
+          <img src='banner_03.png' alt='slide banner' />
+        </a>
+        Slide 3
+      </SwiperSlide>
+      <SwiperSlide className='slide'>
+        <a href='http://localhost:3000/lecture/xkpcNolC270'>
+          <img src='banner_04.png' alt='slide banner' />
+        </a>
+        Slide 4
+      </SwiperSlide>
+      <SwiperSlide className='slide'>
+        <a href='http://localhost:3000/lecture/4_WLS9Lj6n4'>
+          <img src='banner_05.png' alt='slide banner' />
+        </a>
+        Slide 5
+      </SwiperSlide>
     </Swiper>
   );
 };
 export default Slide;
+
+const SlideBanner = styled(SwiperSlide)``;
