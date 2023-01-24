@@ -1,9 +1,9 @@
-.slide{
-/* min-width: 100%; */
+.slide {
+  /* min-width: 100%; */
 
   /* overflow: hidden; */
 }
-.swiper-slide{
+.swiper-slide {
   height: 200px;
-  background-color: beige;
+  /* background-color: red; */
 }
