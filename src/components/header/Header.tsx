@@ -9,6 +9,7 @@ const Header = () => {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
+  // 검색창 - 검색어 입력시 페이지 이동
   const handleSubmit = (event: any) => {
     event.preventDefault();
     navigate(`/search?title=${search}`);
@@ -27,8 +28,14 @@ const Header = () => {
               type='text'
               placeholder='강의 검색'
               onChange={(event) => setSearch(event.target.value)}
+              value={search}
             />
-            <SearchIcon icon={faMagnifyingGlass} />
+            <button
+              type='submit'
+              style={{ border: 'none', backgroundColor: 'transparent' }}
+            >
+              <SearchIcon icon={faMagnifyingGlass} />
+            </button>
           </SearchForm>
           <NavBarLink to='/login'>
             <LogInButton>Login</LogInButton>

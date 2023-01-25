@@ -58,11 +58,11 @@ const MainPage = () => {
   return (
     <>
       {/* 검색 인풋창 */}
-      <TopScrollButton/>
+      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
-      <div
+      {/* <div
         className='input__wrapper'
         style={{ width: '100', textAlign: 'center' }}
       >
@@ -79,7 +79,7 @@ const MainPage = () => {
         <button disabled={!text} onClick={handleOnClick}>
           Search
         </button>
-      </div>
+      </div> */}
       <MainPageWrap>
         <Category>
           {categorylist.map((c: any, idx: number) => {
@@ -117,7 +117,11 @@ const MainPage = () => {
           {pageDatas?.length > 0 && (
             <>
               <div ref={setTarget} />
-              <NoMoreFeeds>{noMore && <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>}</NoMoreFeeds>
+              <NoMoreFeeds>
+                {noMore && (
+                  <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>
+                )}
+              </NoMoreFeeds>
               <div>{loadingMore}</div>
             </>
           )}
@@ -172,7 +176,7 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
-  :hover{
+  :hover {
     color: white;
     background-color: #5f9c92;
   }
