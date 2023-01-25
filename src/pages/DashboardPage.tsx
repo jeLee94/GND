@@ -1,19 +1,19 @@
-import styled from 'styled-components';
-import Button from '../components/button/LogoutButton';
-import ToggleButton from '../components/button/ToggleButton';
-import { useParams } from 'react-router-dom';
-import { doc, DocumentData, getDoc } from 'firebase/firestore';
-import { dbService } from '../firebase';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import Button from "../components/button/LogoutButton";
+import ToggleButton from "../components/button/ToggleButton";
+import { useParams } from "react-router-dom";
+import { doc, DocumentData, getDoc } from "firebase/firestore";
+import { dbService } from "../firebase";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function App() {
   const param = useParams<string>();
   const [data, setData] = useState<any>();
 
   const test = async () => {
-    const docRef = doc(dbService, 'CLASS', param.id as string);
+    const docRef = doc(dbService, "CLASS", param.id as string);
     const docSnap = await getDoc(docRef);
     const ob = docSnap.data();
     return ob as any;
@@ -43,16 +43,18 @@ function App() {
 
           <ToggleButton />
         </LectureListLogoAndToggle>
-        <div>
+        <VideoList>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <Link to={`/lecture/${data?.videoId[idx]}`}>
-                {' '}
-                <div>{vTitle}</div>
-              </Link>
+              <OneVideo>
+                <Link to={`/lecture/${data?.videoId[idx]}`}>
+                  {" "}
+                  <div>{vTitle}</div>
+                </Link>
+              </OneVideo>
             );
           })}
-        </div>
+        </VideoList>
       </Main>
     </>
   );
@@ -98,11 +100,13 @@ const LectureTitle = styled.div`
   font-size: larger;
 `;
 const LectureCotents = styled.div`
-  background-color: gray;
   width: 700px;
   margin: auto;
-  height: 100px;
-  margin-bottom: 50px;
+  height: 20px;
+  margin-bottom: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 const LectureListLogoAndToggle = styled.div`
   width: 700px;
@@ -114,6 +118,15 @@ const LectureListLogoAndToggle = styled.div`
   align-items: center;
   justify-items: center;
 `;
-const LectureList = styled.div`
-  background-color: red;
+const LectureList = styled.div``;
+const VideoList = styled.div`
+  width: 700px;
+  margin: auto;
+  margin-top: 10px;
+`;
+
+const OneVideo = styled.div`
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
 `;
