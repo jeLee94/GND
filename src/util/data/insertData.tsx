@@ -23,9 +23,11 @@ const InsertData = () => {
     axios
       .get(
         //단일 영상용
-        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
         //플레이리스트용
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=타입스크립트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        //내배캠용
+        // 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
       )
       .then((res) => {
         console.log('API요청 완료', res);
@@ -41,20 +43,20 @@ const InsertData = () => {
           console.log(i, idx);
           if (i?.id?.playlistId) {
             addDoc(collection(dbService, 'CLASS'), {
-              category: 'typescript',
+              category: 'react',
               channelId: i?.snippet?.channelId,
               channelTitle: i?.snippet?.channelTitle,
               title: i?.snippet?.title,
               playlistId: i?.id?.playlistId,
               thumbnail: i?.snippet?.thumbnails.high.url,
             });
-          } else if (i?.id?.videoId) {
+          } else if (i?.id?.videoId || i?.id) {
             addDoc(collection(dbService, 'CLASS'), {
               category: 'cs',
               channelId: i?.snippet?.channelId,
               channelTitle: i?.snippet?.channelTitle,
               title: i?.snippet?.title,
-              videoId: i?.id?.videoId,
+              videoId: i?.id,
               thumbnail: i?.snippet?.thumbnails.high.url,
             });
           }
@@ -138,12 +140,15 @@ const InsertData = () => {
   const videoUpdateDocHandler = async () => {
     let k = 0;
     while (k < playlistIdList.length) {
+      console.log('1통과');
       const docRef = doc(dbService, 'CLASS', playlistIdList[k].id);
-      // console.log('p', playlist.id.videoId);
-      // console.log('p2', playlistIdList.videoId);
+      console.log('p', playlist);
+      console.log('p2', playlistIdList);
+      console.log('2통과');
       playlist &&
         playlist.map((i: any) => {
-          if (playlistIdList[k]?.videoId === i?.id?.videoId) {
+          if (playlistIdList[k]?.videoId?.videoId === i?.id?.videoId) {
+            console.log('3통과');
             updateDoc(docRef, {
               videotitle: arrayUnion(i?.snippet?.title),
               description: arrayUnion(i?.snippet?.description ?? '없음'),

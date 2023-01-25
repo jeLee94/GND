@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from '../components/button/LogoutButton';
 import ToggleButton from '../components/button/ToggleButton';
 import { useParams } from 'react-router-dom';
-import { doc, DocumentData, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -47,7 +47,6 @@ function App() {
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
               <Link to={`/lecture/${data?.videoId[idx]}`}>
-                {' '}
                 <div>{vTitle}</div>
               </Link>
             );
