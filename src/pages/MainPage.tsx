@@ -1,61 +1,38 @@
 //메인 페이지
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import Myslide from './Myslide';
-import {
-  getDocs,
-  where,
-  query,
-  collection,
-  limit,
-  getCountFromServer,
-  orderBy,
-  startAfter,
-} from 'firebase/firestore';
+import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
+import Myslide from '../components/slide/Myslide';
+import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import usePagination from '../hook/usePagination';
+import TopScrollButton from '../components/button/topScrollButton';
 
 const MainPage = () => {
-  const [category, setCategory] = useState('react');
-
+  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
+  const categoryName = [
+    'All',
+    'React',
+    'Javascirpt',
+    'Typescript',
+    'CS전공지식',
+  ];
+  const [category, setCategory] = useState('all');
   const [text, setText] = useState<string>('');
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [datas, setDatas] = useState<any>([]);
+  const INITIAL_FETCH_COUNT = 7;
+  const {
+    data: pageDatas,
+    loading,
+    loadingMore,
+    noMore,
+  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
 
-  // 전체 영상 불러오기
-  const getData = async () => {
-    let list: object[] = [];
-    const firstPage = query(
-      collection(dbService, 'CLASS'),
-
-      category !== ''
-        ? where('category', '==', category)
-        : where('category', '!=', category),
-      // orderBy('title', 'desc'),
-      limit(16)
-    );
-    // const countSnap = await getCountFromServer(
-    //   collection(dbService, 'CLASS')
-    // );
-    // console.log('count', countSnap.data().count);
-    const querySnapshot = await getDocs(firstPage);
-    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-    // console.log('l', lastVisible);
-    const next = query(
-      collection(dbService, 'CLASS'),
-      orderBy('title', 'desc'),
-      startAfter(lastVisible),
-      limit(16)
-    );
-    querySnapshot.forEach((doc) => {
-      const obj = {
-        id: doc.id,
-        ...doc.data(),
-      };
-      list.push(obj);
-      // console.log(obj)
-    });
-    return list;
-  };
+  useEffect(() => {
+    // console.log(datas);
+  }, [category]);
 
   // 영상 검색
   const searchVideoRequest = async (text: string) => {
@@ -78,26 +55,10 @@ const MainPage = () => {
     setDatas(res);
   };
 
-  //promise 데이터 리스트로 변환
-  const promise = getData();
-  const [datas, setDatas] = useState<any>([]);
-  const get = async () => {
-    await promise.then((data) => {
-      setDatas(data);
-    });
-    // console.log(datas)
-  };
-
-  useEffect(() => {
-    get();
-    // console.log(datas);
-  }, [category]);
-
   return (
     <>
-      <header>헤더공간</header>
       {/* 검색 인풋창 */}
-
+      <TopScrollButton/>
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -121,48 +82,24 @@ const MainPage = () => {
       </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('');
-            }}
-          >
-            All
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('react');
-            }}
-          >
-            React
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('javascript');
-            }}
-          >
-            Javascript
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('typescript');
-            }}
-          >
-            typescript
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('cs');
-            }}
-          >
-            CS전공지식
-          </CategoryBotton>
+          {categorylist.map((c: any, idx: number) => {
+            return (
+              <CategoryBotton
+                key={idx}
+                onClick={() => {
+                  setCategory(c);
+                }}
+              >
+                {categoryName[idx]}
+              </CategoryBotton>
+            );
+          })}
         </Category>
-
-        <CantentWrap>
-          {datas.map((data: any) => {
-            console.log(data);
+        <ContentWrap>
+          {pageDatas?.map((data: any) => {
             return (
               <Link
+                key={data.id}
                 to={`/dashboard/${data.id}`}
                 style={{ textDecoration: 'none', color: 'black' }}
               >
@@ -176,14 +113,29 @@ const MainPage = () => {
               </Link>
             );
           })}
-        </CantentWrap>
-        {/* <button onClick={next}>test</button> */}
+
+          {pageDatas?.length > 0 && (
+            <>
+              <div ref={setTarget} />
+              <NoMoreFeeds>{noMore && <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>}</NoMoreFeeds>
+              <div>{loadingMore}</div>
+            </>
+          )}
+        </ContentWrap>
       </MainPageWrap>
     </>
   );
 };
 
 export default MainPage;
+
+const NoMoreFeeds = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+`;
 
 const MainPageWrap = styled.div`
   width: 100;
@@ -195,9 +147,7 @@ const MainPageWrap = styled.div`
 
 //* 배너
 const MainPageSlideBanner = styled.div`
-  /* width: 100%; */
   margin-top: 30px;
-  /* height: 400px; */
   background-color: #e3e3e3;
   align-items: center;
   display: flex;
@@ -222,6 +172,10 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
+  :hover{
+    color: white;
+    background-color: #5f9c92;
+  }
 `;
 
 //* 단일강의컨텐츠박스
@@ -232,7 +186,7 @@ const CantentBox = styled.div`
 `;
 
 //* 컨텐츠컨테이너
-const CantentWrap = styled.div`
+const ContentWrap = styled.div`
   width: 1320px;
   padding-bottom: 20px;
   display: flex;
@@ -243,18 +197,10 @@ const CantentWrap = styled.div`
 
 //* 썸네일
 const Thumbnail = styled.img`
-  width: 100%;
+  width: 300px;
   height: 70%;
-  /* padding-bottom: 50%; */
-  background-color: beige;
   box-shadow: 0 10px 4px -4px #e3e3e3;
   display: flex;
-
-  /* ::before {
-      width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-    } */
 `;
 
 //* 강의내용 박스
@@ -262,12 +208,11 @@ const LectureWrap = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-left: 10px;
 `;
 
 //* 강의 제목
 const LectureTitle = styled.div`
-  font-size: 15px;
+  font-size: 18px;
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
@@ -278,23 +223,10 @@ const LectureTitle = styled.div`
   -webkit-box-orient: vertical;
 `;
 
-//* 강의 내용
-const LectureContent = styled.div`
-  width: 100%;
-  font-size: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; //보여질 줄 수
-  -webkit-box-orient: vertical;
-`;
-
 //* 강의 주체자
 const Lecturer = styled.span`
   width: 50px;
   margin: 10px 10px 0 10px;
-  /* padding-right: 10px; */
-  font-size: 10px;
+  font-size: 15px;
   font-weight: bold;
-  /* border-right: 1px solid; */
 `;

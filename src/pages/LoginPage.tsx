@@ -15,7 +15,9 @@ const LoginPage = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userData, setUserData] = useState(null);
 
-  //navigate('/')
+  const onSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+  };
 
   // 로그인 요청
   const handleLogin = () => {
@@ -23,6 +25,7 @@ const LoginPage = () => {
       () => {
         setUserEmail("");
         setUserPassword("");
+        navigate("/");
       }
     );
     console.log(userEmail, userPassword);
@@ -45,7 +48,7 @@ const LoginPage = () => {
       <LoginContainer>
         <LoginTitle>로그인</LoginTitle>
 
-        <Login>
+        <Login onSubmit={onSubmit}>
           <p>아이디</p>
           <EmailInput
             type='text'
@@ -68,13 +71,9 @@ const LoginPage = () => {
           <GoogleLoginButton onClick={handleGoogleLogin}>
             구글로 로그인
           </GoogleLoginButton>
-          <RegisterButton
-            onClick={() => {
-              navigate("/register");
-            }}
-          >
-            회원가입
-          </RegisterButton>
+          <RegisterLink>
+            <a href='http://localhost:3000/register'>회원가입 하러가기</a>
+          </RegisterLink>
         </Login>
       </LoginContainer>
     </>
@@ -87,14 +86,13 @@ export default LoginPage;
 const LoginContainer = styled.div`
   width: 500px;
   height: 430px;
-  background-color: white;
-  border-radius: 12px;
   padding: 50px;
   margin-top: 120px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
+  background-color: #d9d9d9;
   border: 1px double #707070;
 `;
 
@@ -105,7 +103,7 @@ const LoginTitle = styled.h2`
 `;
 
 // 로그인 전체입력부분
-const Login = styled.div`
+const Login = styled.form`
   margin-left: auto;
   margin-right: auto;
 `;
@@ -124,11 +122,11 @@ const PasswordInput = styled.input`
 
 //로그인버튼
 const LoginButton = styled.button`
-  height: 60px;
+  height: 50px;
   width: 360px;
   margin-top: 25px;
-  border-radius: 30px;
-  border: 1px double #707070;
+  border-radius: 7px;
+  border: 1px;
   background-color: #5f9c92;
   color: white;
   display: flex;
@@ -139,12 +137,12 @@ const LoginButton = styled.button`
 
 //구글로그인버튼
 const GoogleLoginButton = styled.button`
-  height: 60px;
+  height: 50px;
   width: 360px;
   margin-top: 10px;
   margin-bottom: 12px;
-  border-radius: 30px;
-  border: 1px double #707070;
+  border-radius: 7px;
+  border: 1px;
   background-color: #5f9c92;
   color: white;
   display: flex;
@@ -153,9 +151,11 @@ const GoogleLoginButton = styled.button`
   cursor: pointer;
 `;
 
-//회원가입버튼
-const RegisterButton = styled.button`
-  margin: auto;
-  display: block;
-  cursor: pointer;
+//회원가입 링크
+const RegisterLink = styled.div`
+  margin-top: 30px;
+  text-align: center;
+  a {
+    text-decoration: none;
+  }
 `;
