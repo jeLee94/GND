@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import topButton from '../../util/img/TopBtn.png';
+// import topButton from '../../util/img/TopBtn.png'
 import React, { useState, useEffect } from 'react';
 // import React from 'react';
 
 const topScrollButton = () => {
-  //const [topBtn, setTopBtn] = useState(false);
+  // const [topBtn, setTopBtn] = useState(false);
   // TopButton
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -17,6 +17,7 @@ const topScrollButton = () => {
   //     setTopBtn(false);
   //   }
   // });
+
   // const ScrolltoTopEffet = ()=>{
   //   if (window.scrollY > 40) {
   //     setTopbtn(true);
@@ -28,7 +29,7 @@ const topScrollButton = () => {
   return (
     <>
       <TopScrollButton onClick={handleScrollToTop}>
-        <img src={topButton} alt='topS croll' />
+        <img src='TopBtn.png' alt='topScroll' />
       </TopScrollButton>
     </>
   );
