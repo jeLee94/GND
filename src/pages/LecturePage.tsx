@@ -3,21 +3,31 @@
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import { useParams } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 // import ReactPlayer from 'react-player';
+const BackToCourse = (e: React.MouseEvent) => {
+  e.preventDefault();
+  window.history.back();
+};
 
 const LecturePage = () => {
-  const param = useParams<string>();
+  const parameters = useParams<string>();
+  const parameter = parameters?.id as string;
+  const param = parameter.split('&'); //param[0]=videoId param[1]=title
   console.log(param);
 
   return (
     <Container>
       <LectureHeader>
-        <LectureTitle>혼자서도 마스터하는 React</LectureTitle>
-        <BackButton>Back to Course</BackButton>
+        <LectureTitle>{param[1]}</LectureTitle>
+        <Link to={`/dashboard/${param[0]}`}>
+          <BackButton onClick={BackToCourse}>Back to Course</BackButton>
+        </Link>
       </LectureHeader>
       <YouTube
-        videoId={param?.id} //임시로 아이디값 하드코딩
+        videoId={param[0]}
         opts={{
           width: 900,
           height: 510,
@@ -46,8 +56,10 @@ const LectureHeader = styled.div`
 `;
 
 const LectureTitle = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 `;
 
 const BackButton = styled.button`

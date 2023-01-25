@@ -29,7 +29,6 @@ function App() {
 
   useEffect(() => {
     get();
-    console.log(data);
   }, []);
 
   return (
@@ -46,7 +45,9 @@ function App() {
         <div>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <Link to={`/lecture/${data?.videoId[idx]}`}>
+              <Link
+                to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
+              >
                 <div>{vTitle}</div>
               </Link>
             );
