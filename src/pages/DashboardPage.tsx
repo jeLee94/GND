@@ -1,22 +1,58 @@
 import styled from 'styled-components';
 import Button from '../components/button/LogoutButton';
 import ToggleButton from '../components/button/ToggleButton';
+import { useParams } from 'react-router-dom';
+import { doc, DocumentData, getDoc } from 'firebase/firestore';
+import { dbService } from '../firebase';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 function App() {
+  const param = useParams<string>();
+  const [data, setData] = useState<any>();
+
+  const test = async () => {
+    const docRef = doc(dbService, 'CLASS', param.id as string);
+    const docSnap = await getDoc(docRef);
+    const ob = docSnap.data();
+    return ob as any;
+  };
+
+  // promise 데이터 리스트로 변환
+  const promise = test();
+  const get = async () => {
+    await promise.then((data) => {
+      setData(data);
+    });
+  };
+
+  useEffect(() => {
+    get();
+    console.log(data);
+  }, []);
+
   return (
     <>
       <Main>
-        <Header>
-          <HeaderGNDLogo>GND</HeaderGNDLogo>
-          <HeaderEmailLogo>testEmail@naver.com</HeaderEmailLogo>
-          <Button>Log out</Button>
-        </Header>
-        <ThumbNailImg>강의 썸네일 이미지</ThumbNailImg>
-        <LectureTitle>과정 제목</LectureTitle>
-        <LectureCotents>강의 내용</LectureCotents>
+        <ThumbNailImg src={data?.thumbnail[0]} />
+        <LectureTitle>{data?.title}</LectureTitle>
+        <LectureCotents>{data?.description}</LectureCotents>
         <LectureListLogoAndToggle>
           <LectureList>강의 목록</LectureList>
+
           <ToggleButton />
         </LectureListLogoAndToggle>
+        <div>
+          {data?.videotitle?.map((vTitle: any, idx: number) => {
+            return (
+              <Link to={`/lecture/${data?.videoId[idx]}`}>
+                {' '}
+                <div>{vTitle}</div>
+              </Link>
+            );
+          })}
+        </div>
       </Main>
     </>
   );
@@ -24,7 +60,11 @@ function App() {
 
 export default App;
 
-const Main = styled.div``;
+const Main = styled.div`
+  margin-top: 100px;
+`;
+//임시로
+
 const Header = styled.div`
   width: 100%;
   height: 33px;
@@ -40,9 +80,9 @@ const HeaderEmailLogo = styled.div`
   margin-left: 900px;
 `;
 
-const ThumbNailImg = styled.div`
+const ThumbNailImg = styled.img`
   width: 700px;
-  height: 250px;
+  height: 500px;
   margin: auto;
   margin-top: 50px;
   background-color: gray;
