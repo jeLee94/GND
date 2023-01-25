@@ -1,20 +1,19 @@
-import { createUserWithEmailAndPassword } from "@firebase/auth";
-import { SlowBuffer } from "buffer";
-import { useState } from "react";
-import styled, { css } from "styled-components";
-import { authService } from "../firebase";
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { authService } from '../firebase';
 
 //로그인 회원가입 화면
 const RegisterPage = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
   //회원가입 요청
   const handleRegister = () => {
     createUserWithEmailAndPassword(authService, userEmail, userPassword).then(
       () => {
-        setUserEmail("");
-        setUserPassword("");
+        setUserEmail('');
+        setUserPassword('');
       }
     );
     console.log(userEmail, userPassword);

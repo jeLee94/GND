@@ -1,6 +1,6 @@
 //메인 페이지
 import styled from 'styled-components';
-import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
 import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';
@@ -58,7 +58,7 @@ const MainPage = () => {
   return (
     <>
       {/* 검색 인풋창 */}
-      <TopScrollButton/>
+      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -117,7 +117,11 @@ const MainPage = () => {
           {pageDatas?.length > 0 && (
             <>
               <div ref={setTarget} />
-              <NoMoreFeeds>{noMore && <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>}</NoMoreFeeds>
+              <NoMoreFeeds>
+                {noMore && (
+                  <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>
+                )}
+              </NoMoreFeeds>
               <div>{loadingMore}</div>
             </>
           )}
@@ -172,7 +176,7 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
-  :hover{
+  :hover {
     color: white;
     background-color: #5f9c92;
   }
