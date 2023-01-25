@@ -1,61 +1,37 @@
 //메인 페이지
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
 import Myslide from './Myslide';
-import {
-  getDocs,
-  where,
-  query,
-  collection,
-  limit,
-  getCountFromServer,
-  orderBy,
-  startAfter,
-} from 'firebase/firestore';
+import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import usePagination from '../hook/usePagination';
 
 const MainPage = () => {
-  const [category, setCategory] = useState('react');
-
+  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
+  const categoryName = [
+    'All',
+    'React',
+    'Javascirpt',
+    'Typescript',
+    'CS전공지식',
+  ];
+  const [category, setCategory] = useState('all');
   const [text, setText] = useState<string>('');
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [datas, setDatas] = useState<any>([]);
+  const INITIAL_FETCH_COUNT = 7;
+  const {
+    data: pageDatas,
+    loading,
+    loadingMore,
+    noMore,
+  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
 
-  // 전체 영상 불러오기
-  const getData = async () => {
-    let list: object[] = [];
-    const firstPage = query(
-      collection(dbService, 'CLASS'),
-
-      category !== ''
-        ? where('category', '==', category)
-        : where('category', '!=', category),
-      // orderBy('title', 'desc'),
-      limit(16)
-    );
-    // const countSnap = await getCountFromServer(
-    //   collection(dbService, 'CLASS')
-    // );
-    // console.log('count', countSnap.data().count);
-    const querySnapshot = await getDocs(firstPage);
-    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-    // console.log('l', lastVisible);
-    const next = query(
-      collection(dbService, 'CLASS'),
-      orderBy('title', 'desc'),
-      startAfter(lastVisible),
-      limit(16)
-    );
-    querySnapshot.forEach((doc) => {
-      const obj = {
-        id: doc.id,
-        ...doc.data(),
-      };
-      list.push(obj);
-      // console.log(obj)
-    });
-    return list;
-  };
+  useEffect(() => {
+    // console.log(datas);
+  }, [category]);
 
   // 영상 검색
   const searchVideoRequest = async (text: string) => {
@@ -77,21 +53,6 @@ const MainPage = () => {
     const res = await searchVideoRequest(text);
     setDatas(res);
   };
-
-  //promise 데이터 리스트로 변환
-  const promise = getData();
-  const [datas, setDatas] = useState<any>([]);
-  const get = async () => {
-    await promise.then((data) => {
-      setDatas(data);
-    });
-    // console.log(datas)
-  };
-
-  useEffect(() => {
-    get();
-    // console.log(datas);
-  }, [category]);
 
   return (
     <>
@@ -121,48 +82,25 @@ const MainPage = () => {
       </div>
       <MainPageWrap>
         <Category>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('');
-            }}
-          >
-            All
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('react');
-            }}
-          >
-            React
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('javascript');
-            }}
-          >
-            Javascript
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('typescript');
-            }}
-          >
-            typescript
-          </CategoryBotton>
-          <CategoryBotton
-            onClick={() => {
-              setCategory('cs');
-            }}
-          >
-            CS전공지식
-          </CategoryBotton>
+          {categorylist.map((c: any, idx: number) => {
+            return (
+              <CategoryBotton
+                key={idx}
+                onClick={() => {
+                  setCategory(c);
+                }}
+              >
+                {categoryName[idx]}
+              </CategoryBotton>
+            );
+          })}
         </Category>
-
-        <CantentWrap>
-          {datas.map((data: any) => {
-            console.log(data);
+        <ContentWrap>
+          {pageDatas?.map((data: any) => {
+            // console.log(data);
             return (
               <Link
+                key={data.id}
                 to={`/dashboard/${data.id}`}
                 style={{ textDecoration: 'none', color: 'black' }}
               >
@@ -176,8 +114,16 @@ const MainPage = () => {
               </Link>
             );
           })}
-        </CantentWrap>
-        {/* <button onClick={next}>test</button> */}
+
+          {pageDatas?.length > 0 && (
+            <>
+              <div ref={setTarget} />
+              <div>{noMore && <div>더 이상 불러올 피드가 없어요</div>}</div>
+              <div>{loadingMore}</div>
+            </>
+          )}
+          {/* <button onClick={next}>test</button> */}
+        </ContentWrap>
       </MainPageWrap>
     </>
   );
@@ -232,7 +178,7 @@ const CantentBox = styled.div`
 `;
 
 //* 컨텐츠컨테이너
-const CantentWrap = styled.div`
+const ContentWrap = styled.div`
   width: 1320px;
   padding-bottom: 20px;
   display: flex;
@@ -243,7 +189,7 @@ const CantentWrap = styled.div`
 
 //* 썸네일
 const Thumbnail = styled.img`
-  width: 100%;
+  width: 300px;
   height: 70%;
   /* padding-bottom: 50%; */
   background-color: beige;
