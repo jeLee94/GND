@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import MainPage from "../pages/MainPage";
-import DashboardPage from "../pages/DashboardPage";
-import LecturePage from "../pages/LecturePage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import Header from "../components/header/Header";
-import InsertData from "../util/data/insertData";
+import MainPage from '../pages/MainPage';
+import DashboardPage from '../pages/DashboardPage';
+import LecturePage from '../pages/LecturePage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import Header from '../components/header/Header';
+import InsertData from '../util/data/insertData';
+import React from 'react';
 
 const Router = () => {
   return (

@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import { authService } from "../firebase";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { authService } from '../firebase';
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-} from "@firebase/auth";
+} from '@firebase/auth';
 
 //로그인 화면
 const LoginPage = () => {
   let navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [userData, setUserData] = useState(null);
 
   const onSubmit = (e: { preventDefault: () => void }) => {
@@ -23,9 +23,9 @@ const LoginPage = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(authService, userEmail, userPassword).then(
       () => {
-        setUserEmail("");
-        setUserPassword("");
-        navigate("/");
+        setUserEmail('');
+        setUserPassword('');
+        navigate('/');
       }
     );
     console.log(userEmail, userPassword);

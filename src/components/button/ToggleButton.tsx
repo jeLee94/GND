@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 
 const handleToggle = () => {
   alert('강의 목록 보여주기 버튼');

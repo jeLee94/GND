@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../components/button/LogoutButton';
 import ToggleButton from '../components/button/ToggleButton';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
@@ -7,6 +6,7 @@ import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 function App() {
   const param = useParams<string>();
@@ -100,6 +100,7 @@ const LectureTitle = styled.div`
   font-size: larger;
 `;
 const LectureCotents = styled.div`
+  background-color: gray;
   width: 700px;
   margin: auto;
   height: 20px;

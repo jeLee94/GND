@@ -12,12 +12,11 @@ const topScrollButton = () => {
 
   // useEffect(() => {
   //   if (window.scrollY > 40) {
-  //     setTopBtn(true);
+  //     setTopbtn(true);
   //   } else {
-  //     setTopBtn(false);
+  //     setTopbtn(false);
   //   }
-  // });
-
+  // })
   // const ScrolltoTopEffet = ()=>{
   //   if (window.scrollY > 40) {
   //     setTopbtn(true);

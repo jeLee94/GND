@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const InsertData = () => {

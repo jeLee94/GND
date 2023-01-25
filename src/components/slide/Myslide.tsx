@@ -1,10 +1,11 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css";
-import "./Myslide.css";
-import styled from "styled-components";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import 'swiper/css';
+import './Myslide.css';
+import styled from 'styled-components';
+import React from 'react';
 
 const Slide = () => {
   return (
