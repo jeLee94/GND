@@ -1,9 +1,8 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { authService } from '../firebase';
-import React from 'react';
 
 //로그인 회원가입 화면
 const RegisterPage = () => {

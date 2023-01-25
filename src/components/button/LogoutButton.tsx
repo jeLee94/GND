@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import React from 'react';
 
 interface Props {
   children: any;
 }
 const LogoutBtn = () => {
-  alert("로그아웃");
+  alert('로그아웃');
 };
 
 const Button = ({ children }: Props) => {
