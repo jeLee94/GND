@@ -3,27 +3,13 @@ import styled from 'styled-components';
 import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
 import Myslide from '../components/slide/Myslide';
 import { getDocs, where, query, collection } from 'firebase/firestore';
-import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
-import Myslide from '../components/slide/Myslide';
-import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
 import TopScrollButton from '../components/button/topScrollButton';
-import usePagination from '../hook/usePagination';
-import TopScrollButton from '../components/button/topScrollButton';
 
 const MainPage = () => {
-  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
-  const categoryName = [
-    'All',
-    'React',
-    'Javascirpt',
-    'Typescript',
-    'CS전공지식',
-  ];
-  const [category, setCategory] = useState('all');
   const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
   const categoryName = [
     'All',
@@ -43,19 +29,7 @@ const MainPage = () => {
     loadingMore,
     noMore,
   } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
-  const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [datas, setDatas] = useState<any>([]);
-  const INITIAL_FETCH_COUNT = 7;
-  const {
-    data: pageDatas,
-    loading,
-    loadingMore,
-    noMore,
-  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
 
-  useEffect(() => {
-    // console.log(datas);
-  }, [category]);
   useEffect(() => {
     // console.log(datas);
   }, [category]);
@@ -84,7 +58,7 @@ const MainPage = () => {
   return (
     <>
       {/* 검색 인풋창 */}
-      <TopScrollButton/>
+      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -120,26 +94,11 @@ const MainPage = () => {
               </CategoryBotton>
             );
           })}
-          {categorylist.map((c: any, idx: number) => {
-            return (
-              <CategoryBotton
-                key={idx}
-                onClick={() => {
-                  setCategory(c);
-                }}
-              >
-                {categoryName[idx]}
-              </CategoryBotton>
-            );
-          })}
         </Category>
-        <ContentWrap>
-          {pageDatas?.map((data: any) => {
         <ContentWrap>
           {pageDatas?.map((data: any) => {
             return (
               <Link
-                key={data.id}
                 key={data.id}
                 to={`/dashboard/${data.id}`}
                 style={{ textDecoration: 'none', color: 'black' }}
@@ -158,7 +117,11 @@ const MainPage = () => {
           {pageDatas?.length > 0 && (
             <>
               <div ref={setTarget} />
-              <NoMoreFeeds>{noMore && <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>}</NoMoreFeeds>
+              <NoMoreFeeds>
+                {noMore && (
+                  <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>
+                )}
+              </NoMoreFeeds>
               <div>{loadingMore}</div>
             </>
           )}
@@ -169,14 +132,6 @@ const MainPage = () => {
 };
 
 export default MainPage;
-
-const NoMoreFeeds = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-`;
 
 const NoMoreFeeds = styled.div`
   display: flex;
@@ -221,7 +176,7 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
-  :hover{
+  :hover {
     color: white;
     background-color: #5f9c92;
   }
@@ -235,7 +190,6 @@ const CantentBox = styled.div`
 `;
 
 //* 컨텐츠컨테이너
-const ContentWrap = styled.div`
 const ContentWrap = styled.div`
   width: 1320px;
   padding-bottom: 20px;
