@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import MainPage from "../pages/MainPage";
-import DashboardPage from "../pages/DashboardPage";
-import LecturePage from "../pages/LecturePage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import Header from "../components/header/Header";
-import InsertData from "../util/data/insertData";
+import MainPage from '../pages/MainPage';
+import DashboardPage from '../pages/DashboardPage';
+import LecturePage from '../pages/LecturePage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import Header from '../components/header/Header';
+import InsertData from '../util/data/insertData';
+import SearchPage from '../pages/SearchPage';
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/data' element={<InsertData />} />
+        <Route path='/search' element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );

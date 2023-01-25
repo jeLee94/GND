@@ -17,8 +17,8 @@ const Slide = () => {
       navigation
       spaceBetween={50}
       slidesPerView={1}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log('slide change')}
+      // onSwiper={(swiper) => console.log(swiper)}
       autoplay={{ delay: 3000 }}
       loop={true}
     >

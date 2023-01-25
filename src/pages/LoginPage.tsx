@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import { authService } from "../firebase";
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { authService } from '../firebase';
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-} from "@firebase/auth";
+} from '@firebase/auth';
 
 //로그인 화면
 const LoginPage = () => {
   let navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [userData, setUserData] = useState(null);
 
   //navigate('/')
@@ -21,8 +21,8 @@ const LoginPage = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(authService, userEmail, userPassword).then(
       () => {
-        setUserEmail("");
-        setUserPassword("");
+        setUserEmail('');
+        setUserPassword('');
       }
     );
     console.log(userEmail, userPassword);
@@ -70,7 +70,7 @@ const LoginPage = () => {
           </GoogleLoginButton>
           <RegisterButton
             onClick={() => {
-              navigate("/register");
+              navigate('/register');
             }}
           >
             회원가입

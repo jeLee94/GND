@@ -1,9 +1,20 @@
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    navigate(`/search?title=${search}`);
+    setSearch('');
+  };
+
   return (
     <NavContainer>
       <Nav>
@@ -11,10 +22,14 @@ const Header = () => {
         <NavBarLink to='/lecture'>lectures</NavBarLink>
         <NavBarLink to='/dashboard'>dashboard</NavBarLink>
         <RightSection>
-          <SearchWrapper>
-            <SeachInput type='text' placeholder='강의 검색' />
+          <SearchForm onSubmit={handleSubmit}>
+            <SeachInput
+              type='text'
+              placeholder='강의 검색'
+              onChange={(event) => setSearch(event.target.value)}
+            />
             <SearchIcon icon={faMagnifyingGlass} />
-          </SearchWrapper>
+          </SearchForm>
           <NavBarLink to='/login'>
             <LogInButton>Login</LogInButton>
           </NavBarLink>
@@ -49,24 +64,14 @@ const NavBarLink = styled(NavLink)`
   color: white;
 `;
 
-const LogInButton = styled.button`
-  width: 80px;
-  height: 30px;
-  border: none;
-  border-radius: 100px;
-  background-color: #3b615b;
-  color: #ffffff;
-  font-size: 0.8rem;
-  cursor: pointer;
-`;
-
 const RightSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const SearchWrapper = styled.div`
+// 검색창
+const SearchForm = styled.form`
   margin-right: 30px;
 `;
 
@@ -82,5 +87,17 @@ const SeachInput = styled.input`
 
 const SearchIcon = styled(FontAwesomeIcon)`
   color: #ffffff;
+  cursor: pointer;
+`;
+
+// 로그인 버튼
+const LogInButton = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-radius: 100px;
+  background-color: #3b615b;
+  color: #ffffff;
+  font-size: 0.8rem;
   cursor: pointer;
 `;
