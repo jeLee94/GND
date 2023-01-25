@@ -46,7 +46,7 @@ const LoginPage = () => {
         <LoginTitle>로그인</LoginTitle>
 
         <Login>
-          <EmailTitle>아이디</EmailTitle>
+          <p>아이디</p>
           <EmailInput
             type='text'
             value={userEmail}
@@ -83,44 +83,42 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-//로그인 창
+//로그인 전체
 const LoginContainer = styled.div`
   width: 500px;
   height: 430px;
   background-color: white;
   border-radius: 12px;
   padding: 50px;
+  margin-top: 120px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   border: 1px double #707070;
 `;
 
-// 로그인 전체입력창
-const Login = styled.div`
-  margin-left: 50px;
-  margin-right: 50px;
-`;
-
 //로그인 타이틀
 const LoginTitle = styled.h2`
-  /* display: flex; */
   align-items: center;
   text-align: center;
 `;
 
-const EmailTitle = styled.p`
-  text-align: left;
+// 로그인 전체입력부분
+const Login = styled.div`
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 //이메일 인풋
 const EmailInput = styled.input`
-  width: 70%;
+  width: 90%;
   padding: 10px 15px;
 `;
 
 //비번 인풋
 const PasswordInput = styled.input`
-  width: 70%;
+  width: 90%;
   padding: 10px 15px;
 `;
 
@@ -131,6 +129,8 @@ const LoginButton = styled.button`
   margin-top: 25px;
   border-radius: 30px;
   border: 1px double #707070;
+  background-color: #5f9c92;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,9 +141,12 @@ const LoginButton = styled.button`
 const GoogleLoginButton = styled.button`
   height: 60px;
   width: 360px;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 12px;
   border-radius: 30px;
   border: 1px double #707070;
+  background-color: #5f9c92;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,7 +155,7 @@ const GoogleLoginButton = styled.button`
 
 //회원가입버튼
 const RegisterButton = styled.button`
-  text-align: center;
-  display: inline-block;
-  background-color: #3b615b;
+  margin: auto;
+  display: block;
+  cursor: pointer;
 `;

@@ -1,12 +1,12 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css';
-import './Myslide.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css";
+import "./Myslide.css";
 // import styled from 'styled-components';
-import { on } from 'events';
-import styled from 'styled-components';
+import { on } from "events";
+import styled from "styled-components";
 
 const Slide = () => {
   return (
@@ -17,7 +17,7 @@ const Slide = () => {
       navigation
       spaceBetween={50}
       slidesPerView={1}
-      onSlideChange={() => console.log('slide change')}
+      onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
       autoplay={{ delay: 3000 }}
       loop={true}

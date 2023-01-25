@@ -23,9 +23,9 @@ const RegisterPage = () => {
   return (
     <>
       <RegisterContainer>
-        <Register>회원가입</Register>
+        <RegisteTitle>회원가입</RegisteTitle>
 
-        <div>
+        <Register>
           <p>아이디</p>
           <EmailInput
             type='text'
@@ -45,7 +45,7 @@ const RegisterPage = () => {
             }}
           />
           <RegisterButton onClick={handleRegister}>등록</RegisterButton>
-        </div>
+        </Register>
       </RegisterContainer>
     </>
   );
@@ -60,27 +60,36 @@ const RegisterContainer = styled.div`
   background-color: white;
   border-radius: 12px;
   padding: 50px;
+  margin-top: 120px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   border: 1px double #707070;
 `;
 
 //회원가입 타이틀
-const Register = styled.h2`
+const RegisteTitle = styled.h2`
   /* display: flex; */
   align-items: center;
   text-align: center;
 `;
 
+//회원가입 전체입력부분
+const Register = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 //이메일 인풋
 const EmailInput = styled.input`
-  width: 70%;
+  width: 90%;
   padding: 10px 15px;
 `;
 
 //비번 인풋
 const PasswordInput = styled.input`
-  width: 70%;
+  width: 90%;
   padding: 10px 15px;
 `;
 
@@ -88,9 +97,11 @@ const PasswordInput = styled.input`
 const RegisterButton = styled.button`
   height: 60px;
   width: 360px;
-  margin-top: 25px;
+  margin-top: 50px;
   border-radius: 30px;
   border: 1px double #707070;
+  background-color: #5f9c92;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
