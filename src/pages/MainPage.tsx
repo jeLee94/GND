@@ -62,7 +62,7 @@ const MainPage = () => {
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
-      <div
+      {/* <div
         className='input__wrapper'
         style={{ width: '100', textAlign: 'center' }}
       >
@@ -79,7 +79,7 @@ const MainPage = () => {
         <button disabled={!text} onClick={handleOnClick}>
           Search
         </button>
-      </div>
+      </div> */}
       <MainPageWrap>
         <Category>
           {categorylist.map((c: any, idx: number) => {

@@ -7,7 +7,7 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import Header from '../components/header/Header';
 import InsertData from '../util/data/insertData';
-import React from 'react';
+import SearchPage from '../pages/SearchPage';
 
 const Router = () => {
   return (
@@ -22,6 +22,7 @@ const Router = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/data' element={<InsertData />} />
+        <Route path='/search' element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );
