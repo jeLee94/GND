@@ -45,11 +45,13 @@ function App() {
         <div>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <Link
-                to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
-              >
-                <div>{vTitle}</div>
-              </Link>
+              <VideoOne>
+                <Link
+                  to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
+                >
+                  <div>{vTitle}</div>
+                </Link>
+              </VideoOne>
             );
           })}
         </div>
@@ -98,11 +100,13 @@ const LectureTitle = styled.div`
   font-size: larger;
 `;
 const LectureCotents = styled.div`
-  background-color: gray;
   width: 700px;
   margin: auto;
-  height: 100px;
-  margin-bottom: 50px;
+  height: 20px;
+  margin-bottom: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 const LectureListLogoAndToggle = styled.div`
   width: 700px;
@@ -114,6 +118,11 @@ const LectureListLogoAndToggle = styled.div`
   align-items: center;
   justify-items: center;
 `;
-const LectureList = styled.div`
-  background-color: red;
+const LectureList = styled.div``;
+const VideoOne = styled.div`
+  width: 660px;
+  padding: 19px;
+  margin: auto;
+  border: 1px solid black;
+  margin-top: 10px;
 `;

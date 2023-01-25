@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const handleToggle = () => {
-  alert("강의 목록 보여주기 버튼");
+  alert('강의 목록 보여주기 버튼');
 };
 const ToggleButton = () => {
   return (
