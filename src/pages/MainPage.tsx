@@ -1,12 +1,13 @@
 //메인 페이지
 import styled from 'styled-components';
 import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
-import Myslide from './Myslide';
+import Myslide from '../components/slide/Myslide';
 import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
+import TopScrollButton from '../components/button/topScrollButton';
 
 const MainPage = () => {
   const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
@@ -56,9 +57,8 @@ const MainPage = () => {
 
   return (
     <>
-      <header>헤더공간</header>
       {/* 검색 인풋창 */}
-
+      <TopScrollButton/>
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -97,7 +97,6 @@ const MainPage = () => {
         </Category>
         <ContentWrap>
           {pageDatas?.map((data: any) => {
-            // console.log(data);
             return (
               <Link
                 key={data.id}
@@ -118,11 +117,10 @@ const MainPage = () => {
           {pageDatas?.length > 0 && (
             <>
               <div ref={setTarget} />
-              <div>{noMore && <div>더 이상 불러올 피드가 없어요</div>}</div>
+              <NoMoreFeeds>{noMore && <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>}</NoMoreFeeds>
               <div>{loadingMore}</div>
             </>
           )}
-          {/* <button onClick={next}>test</button> */}
         </ContentWrap>
       </MainPageWrap>
     </>
@@ -130,6 +128,14 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+const NoMoreFeeds = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+`;
 
 const MainPageWrap = styled.div`
   width: 100;
@@ -141,9 +147,7 @@ const MainPageWrap = styled.div`
 
 //* 배너
 const MainPageSlideBanner = styled.div`
-  /* width: 100%; */
   margin-top: 30px;
-  /* height: 400px; */
   background-color: #e3e3e3;
   align-items: center;
   display: flex;
@@ -168,6 +172,10 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
+  :hover{
+    color: white;
+    background-color: #5f9c92;
+  }
 `;
 
 //* 단일강의컨텐츠박스
@@ -191,16 +199,8 @@ const ContentWrap = styled.div`
 const Thumbnail = styled.img`
   width: 300px;
   height: 70%;
-  /* padding-bottom: 50%; */
-  background-color: beige;
   box-shadow: 0 10px 4px -4px #e3e3e3;
   display: flex;
-
-  /* ::before {
-      width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-    } */
 `;
 
 //* 강의내용 박스
@@ -208,12 +208,11 @@ const LectureWrap = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-left: 10px;
 `;
 
 //* 강의 제목
 const LectureTitle = styled.div`
-  font-size: 15px;
+  font-size: 18px;
   margin-bottom: 10px;
   margin-top: 10px;
   font-weight: bold;
@@ -224,23 +223,10 @@ const LectureTitle = styled.div`
   -webkit-box-orient: vertical;
 `;
 
-//* 강의 내용
-const LectureContent = styled.div`
-  width: 100%;
-  font-size: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; //보여질 줄 수
-  -webkit-box-orient: vertical;
-`;
-
 //* 강의 주체자
 const Lecturer = styled.span`
   width: 50px;
   margin: 10px 10px 0 10px;
-  /* padding-right: 10px; */
-  font-size: 10px;
+  font-size: 15px;
   font-weight: bold;
-  /* border-right: 1px solid; */
 `;

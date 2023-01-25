@@ -1,0 +1,32 @@
+/* 슬라이드 CSS */
+
+.swiper-slide {
+  height: 200px;
+  background-color: beige;
+}
+
+.swiper-button-next {
+  background: url(../../util/img/Group\ 60.png) no-repeat;
+  opacity: 0.7;
+  width: 80px;
+  background-size: 50% auto;
+  background-position: center;
+}
+
+.swiper-button-prev {
+  background: url(../../util/img/Group\ 61.png) no-repeat;
+  opacity: 0.7;
+  width: 80px;
+  background-size: 50% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+  color: #5f9c92;
+}
+
+.swiper-pagination-bullet {
+  background-color: #5f9c92
+}
