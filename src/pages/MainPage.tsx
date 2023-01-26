@@ -2,42 +2,47 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
-import { getDocs, where, query, collection } from 'firebase/firestore';
-import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
-import TopScrollButton from '../components/button/topScrollButton';
 
 const MainPage = () => {
-  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
+  const categorylist = [
+    'all',
+    'react',
+    'javascript',
+    'typescript',
+    'cs',
+    '내배캠',
+  ];
   const categoryName = [
     'All',
     'React',
     'Javascirpt',
     'Typescript',
     'CS전공지식',
+    '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
-  const [text, setText] = useState<string>('');
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [datas, setDatas] = useState<any>([]);
   const INITIAL_FETCH_COUNT = 7;
   const {
     data: pageDatas,
-    loading,
     loadingMore,
     noMore,
-  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
+  } = usePagination(
+    'CLASS',
+    INITIAL_FETCH_COUNT,
+    target,
+    category,
+    categorylist
+  );
 
-  useEffect(() => {
-    // console.log(datas);
-  }, [category]);
+  useEffect(() => {}, [category]);
 
   return (
     <>
       {/* 검색 인풋창 */}
-      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
