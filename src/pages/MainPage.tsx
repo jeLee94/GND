@@ -2,47 +2,42 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
+import { getDocs, where, query, collection } from 'firebase/firestore';
+import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
+import TopScrollButton from '../components/button/TopScrollButton';
 
 const MainPage = () => {
-  const categorylist = [
-    'all',
-    'react',
-    'javascript',
-    'typescript',
-    'cs',
-    '내배캠',
-  ];
+  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
   const categoryName = [
     'All',
     'React',
     'Javascirpt',
     'Typescript',
     'CS전공지식',
-    '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
+  const [text, setText] = useState<string>('');
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [datas, setDatas] = useState<any>([]);
   const INITIAL_FETCH_COUNT = 7;
   const {
     data: pageDatas,
+    loading,
     loadingMore,
     noMore,
-  } = usePagination(
-    'CLASS',
-    INITIAL_FETCH_COUNT,
-    target,
-    category,
-    categorylist
-  );
+  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
 
-  useEffect(() => {}, [category]);
+  useEffect(() => {
+    // console.log(datas);
+  }, [category]);
 
   return (
-    <>
+    <Container>
       {/* 검색 인풋창 */}
+      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -94,12 +89,18 @@ const MainPage = () => {
           )}
         </ContentWrap>
       </MainPageWrap>
-    </>
+    </Container>
   );
 };
 
 export default MainPage;
-
+const Container = styled.div`
+width: 100%;
+margin-top: 42px;
+position: absolute;
+left: 0;
+`
+;
 const NoMoreFeeds = styled.div`
   display: flex;
   width: 100%;
@@ -109,7 +110,7 @@ const NoMoreFeeds = styled.div`
 `;
 
 const MainPageWrap = styled.div`
-  width: 100;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -118,7 +119,6 @@ const MainPageWrap = styled.div`
 
 //* 배너
 const MainPageSlideBanner = styled.div`
-  margin-top: 30px;
   background-color: #e3e3e3;
   align-items: center;
   display: flex;
@@ -126,13 +126,15 @@ const MainPageSlideBanner = styled.div`
 
 //* 카테고리
 const Category = styled.div`
-  width: 80%;
+  width: 100%;
   height: 50px;
   padding-bottom: 30px;
   padding-top: 30px;
   justify-content: center;
   display: flex;
   border-bottom: 1px solid #e3e3e3;
+  align-items: center;
+  text-align: center;
 `;
 
 //* 카테고리 버튼
