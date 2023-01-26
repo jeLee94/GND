@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Comment from './comment';
 
 function Dashboard() {
   const param = useParams<string>();
@@ -65,16 +66,13 @@ function Dashboard() {
             );
           })}
         </LectureList>
-        {/* 댓글영역 임시로 잡아놓음 */}
+        {/* 댓글영역  */}
         <ToggleHeader>
-          <ToggleTitle>댓글영역</ToggleTitle>
+          <ToggleTitle>강의평</ToggleTitle>
         </ToggleHeader>
-        <LectureList
-          display=''
-          style={{ height: 500, backgroundColor: 'gray' }}
-        >
-          임시영역
-        </LectureList>
+
+        <LectureList display=''></LectureList>
+        <Comment classID={data?.playlistId ?? data?.videoId[0]} />
       </Main>
     </>
   );
@@ -127,7 +125,9 @@ const ToggleHeader = styled.div`
   /* justify-items: center; */
   justify-content: space-between;
 `;
-const ToggleTitle = styled.div``;
+const ToggleTitle = styled.div`
+  font-weight: bold;
+`;
 
 const LectureList = styled.div<{ display: string }>`
   width: 700px;

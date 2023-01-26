@@ -2,8 +2,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
-import { getDocs, where, query, collection } from 'firebase/firestore';
-import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
@@ -26,13 +24,10 @@ const MainPage = () => {
     '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
-  const [text, setText] = useState<string>('');
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [datas, setDatas] = useState<any>([]);
   const INITIAL_FETCH_COUNT = 7;
   const {
     data: pageDatas,
-    loading,
     loadingMore,
     noMore,
   } = usePagination(
