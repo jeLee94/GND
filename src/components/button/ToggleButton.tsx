@@ -1,13 +1,19 @@
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
-const handleToggle = () => {
-  alert('강의 목록 보여주기 버튼');
-};
-const ToggleButton = () => {
+const ToggleButton = (props: any) => {
+  const { onClick, icon } = props;
   return (
     <>
-      <ToggleBtn onClick={handleToggle}></ToggleBtn>
+      <ToggleBtn
+        onClick={() => {
+          onClick();
+        }}
+      >
+        <ToggleIcon icon={icon == 'minus' ? faSquareMinus : faSquarePlus} />
+      </ToggleBtn>
     </>
   );
 };
@@ -15,9 +21,12 @@ const ToggleButton = () => {
 export default ToggleButton;
 
 const ToggleBtn = styled.button`
-  width: 30px;
+  background-color: transparent;
+  border: 0;
+`;
+
+const ToggleIcon = styled(FontAwesomeIcon)`
+  color: #3b615b;
+  cursor: pointer;
   height: 30px;
-  margin-left: 600px;
-  border-radius: 20px;
-  background-color: #3b615b;
 `;
