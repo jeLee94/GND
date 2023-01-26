@@ -3,16 +3,16 @@ import ToggleButton from '../components/button/ToggleButton';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../firebase';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import React from 'react';
 
-function App() {
+function Dashboard() {
   const param = useParams<string>();
   const [data, setData] = useState<any>();
+  const [chagneButton, setChangeButton] = useState('minus');
+  const [changeDisplay, setChangeDisplay] = useState('flex');
 
-  const test = async () => {
+  const SnapDoc = async () => {
     const docRef = doc(dbService, 'CLASS', param.id as string);
     const docSnap = await getDoc(docRef);
     const ob = docSnap.data();
@@ -20,13 +20,22 @@ function App() {
   };
 
   // promise 데이터 리스트로 변환
-  const promise = test();
+  const promise = SnapDoc();
   const get = async () => {
     await promise.then((data) => {
       setData(data);
     });
   };
 
+  const onClickHandler = () => {
+    changeDisplay == 'flex'
+      ? setChangeDisplay('none')
+      : setChangeDisplay('flex');
+
+    chagneButton == 'minus'
+      ? setChangeButton('plus')
+      : setChangeButton('minus');
+  };
   useEffect(() => {
     get();
   }, []);
@@ -34,96 +43,113 @@ function App() {
   return (
     <>
       <Main>
+        <ClassTitle>{data?.title}</ClassTitle>
+        <Lecturer>{data?.channelTitle}</Lecturer>
         <ThumbNailImg src={data?.thumbnail[0]} />
-        <LectureTitle>{data?.title}</LectureTitle>
-        <LectureCotents>{data?.description}</LectureCotents>
-        <LectureListLogoAndToggle>
-          <LectureList>강의 목록</LectureList>
 
-          <ToggleButton />
-        </LectureListLogoAndToggle>
-        <div>
+        <LectureCotents>{data?.description}</LectureCotents>
+        <ToggleHeader>
+          <ToggleTitle>강의 목록</ToggleTitle>
+          <ToggleButton onClick={onClickHandler} icon={chagneButton} />
+        </ToggleHeader>
+        <LectureList display={changeDisplay}>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <VideoOne>
+              <VideoOne key={idx}>
                 <Link
                   to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
                 >
-                  <div>{vTitle}</div>
+                  <LectureTitle>{vTitle}</LectureTitle>
                 </Link>
               </VideoOne>
             );
           })}
-        </div>
+        </LectureList>
+        {/* 댓글영역 임시로 잡아놓음 */}
+        <ToggleHeader>
+          <ToggleTitle>댓글영역</ToggleTitle>
+        </ToggleHeader>
+        <LectureList
+          display=''
+          style={{ height: 500, backgroundColor: 'gray' }}
+        >
+          임시영역
+        </LectureList>
       </Main>
     </>
   );
 }
 
-export default App;
+export default Dashboard;
 
 const Main = styled.div`
-  margin-top: 100px;
-`;
-//임시로
-
-const Header = styled.div`
-  width: 100%;
-  height: 33px;
-  background-color: #5f9c92;
+  width: 700px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const HeaderGNDLogo = styled.div`
-  margin-left: 20px;
-`;
-const HeaderEmailLogo = styled.div`
-  margin-left: 900px;
+  flex-direction: column;
+  margin: 50px auto;
 `;
 
 const ThumbNailImg = styled.img`
-  width: 700px;
   height: 500px;
-  margin: auto;
-  margin-top: 50px;
   background-color: gray;
   justify-content: center;
   align-items: center;
   display: flex;
 `;
-const LectureTitle = styled.div`
-  width: 700px;
-  margin: auto;
-  padding: 10px;
+const ClassTitle = styled.div`
+  margin: 30px 0 5px 0;
   font-weight: bold;
-  font-size: larger;
+  font-size: 30px;
+`;
+
+const Lecturer = styled.div`
+  margin: 5px 0 30px 0;
 `;
 const LectureCotents = styled.div`
-  background-color: gray;
+  /* background-color: gray; */
   width: 700px;
   margin: auto;
-  height: 20px;
-  margin-bottom: 20px;
+  height: auto;
+  line-height: 35px;
+  margin: 20px auto;
   text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  /* overflow: hidden; */
+  /* white-space: nowrap; */
 `;
-const LectureListLogoAndToggle = styled.div`
+const ToggleHeader = styled.div`
   width: 700px;
-  margin: auto;
+  margin: 10px auto;
   height: 40px;
   border-top: 5px solid #3b615b;
   border-bottom: 5px solid #3b615b;
   display: flex;
   align-items: center;
-  justify-items: center;
+  /* justify-items: center; */
+  justify-content: space-between;
 `;
-const LectureList = styled.div``;
+const ToggleTitle = styled.div``;
+
+const LectureList = styled.div<{ display: string }>`
+  width: 700px;
+  margin: 10px auto;
+  display: ${(props) => props.display};
+  flex-direction: column;
+`;
 const VideoOne = styled.div`
+  /* background-color:  */
   width: 660px;
-  padding: 19px;
-  margin: auto;
-  border: 1px solid black;
-  margin-top: 10px;
+  padding: 20px;
+  margin: 10px auto;
+  box-shadow: 1px 1px 5px gray;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  &:hover {
+    background-color: #3b615b;
+    a {
+      color: white;
+    }
+  }
 `;
+const LectureTitle = styled.div``;
