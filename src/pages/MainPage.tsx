@@ -9,13 +9,21 @@ import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
 
 const MainPage = () => {
-  const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
+  const categorylist = [
+    'all',
+    'react',
+    'javascript',
+    'typescript',
+    'cs',
+    '내배캠',
+  ];
   const categoryName = [
     'All',
     'React',
     'Javascirpt',
     'Typescript',
     'CS전공지식',
+    '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
   const [text, setText] = useState<string>('');
@@ -27,7 +35,13 @@ const MainPage = () => {
     loading,
     loadingMore,
     noMore,
-  } = usePagination('CLASS', INITIAL_FETCH_COUNT, target, category);
+  } = usePagination(
+    'CLASS',
+    INITIAL_FETCH_COUNT,
+    target,
+    category,
+    categorylist
+  );
 
   useEffect(() => {
     // console.log(datas);
