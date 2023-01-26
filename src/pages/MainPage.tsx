@@ -7,7 +7,6 @@ import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
-import TopScrollButton from '../components/button/TopScrollButton';
 
 const MainPage = () => {
   const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
@@ -37,7 +36,7 @@ const MainPage = () => {
   return (
     <Container>
       {/* 검색 인풋창 */}
-      <TopScrollButton />
+
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -95,12 +94,11 @@ const MainPage = () => {
 
 export default MainPage;
 const Container = styled.div`
-width: 100%;
-margin-top: 42px;
-position: absolute;
-left: 0;
-`
-;
+  width: 100%;
+  margin-top: 42px;
+  position: absolute;
+  left: 0;
+`;
 const NoMoreFeeds = styled.div`
   display: flex;
   width: 100%;
