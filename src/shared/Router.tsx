@@ -8,10 +8,12 @@ import RegisterPage from '../pages/RegisterPage';
 import Header from '../components/header/Header';
 import InsertData from '../util/data/insertData';
 import SearchPage from '../pages/SearchPage';
+import TopScrollButton from '../components/button/topScrollButton';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <TopScrollButton />
       <Header />
       <Routes>
         <Route path='/' element={<MainPage />} />

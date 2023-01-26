@@ -5,7 +5,6 @@ import Myslide from '../components/slide/Myslide';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
-import TopScrollButton from '../components/button/topScrollButton';
 
 const MainPage = () => {
   const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
@@ -30,7 +29,6 @@ const MainPage = () => {
   return (
     <>
       {/* 검색 인풋창 */}
-      <TopScrollButton />
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
