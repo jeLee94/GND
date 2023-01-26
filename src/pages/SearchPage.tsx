@@ -116,7 +116,7 @@ const LectureTitle = styled.div`
   font-size: 1.2rem;
   margin-bottom: 6px;
   margin-top: 15px;
-  font-weight: 700;
+  font-weight: 800;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
