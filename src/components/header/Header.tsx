@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { authService } from '../../firebase';
+import { signOut } from '@firebase/auth';
 
 const Header = () => {
   const [search, setSearch] = useState('');
@@ -14,6 +16,18 @@ const Header = () => {
     event.preventDefault();
     navigate(`/search?title=${search}`);
     setSearch('');
+  };
+
+  // 로그아웃 요청
+  const handleAuth = () => {
+    if (!!authService.currentUser?.uid) {
+      signOut(authService)
+        .then(() => {
+          console.log('로그아웃 성공');
+          navigate('/login');
+        })
+        .catch((err: any) => alert(err));
+    }
   };
 
   return (
@@ -38,7 +52,9 @@ const Header = () => {
             </button>
           </SearchForm>
           <NavBarLink to='/login'>
-            <LogInButton>Login</LogInButton>
+            <LogInButton onClick={handleAuth}>
+              {authService.currentUser ? '로그아웃' : '로그인'}
+            </LogInButton>
           </NavBarLink>
         </RightSection>
       </Nav>

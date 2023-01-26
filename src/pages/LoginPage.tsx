@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { authService } from '../firebase';
@@ -7,6 +7,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from '@firebase/auth';
+import { emailRegex, pwRegex } from '../util/utils';
+import { Link } from 'react-router-dom';
 
 //로그인 화면
 const LoginPage = () => {
@@ -15,19 +17,59 @@ const LoginPage = () => {
   const [userPassword, setUserPassword] = useState('');
   const [userData, setUserData] = useState(null);
 
+  //유효성 검사 함수
+  const validateInputs = () => {
+    const matchedEmail = userEmail.match(emailRegex);
+    const matchedPw = userPassword.match(pwRegex);
+
+    if (!userEmail) {
+      alert('이메일을 입력해주세요.');
+      //emailRef.current
+      return true;
+    }
+    if (matchedEmail === null) {
+      alert('이메일 형식에 맞게 입력해 주세요.');
+      //emailRef.current;
+      return true;
+    }
+    if (!userPassword) {
+      alert('비밀번호를 입력해주세요.');
+      //pwRef.current;
+      return true;
+    }
+
+    if (matchedPw === null) {
+      alert('비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.');
+      //pwRef.current;
+      return true;
+    }
+  };
+
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
   };
 
-  // 로그인 요청
   const handleLogin = () => {
-    signInWithEmailAndPassword(authService, userEmail, userPassword).then(
-      () => {
+    //유효성 검사
+    if (validateInputs()) {
+      return;
+    }
+    // 로그인 요청
+    signInWithEmailAndPassword(authService, userEmail, userPassword)
+      .then(() => {
         setUserEmail('');
         setUserPassword('');
         navigate('/');
-      }
-    );
+      })
+      .catch((err) => {
+        console.log('err.message:', err.message);
+        if (err.message.includes('user-not-found')) {
+          alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
+        }
+        if (err.message.includes('wrong-password')) {
+          alert('비밀번호가 틀렸습니다.');
+        }
+      });
     console.log(userEmail, userPassword);
   };
 
@@ -37,6 +79,7 @@ const LoginPage = () => {
     signInWithPopup(authService, provider)
       .then((data) => {
         setUserData(userData);
+        navigate('/');
         console.log(data);
       })
       .catch((err) => {
@@ -72,7 +115,7 @@ const LoginPage = () => {
             구글로 로그인
           </GoogleLoginButton>
           <RegisterLink>
-            <a href='http://localhost:3000/register'>회원가입 하러가기</a>
+            <Link to={`/register`}>회원가입하러가기</Link>
           </RegisterLink>
         </Login>
       </LoginContainer>

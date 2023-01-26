@@ -1,22 +1,55 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { authService } from '../firebase';
+import { emailRegex, pwRegex } from '../util/utils';
+import { Link } from 'react-router-dom';
 
-//로그인 회원가입 화면
+//회원가입 화면
 const RegisterPage = () => {
   let navigate = useNavigate();
+  const emailRef = useRef(null);
+  //const pwRef = useRef(null);
+
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [userPwConfirm, setUserPwConfirm] = useState('');
 
+  //유효성 검사 함수
   const validateInputs = () => {
+    const matchedEmail = userEmail.match(emailRegex);
+    const matchedPw = userPassword.match(pwRegex);
+
     if (!userEmail) {
       alert('이메일을 입력해주세요.');
+      //emailRef.current
+      return true;
+    }
+    if (matchedEmail === null) {
+      alert('이메일 형식에 맞게 입력해 주세요.');
+      //emailRef.current;
       return true;
     }
     if (!userPassword) {
       alert('비밀번호를 입력해주세요.');
+      //pwRef.current;
+      return true;
+    }
+    if (matchedPw === null) {
+      alert('비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.');
+      //pwRef.current;
+      return true;
+    }
+    if (!userPwConfirm) {
+      alert('비밀번호를 한번 더 입력해주세요.');
+      //pwRef.current;
+      return true;
+    }
+    if (userPassword === userPwConfirm) {
+      alert('가입 완료.');
+    } else {
+      alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
       return true;
     }
   };
@@ -25,18 +58,26 @@ const RegisterPage = () => {
     e.preventDefault();
   };
 
-  //회원가입 요청
   const handleRegister = () => {
-    createUserWithEmailAndPassword(authService, userEmail, userPassword).then(
-      () => {
+    //유효성 검사
+    if (validateInputs()) {
+      return;
+    }
+    //회원가입 요청
+    createUserWithEmailAndPassword(authService, userEmail, userPassword)
+      .then(() => {
         setUserEmail('');
         setUserPassword('');
-        navigate('/');
-      }
-    );
+        navigate('/login');
+      })
+      .catch((err) => {
+        console.log('err.message:', err.message);
+        if (err.message.includes('already-in-use')) {
+          alert('이미 사용중인 아이디입니다.');
+        }
+      });
     console.log(userEmail, userPassword);
   };
-
   return (
     <>
       <RegisterContainer>
@@ -63,15 +104,15 @@ const RegisterPage = () => {
           <p>비밀번호 확인</p>
           <PasswordAgainInput
             type='password'
-            value={userPassword}
+            value={userPwConfirm}
             placeholder='비밀번호를 한번 더 입력하세요.'
             onChange={(e) => {
-              setUserPassword(e.target.value);
+              setUserPwConfirm(e.target.value);
             }}
           />
           <RegisterButton onClick={handleRegister}>등록</RegisterButton>
           <LoginLink>
-            <a href='http://localhost:3000/login'>로그인 하러가기</a>
+            <Link to={`/login`}> 로그인 하러가기</Link>
           </LoginLink>
         </Register>
       </RegisterContainer>
