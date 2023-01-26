@@ -1,6 +1,6 @@
 //메인 페이지
 import styled from 'styled-components';
-import React, { Dispatch, LegacyRef, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
 import { getDocs, where, query, collection } from 'firebase/firestore';
 import { dbService } from '../firebase';

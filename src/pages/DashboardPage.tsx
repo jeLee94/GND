@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../components/button/LogoutButton';
 import ToggleButton from '../components/button/ToggleButton';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
@@ -7,6 +6,7 @@ import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 function App() {
   const param = useParams<string>();
@@ -45,11 +45,13 @@ function App() {
         <div>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <Link
-                to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
-              >
-                <div>{vTitle}</div>
-              </Link>
+              <VideoOne>
+                <Link
+                  to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
+                >
+                  <div>{vTitle}</div>
+                </Link>
+              </VideoOne>
             );
           })}
         </div>
@@ -101,8 +103,11 @@ const LectureCotents = styled.div`
   background-color: gray;
   width: 700px;
   margin: auto;
-  height: 100px;
-  margin-bottom: 50px;
+  height: 20px;
+  margin-bottom: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 const LectureListLogoAndToggle = styled.div`
   width: 700px;
@@ -114,6 +119,11 @@ const LectureListLogoAndToggle = styled.div`
   align-items: center;
   justify-items: center;
 `;
-const LectureList = styled.div`
-  background-color: red;
+const LectureList = styled.div``;
+const VideoOne = styled.div`
+  width: 660px;
+  padding: 19px;
+  margin: auto;
+  border: 1px solid black;
+  margin-top: 10px;
 `;
