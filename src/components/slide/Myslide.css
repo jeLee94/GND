@@ -2,11 +2,10 @@
 
 .swiper-slide {
   height: 200px;
-  background-color: beige;
 }
 
 .swiper-button-next {
-  background: url(../../util/img/Group\ 60.png) no-repeat;
+  background: url(../../util/img/Group60.png) no-repeat;
   opacity: 0.7;
   width: 80px;
   background-size: 50% auto;
@@ -14,7 +13,7 @@
 }
 
 .swiper-button-prev {
-  background: url(../../util/img/Group\ 61.png) no-repeat;
+  background: url(../../util/img/Group61.png) no-repeat;
   opacity: 0.7;
   width: 80px;
   background-size: 50% auto;

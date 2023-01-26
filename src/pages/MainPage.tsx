@@ -35,7 +35,7 @@ const MainPage = () => {
   }, [category]);
 
   return (
-    <>
+    <Container>
       {/* 검색 인풋창 */}
       <TopScrollButton />
       <MainPageSlideBanner>
@@ -89,12 +89,18 @@ const MainPage = () => {
           )}
         </ContentWrap>
       </MainPageWrap>
-    </>
+    </Container>
   );
 };
 
 export default MainPage;
-
+const Container = styled.div`
+width: 100%;
+margin-top: 42px;
+position: absolute;
+left: 0;
+`
+;
 const NoMoreFeeds = styled.div`
   display: flex;
   width: 100%;
@@ -104,7 +110,7 @@ const NoMoreFeeds = styled.div`
 `;
 
 const MainPageWrap = styled.div`
-  width: 100;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -113,7 +119,6 @@ const MainPageWrap = styled.div`
 
 //* 배너
 const MainPageSlideBanner = styled.div`
-  margin-top: 30px;
   background-color: #e3e3e3;
   align-items: center;
   display: flex;
@@ -121,13 +126,15 @@ const MainPageSlideBanner = styled.div`
 
 //* 카테고리
 const Category = styled.div`
-  width: 80%;
+  width: 100%;
   height: 50px;
   padding-bottom: 30px;
   padding-top: 30px;
   justify-content: center;
   display: flex;
   border-bottom: 1px solid #e3e3e3;
+  align-items: center;
+  text-align: center;
 `;
 
 //* 카테고리 버튼
