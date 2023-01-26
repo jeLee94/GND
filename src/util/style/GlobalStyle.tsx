@@ -10,7 +10,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body{
-    /* align-items: center; */
     font-family: "Pretendard-Regular";
   }
 `;

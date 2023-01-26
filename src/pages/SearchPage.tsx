@@ -48,6 +48,11 @@ const SearchPage = () => {
   return (
     <SearchResultContainer>
       <ContentWrap>
+        <BackButtonWrapper>
+          <Link to={`/`}>
+            <BackButton>Back to Course</BackButton>
+          </Link>
+        </BackButtonWrapper>
         {Object.keys(data).map((i) => (
           <Link
             key={data[i]}
@@ -76,7 +81,7 @@ const SearchResultContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 7rem;
+  margin-top: 5rem;
 `;
 
 //* 컨텐츠컨테이너
@@ -129,4 +134,25 @@ const Lecture = styled.span`
   width: 50px;
   font-size: 0.9rem;
   font-weight: 500;
+`;
+
+//* 뒤로가기 버튼
+const BackButtonWrapper = styled.div`
+  width: 1320px;
+  text-align: right;
+  margin-right: 30px;
+`;
+
+const BackButton = styled.button`
+  width: 150px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: #76c2b6;
+  color: #fff;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  :hover {
+    background-color: #4aa496;
+  }
 `;
