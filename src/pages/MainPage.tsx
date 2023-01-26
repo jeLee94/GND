@@ -7,7 +7,7 @@ import { dbService } from '../firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
-import TopScrollButton from '../components/button/topScrollButton';
+import TopScrollButton from '../components/button/TopScrollButton';
 
 const MainPage = () => {
   const categorylist = ['all', 'react', 'javascript', 'typescript', 'cs'];
