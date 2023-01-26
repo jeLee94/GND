@@ -19,8 +19,7 @@ const usePagination = (
   collectionName: any,
   limitCount: any,
   target: any,
-  category: any,
-  categorylist: any
+  category: any
 ) => {
   const [data, setData] = useState<object[]>([]); // 불러온 문서들 상태
   const [loading, setLoading] = useState(false); // 로딩 상태
@@ -35,7 +34,7 @@ const usePagination = (
       collection(dbService, collectionName),
       category !== 'all'
         ? where('category', '==', category)
-        : where('category', 'in', categorylist.slice(1)),
+        : where('category', 'in', ['react', 'javascript', 'cs', 'tyescript']),
       orderBy('title', 'desc'), // 최신 작성순으로 정렬
       limit(limitCount)
     );
@@ -64,9 +63,7 @@ const usePagination = (
     async (loadCount: any) => {
       const queryRef = query(
         collection(dbService, collectionName),
-        category !== 'all'
-          ? where('category', '==', category)
-          : where('category', 'in', categorylist.slice(1)),
+
         orderBy('title', 'desc'),
         startAfter(key), // 마지막 커서 기준으로 추가 요청을 보내도록 쿼리 전송
         limit(loadCount)

@@ -1,39 +1,37 @@
 import styled from 'styled-components';
-// import topButton from '../../util/img/TopBtn.png'
 import React, { useState, useEffect } from 'react';
-// import React from 'react';
 
-const topScrollButton = () => {
-  // const [topBtn, setTopBtn] = useState(false);
+const TopButton = () => {
+  const [showTopButton, setShowTopButton] = useState(false);
   // TopButton
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // useEffect(() => {
-  //   if (window.scrollY > 40) {
-  //     setTopbtn(true);
-  //   } else {
-  //     setTopbtn(false);
-  //   }
-  // })
-  // const ScrolltoTopEffet = ()=>{
-  //   if (window.scrollY > 40) {
-  //     setTopbtn(true);
-  //   } else {
-  //     setTopbtn(false);
-  //   }
-  // }
+  }
+  useEffect(() => {
+   const ShowTopButtonClick = () => {
+    if (window.scrollY > 200) {
+      setShowTopButton(true);
+    } else {
+      setShowTopButton(false);
+    }
+  }
+  window.addEventListener("scroll", ShowTopButtonClick)
+  return () => {
+    window.removeEventListener("scroll", ShowTopButtonClick)
+  }
+}, [])
 
   return (
     <>
+    {showTopButton &&
       <TopScrollButton onClick={handleScrollToTop}>
         <img src='TopBtn.png' alt='topScroll' />
       </TopScrollButton>
+    }
     </>
   );
 };
-export default topScrollButton;
+export default TopButton;
 
 const TopScrollButton = styled.div`
   cursor: pointer;
