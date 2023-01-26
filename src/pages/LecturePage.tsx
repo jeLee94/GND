@@ -69,5 +69,9 @@ const BackButton = styled.button`
   border-radius: 5px;
   background-color: #76c2b6;
   color: #fff;
+  transition: all 200ms ease-in-out;
   cursor: pointer;
+  :hover {
+    background-color: #4aa496;
+  }
 `;
