@@ -17,7 +17,7 @@ const SearchPage = () => {
 
   // 현재 URL에서 title의 값 가져오기
   let search = getQuery.get('title');
-  console.log('search', search);
+  // console.log('search', search);
 
   // FB에서 검색 영상 데이터 가져오기
   const searchVideoRequest = async (search: any) => {
@@ -46,55 +46,62 @@ const SearchPage = () => {
   }, [search]);
 
   return (
-    <div>
-      {Object.keys(data).map((i) => (
-        <Link
-          key={data[i]}
-          to={`/dashboard/${data[i].id}`}
-          style={{ textDecoration: 'none', color: 'black' }}
-        >
-          <CantentBox key={data[i].title}>
-            <Thumbnail src={data[i]['thumbnail'][0]} />
-            <LectureWrap>
-              <LectureTitle>{data[i].title}</LectureTitle>
-            </LectureWrap>
-            <Lecturer>{data[i].channelTitle}</Lecturer>
-          </CantentBox>
-        </Link>
-      ))}
-    </div>
+    <SearchResultContainer>
+      <ContentWrap>
+        {Object.keys(data).map((i) => (
+          <Link
+            key={data[i]}
+            to={`/dashboard/${data[i]}`}
+            style={{ textDecoration: 'none', color: 'black' }}
+          >
+            <CantentBox key={data[i].title}>
+              <Thumbnail src={data[i]['thumbnail'][0]} />
+              <LectureWrap>
+                <LectureTitle>{data[i].title}</LectureTitle>
+              </LectureWrap>
+              <Lecture>{data[i].channelTitle}</Lecture>
+            </CantentBox>
+          </Link>
+        ))}
+      </ContentWrap>
+    </SearchResultContainer>
   );
 };
 
 export default SearchPage;
 
-const Container = styled.div`
+const SearchResultContainer = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
+`;
+
+//* 컨텐츠컨테이너
+const ContentWrap = styled.div`
+  width: 1320px;
+  /* padding-bottom: 20px; */
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 30px;
+  text-align: center;
 `;
 
 //* 단일강의컨텐츠박스
 const CantentBox = styled.div`
   max-width: 300px;
   height: 300px;
-  margin-top: 20px;
-`;
-
-//* 컨텐츠컨테이너
-const ContentWrap = styled.div`
-  width: 1320px;
-  padding-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 40px;
-  text-align: center;
+  margin-top: 10px;
 `;
 
 //* 썸네일
 const Thumbnail = styled.img`
   width: 300px;
   height: 70%;
-  box-shadow: 0 10px 4px -4px #e3e3e3;
   display: flex;
+  box-shadow: 14px 14px 37px -25px rgba(0, 0, 0, 0.75);
 `;
 
 //* 강의내용 박스
@@ -106,10 +113,10 @@ const LectureWrap = styled.div`
 
 //* 강의 제목
 const LectureTitle = styled.div`
-  font-size: 18px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+  margin-top: 15px;
+  font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -118,9 +125,8 @@ const LectureTitle = styled.div`
 `;
 
 //* 강의 주체자
-const Lecturer = styled.span`
+const Lecture = styled.span`
   width: 50px;
-  margin: 10px 10px 0 10px;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 500;
 `;

@@ -34,27 +34,6 @@ const MainPage = () => {
     // console.log(datas);
   }, [category]);
 
-  // 영상 검색
-  const searchVideoRequest = async (text: string) => {
-    const q = query(
-      collection(dbService, 'CLASS'),
-      where('channelTitle', '>=', text),
-      where('channelTitle', '<=', text + '\uf8ff')
-    );
-    const querySnapshot = await getDocs(q);
-    const searchItem: any[] = [];
-    querySnapshot.docs.forEach((doc) => {
-      searchItem.push({ id: doc.id, ...doc.data() });
-    });
-    console.log(searchItem);
-    return searchItem;
-  };
-
-  const handleOnClick = async () => {
-    const res = await searchVideoRequest(text);
-    setDatas(res);
-  };
-
   return (
     <>
       {/* 검색 인풋창 */}
@@ -62,24 +41,7 @@ const MainPage = () => {
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
-      {/* <div
-        className='input__wrapper'
-        style={{ width: '100', textAlign: 'center' }}
-      >
-        <input
-          type='text'
-          placeholder='Search Lecture Video'
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-            // setVideoList(videos);
-            setDatas(datas);
-          }}
-        />
-        <button disabled={!text} onClick={handleOnClick}>
-          Search
-        </button>
-      </div> */}
+
       <MainPageWrap>
         <Category>
           {categorylist.map((c: any, idx: number) => {
