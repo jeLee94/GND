@@ -5,12 +5,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Pretendard-Regular";
     src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
       format("woff");
-    font-weight: 400;
+    font-weight: 100,200,300,400,500,600,700,800,900;
     font-style: normal;
   }
 
   body{
-    /* align-items: center; */
     font-family: "Pretendard-Regular";
   }
 `;
