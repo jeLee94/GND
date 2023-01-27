@@ -18,7 +18,10 @@ const Comment = (props: any) => {
   const [newComment, setNewComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
   const user = authService?.currentUser;
-
+  // todo: input창 제출 후 지우기
+  // form으로 수정해서 엔터 가능하도록
+  //수정기능 추가
+  // createAt 활용
   useEffect(() => {
     viewComment();
   }, [classID]);
@@ -119,17 +122,19 @@ const Content = styled.div``;
 const CommentContainer = styled.div`
   /* border-bottom: 1px solid #3b615b40; */
   display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
   /* justify-content: center; */
   /* align-items: center; */
   border: 1px solid #c0bebe;
+  border-radius: 10px;
 `;
 const CommentEmailWrap = styled.div`
-  width: 600px;
+  /* width: 600px; */
 `;
 const ButtonWrap = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   margin: auto;
 `;
@@ -141,6 +146,8 @@ const Email = styled.div`
   align-items: center;
   display: flex;
   padding-left: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 const Comments = styled.div`
   min-height: 60px;
@@ -153,7 +160,7 @@ const InputWrap = styled.div`
   display: flex;
 `;
 const InputComment = styled.textarea`
-  width: 595px;
+  width: 610px;
   height: 100px;
   font-family: 'Pretendard-standard';
 `;
