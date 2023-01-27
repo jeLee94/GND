@@ -159,6 +159,8 @@ const SearchIcon = styled(FontAwesomeIcon)`
 const UserInform = styled.div`
   margin-right: 30px;
   font-size: 15px;
+  @media screen and (max-width: 768px) {
+    display: none;
 `;
 // 로그인 버튼
 const LogInButton = styled.button`
