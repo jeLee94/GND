@@ -87,118 +87,188 @@ const LoginPage = () => {
       });
   }
   return (
-    <>
-      <LoginContainer>
+    <LoginContainer>
+      <LoginWrapper>
         <LoginTitle>로그인</LoginTitle>
 
         <Login onSubmit={onSubmit}>
-          <p>아이디</p>
-          <EmailInput
-            type='text'
-            value={userEmail}
-            placeholder='이메일을 입력하세요.'
-            onChange={(e) => {
-              setUserEmail(e.target.value);
-            }}
-          />
-          <p>비밀번호</p>
-          <PasswordInput
-            type='password'
-            value={userPassword}
-            placeholder='비밀번호를 입력하세요.'
-            onChange={(e) => {
-              setUserPassword(e.target.value);
-            }}
-          />
-          <LoginButton onClick={handleLogin}>로그인</LoginButton>
-          <GoogleLoginButton onClick={handleGoogleLogin}>
-            구글로 로그인
-          </GoogleLoginButton>
+          <EmailSection>
+            <label htmlFor='email-input'>아이디</label>
+            <input
+              id='email-input'
+              type='text'
+              value={userEmail}
+              placeholder='이메일을 입력하세요.'
+              onChange={(e) => {
+                setUserEmail(e.target.value);
+              }}
+            />
+          </EmailSection>
+          <PasswordSection>
+            <label htmlFor='password-input'>비밀번호</label>
+            <input
+              id='password-input'
+              type='password'
+              value={userPassword}
+              placeholder='비밀번호를 입력하세요.'
+              onChange={(e) => {
+                setUserPassword(e.target.value);
+              }}
+            />
+          </PasswordSection>
+          <ButtonSection>
+            <LoginButton onClick={handleLogin}>로그인</LoginButton>
+            <GoogleLoginButton onClick={handleGoogleLogin}>
+              구글로 로그인
+            </GoogleLoginButton>
+          </ButtonSection>
           <RegisterLink>
             <Link to={`/register`}>회원가입하러가기</Link>
           </RegisterLink>
         </Login>
-      </LoginContainer>
-    </>
+      </LoginWrapper>
+    </LoginContainer>
   );
 };
 
 export default LoginPage;
 
-//로그인 전체
 const LoginContainer = styled.div`
-  width: 500px;
-  height: 430px;
+  width: 100%;
+  height: 100%;
+`;
+
+//로그인 전체
+const LoginWrapper = styled.div`
+  width: 35%;
+  min-width: 350px;
+  height: 50%;
   padding: 50px;
+  margin: 0 auto;
   margin-top: 120px;
-  margin-left: auto;
-  margin-right: auto;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: #d9d9d9;
-  border: 1px double #707070;
 `;
 
 //로그인 타이틀
 const LoginTitle = styled.h2`
-  align-items: center;
-  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #222222;
+  margin-bottom: 2rem;
 `;
 
 // 로그인 전체입력부분
 const Login = styled.form`
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  label {
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222222;
+  }
+  input {
+    width: 80%;
+    height: 36px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    padding: 2px 5px;
+  }
 `;
 
-//이메일 인풋
-const EmailInput = styled.input`
-  width: 90%;
-  padding: 10px 15px;
+const EmailSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 300px;
+  margin-bottom: 20px;
 `;
 
-//비번 인풋
-const PasswordInput = styled.input`
-  width: 90%;
-  padding: 10px 15px;
+const PasswordSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 300px;
+  margin-bottom: 40px;
 `;
 
-//로그인버튼
+const ButtonSection = styled.div`
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+// //로그인버튼
 const LoginButton = styled.button`
-  height: 50px;
-  width: 360px;
-  margin-top: 25px;
+  height: 35px;
+  width: 80%;
+  border: none;
   border-radius: 7px;
-  border: 1px;
   background-color: #5f9c92;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 400;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
+  &:hover {
+    background-color: #478a7d;
+  }
 `;
 
-//구글로그인버튼
+// //구글로그인버튼
 const GoogleLoginButton = styled.button`
-  height: 50px;
-  width: 360px;
-  margin-top: 10px;
-  margin-bottom: 12px;
+  height: 35px;
+  width: 80%;
+  margin-top: 1rem;
+  border: none;
   border-radius: 7px;
-  border: 1px;
   background-color: #5f9c92;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 400;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
+  &:hover {
+    background-color: #478a7d;
+  }
 `;
 
 //회원가입 링크
 const RegisterLink = styled.div`
-  margin-top: 30px;
+  height: 35px;
+  width: 80%;
+
+  font-weight: 400;
+  margin-top: 1rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
   text-align: center;
+  line-height: 2.2rem;
   a {
     text-decoration: none;
+    color: #478a7d;
+    font-size: 1rem;
+  }
+  &:hover {
+    background-color: #ffffff;
+    color: white;
   }
 `;

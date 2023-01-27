@@ -9,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  *{
+    box-sizing: border-box;
+  }
+
   body{
     font-family: "Pretendard-Regular";
     html, body, div, span, applet, object, iframe,
@@ -40,6 +44,8 @@ body {
 	line-height: 1;
   margin: 0;
   padding: 0;
+
+
 }
 ol, ul {
 	list-style: none;
