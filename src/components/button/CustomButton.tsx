@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import React from 'react';
 
 const CustomButton = (props: any): any => {
-  const { onClick, children, idx } = props;
+  const { onClick, children, idx, commentID } = props;
   return (
     <>
-      <Button onClick={(e) => onClick(e, idx)}>{children}</Button>
+      <Button onClick={(e) => onClick(e, idx, commentID)}>{children}</Button>
     </>
   );
 };
@@ -13,8 +13,8 @@ const CustomButton = (props: any): any => {
 export default CustomButton;
 
 const Button = styled.button`
-  background-color: #3b615b;
-  background-image: linear-gradient(315deg, #5f9c92 0%, #76c2b6 74%);
+  background-color: #b9b9b9;
+  background-image: linear-gradient(315deg, #d4d4d4 0%, #cfcfcf 74%);
   line-height: 30px;
   margin: 10px;
   padding: 0;

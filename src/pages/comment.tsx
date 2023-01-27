@@ -8,16 +8,22 @@ import {
   where,
   orderBy,
   getDocs,
+  updateDoc,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getDate } from '../util/utils';
 import CustomButton from '../components/button/CustomButton';
+
 const Comment = (props: any) => {
   const { classID } = props;
   const [newComment, setNewComment] = useState('');
+  const [modifiedComment, setModifiedComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
+  const [isModifying, setIsModifying] = useState<any[]>([]);
+  const [test, setTest] = useState(false);
   const user = authService?.currentUser;
+  let testlist: boolean[] = [];
   // todo: input창 제출 후 지우기
   // form으로 수정해서 엔터 가능하도록
   //수정기능 추가
@@ -48,6 +54,7 @@ const Comment = (props: any) => {
     viewComment();
   };
 
+  //댓글 삭제
   const deleteComment = async (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
     const ok = window.confirm('정말 삭제하시겠습니까?');
@@ -63,6 +70,7 @@ const Comment = (props: any) => {
     viewComment();
   };
 
+  //댓글 보기
   const viewComment = async () => {
     console.log('view!');
 
@@ -81,36 +89,92 @@ const Comment = (props: any) => {
       }));
 
       setCommentList(commentObjList);
+      const tmp = new Array(commentObjList.length);
+      setIsModifying(tmp.fill(false));
     }
+  };
+
+  //댓글 수정
+  const setModify = (e: React.MouseEvent, idx: number, commentID: any) => {
+    e.preventDefault();
+    isModifying[idx] == true
+      ? (isModifying[idx] = false)
+      : (isModifying[idx] = true);
+    setIsModifying([...isModifying]);
+  };
+
+  //댓글 수정 완료 버튼 클릭시
+  const ModifidComment = async (e: React.MouseEvent, idx: number) => {
+    console.log(isModifying);
+    e.preventDefault();
+    // const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
+    // try {
+    //   await updateDoc(commentRef, {
+    //     comment: modifiedComment,
+    //   });
+    //   viewComment();
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
     <Content>
       {commentList?.map((comment: any, idx: any) => {
-        console.log(comment);
+        console.log('comment', comment);
+        console.log(test);
         return (
           <CommentContainer key={comment.id}>
-            <CommentEmailWrap>
-              <Email> {comment.email}</Email>
-              <Comments> {comment.comment}</Comments>
-            </CommentEmailWrap>
-            <ButtonWrap>
-              <CustomButton onClick={deleteComment} idx={idx}>
-                수정
-              </CustomButton>
-              <CustomButton onClick={deleteComment} idx={idx}>
-                삭제
-              </CustomButton>
-            </ButtonWrap>
+            {comment.createID !== user?.uid ? (
+              <CommentEmailWrap isModifying={false}>
+                <Email> {comment.email}</Email>
+                <Comments> {comment.comment}</Comments>
+              </CommentEmailWrap>
+            ) : (
+              <div>
+                <CommentEmailWrap isModifying={isModifying[idx]}>
+                  <Email> {comment.email}</Email>
+                  <Comments> {comment.comment}</Comments>
+                </CommentEmailWrap>
+                <ModifyInputWrap isModifying={isModifying[idx]}>
+                  <InputComment
+                    onChange={(e) => {
+                      setModifiedComment(e.target.value);
+                    }}
+                  />
+
+                  <CustomButton onClick={ModifidComment}>완료</CustomButton>
+                  <CustomButton onClick={setModify} idx={idx}>
+                    취소
+                  </CustomButton>
+                </ModifyInputWrap>
+              </div>
+            )}
+
+            {comment.createID === user?.uid ? (
+              <ButtonWrap isModifying={isModifying[idx]}>
+                <CustomButton
+                  onClick={setModify}
+                  idx={idx}
+                  commentID={comment?.commentID}
+                >
+                  수정
+                </CustomButton>
+                <CustomButton onClick={deleteComment} idx={idx}>
+                  삭제
+                </CustomButton>
+              </ButtonWrap>
+            ) : null}
           </CommentContainer>
         );
       })}
+      {/* 입력영역 */}
       <InputWrap>
         <InputComment
           onChange={(e) => {
             setNewComment(e.target.value);
           }}
-        ></InputComment>
+        />
         <CustomButton onClick={createComment}>등록</CustomButton>
       </InputWrap>
     </Content>
@@ -129,15 +193,7 @@ const CommentContainer = styled.div`
   border: 1px solid #c0bebe;
   border-radius: 10px;
 `;
-const CommentEmailWrap = styled.div`
-  /* width: 600px; */
-`;
-const ButtonWrap = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  margin: auto;
-`;
+
 const Email = styled.div`
   font-size: 12px;
   font-weight: bold;
@@ -163,4 +219,18 @@ const InputComment = styled.textarea`
   width: 610px;
   height: 100px;
   font-family: 'Pretendard-standard';
+`;
+const ModifyInputWrap = styled.div<{ isModifying: boolean }>`
+  display: ${(props) => (props.isModifying == false ? 'none' : 'flex')};
+`;
+const CommentEmailWrap = styled.div<{ isModifying: boolean }>`
+  display: ${(props) => (props.isModifying == true ? 'none' : '')};
+  /* width: 600px; */
+`;
+const ButtonWrap = styled.div<{ isModifying: boolean }>`
+  display: ${(props) => (props.isModifying == true ? 'none' : 'flex')};
+
+  /* flex-direction: column; */
+  justify-content: center;
+  margin: auto;
 `;
