@@ -166,6 +166,7 @@ const UserInform = styled.div`
   color: #ffffff;
   @media screen and (max-width: 768px) {
     display: none;
+  }
 `;
 // 로그인 버튼
 const LogInButton = styled.button`
