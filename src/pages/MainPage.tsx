@@ -5,6 +5,7 @@ import Myslide from '../components/slide/Myslide';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
+import DropDownList from '../components/dropdown/DropdownList';
 
 const MainPage = () => {
   const categorylist = [
@@ -24,6 +25,7 @@ const MainPage = () => {
     '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
+  const [sortby, setSortby] = useState('title&desc');
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const INITIAL_FETCH_COUNT = 7;
   const {
@@ -35,15 +37,35 @@ const MainPage = () => {
     INITIAL_FETCH_COUNT,
     target,
     category,
-    categorylist
+    categorylist,
+    sortby
   );
 
-  useEffect(() => {}, [category]);
+  // useEffect(() => {}, [category, sortby]);
 
+  const list = [
+    '제목 오름차순',
+    '제목 내림차순',
+    '채널명 오름차순',
+    '채널명 내림차순',
+  ];
+  const ChooseOne = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const target = e.currentTarget.textContent;
+    if (target == '제목 오름차순') {
+      setSortby('title&asc');
+    } else if (target == '제목 내림차순') {
+      setSortby('title&desc');
+    } else if (target == '채널명 오름차순') {
+      setSortby('channelTitle&asc');
+    } else if (target == '채널명 내림차순') {
+      setSortby('channelTitle&desc');
+    }
+  };
   return (
     <Container>
       {/* 검색 인풋창 */}
-
       <MainPageSlideBanner>
         <Myslide />
       </MainPageSlideBanner>
@@ -52,22 +74,25 @@ const MainPage = () => {
         <Category>
           {categorylist.map((c: any, idx: number) => {
             return (
-              <CategoryBotton
+              <CategoryButton
                 key={idx}
                 onClick={() => {
                   setCategory(c);
                 }}
               >
                 {categoryName[idx]}
-              </CategoryBotton>
+              </CategoryButton>
             );
           })}
         </Category>
+        <WhereIsDropDown>
+          <DropDownList list={list} ChooseOne={ChooseOne} />
+        </WhereIsDropDown>
         <ContentWrap>
-          {pageDatas?.map((data: any) => {
+          {pageDatas?.map((data: any, idx: any) => {
             return (
               <Link
-                key={data.id}
+                key={idx}
                 to={`/dashboard/${data.id}`}
                 style={{ textDecoration: 'none', color: 'black' }}
               >
@@ -87,7 +112,7 @@ const MainPage = () => {
               <div ref={setTarget} />
               <NoMoreFeeds>
                 {noMore && (
-                  <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>
+                  <NoMoreFeeds>더 이상 불러올 영상이 없어요</NoMoreFeeds>
                 )}
               </NoMoreFeeds>
               <div>{loadingMore}</div>
@@ -100,6 +125,7 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
 const Container = styled.div`
   width: 100%;
   margin-top: 42px;
@@ -144,8 +170,8 @@ const MainPageSlideBanner = styled.div`
 const Category = styled.div`
   width: 100%;
   height: 50px;
-  padding-bottom: 30px;
-  padding-top: 30px;
+  padding-bottom: 50px;
+  padding-top: 50px;
   justify-content: center;
   display: flex;
   border-bottom: 1px solid #e3e3e3;
@@ -159,7 +185,7 @@ const Category = styled.div`
 `;
 
 //* 카테고리 버튼
-const CategoryBotton = styled.button`
+const CategoryButton = styled.button`
   width: 100px;
   height: 30px;
   border-radius: 15px;
@@ -174,6 +200,13 @@ const CategoryBotton = styled.button`
   @media screen and (max-width: 768px) {
     margin-bottom: 10px;
   }
+`;
+const WhereIsDropDown = styled.div`
+  display: flex;
+  width: 1320px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 30px;
 `;
 
 //* 단일강의컨텐츠박스

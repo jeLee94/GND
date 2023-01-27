@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ToggleButton from '../components/button/ToggleButton';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import React, { useEffect, useState } from 'react';
@@ -8,10 +8,16 @@ import { Link } from 'react-router-dom';
 import Comment from './comment';
 
 function Dashboard() {
+  const location = useLocation();
   const param = useParams<string>();
   const [data, setData] = useState<any>();
   const [chagneButton, setChangeButton] = useState('minus');
   const [changeDisplay, setChangeDisplay] = useState('flex');
+  useEffect(() => {
+    if (location.pathname.split('/')[1] === 'dashboard') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, []);
 
   const SnapDoc = async () => {
     const docRef = doc(dbService, 'CLASS', param.id as string);
