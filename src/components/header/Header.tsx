@@ -35,7 +35,10 @@ const Header = () => {
     <NavContainer>
       <Nav>
         <NavBarLink to='/'>
-          <NavLogo src={'./image/GND_logo.png'} alt='로고' />
+          <NavLogo
+            src={process.env.PUBLIC_URL + 'image/GND_logo.png'}
+            alt='로고'
+          />
         </NavBarLink>
         {/* <NavBarLink to='/lecture'>lectures</NavBarLink>
         <NavBarLink to='/dashboard'>dashboard</NavBarLink> */}
@@ -54,6 +57,8 @@ const Header = () => {
               <SearchIcon icon={faMagnifyingGlass} />
             </button>
           </SearchForm>
+          <UserInform>{authService?.currentUser?.email ?? ''}</UserInform>
+          {/* 로그아웃 처리 해주기 */}
           <NavBarLink to='/login'>
             <LogInButton onClick={handleAuth}>
               {authService.currentUser ? '로그아웃' : '로그인'}
@@ -97,7 +102,6 @@ const NavLogo = styled.img`
 
 const RightSection = styled.section`
   display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -125,7 +129,10 @@ const SearchIcon = styled(FontAwesomeIcon)`
   color: #ffffff;
   cursor: pointer;
 `;
-
+const UserInform = styled.div`
+  margin-right: 30px;
+  font-size: 15px;
+`;
 // 로그인 버튼
 const LogInButton = styled.button`
   width: 80px;

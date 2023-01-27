@@ -70,8 +70,6 @@ function Dashboard() {
         <ToggleHeader>
           <ToggleTitle>강의평</ToggleTitle>
         </ToggleHeader>
-
-        <LectureList display=''></LectureList>
         <Comment classID={data?.playlistId ?? data?.videoId[0]} />
       </Main>
     </>
