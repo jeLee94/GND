@@ -14,18 +14,21 @@ export default CustomButton;
 
 const Button = styled.button`
   cursor: pointer;
-  background-color: #b9b9b9;
-  background-image: linear-gradient(315deg, #d4d4d4 0%, #cfcfcf 74%);
-  line-height: 30px;
-  margin-left: 10px;
-  padding: 0;
+  color: #222222;
+  margin: auto;
+  /* margin-bottom: 5px; */
   border: none;
   border-radius: 5px;
-  width: 70px;
+  width: 80px;
+  height: 22px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: transparent;
 
   &:hover {
-    background-color: #89d8d3;
-    background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+    color: #ffffff;
+    background-color: #478a7d;
+    background-image: linear-gradient(220deg, #529c8d 0%, #67b5a8 74%);
   }
   &:before,
   :after {

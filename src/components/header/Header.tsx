@@ -160,7 +160,7 @@ const SearchIcon = styled(FontAwesomeIcon)`
     display: none;
   }
 `;
-const UserInform = styled.div`
+export const UserInform = styled.div`
   margin-right: 30px;
   font-size: 15px;
   color: #ffffff;
