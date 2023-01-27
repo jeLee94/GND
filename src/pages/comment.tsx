@@ -96,17 +96,18 @@ const Comment = (props: any) => {
     }
   };
 
-  //댓글 수정
+  //댓글 수정, 수정 취소
   const setModify = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
-    setPrevComment(
-      e.currentTarget.parentElement?.parentElement?.childNodes[0].childNodes[0]
-        .childNodes[1].textContent as string
-    );
 
     isModifying[idx] == true
       ? (isModifying[idx] = false)
-      : (isModifying[idx] = true);
+      : (isModifying[idx] = true) &&
+        setPrevComment(
+          e.currentTarget.parentNode?.parentNode?.parentNode?.childNodes[1]
+            .textContent as string
+        );
+
     setIsModifying([...isModifying]);
   };
 
@@ -126,11 +127,12 @@ const Comment = (props: any) => {
 
       viewComment();
       setModifiedComment('');
+      setPrevComment('');
     } catch (err) {
       console.error(err);
     }
   };
-  console.log('prev', prevComment);
+
   return (
     <Content>
       {commentList?.map((comment: any, idx: any) => {
@@ -140,19 +142,32 @@ const Comment = (props: any) => {
             {comment?.createID !== user?.uid ? (
               // 현재 유저가 쓴 글이 아니면 내용만 보여주고
               <CommentEmailWrap isModifying={false}>
-                <Email>
-                  {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
-                </Email>
+                <CommentHeader>
+                  <CreateInform>
+                    {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
+                  </CreateInform>
+                </CommentHeader>
                 <Comments> {comment.comment}</Comments>
               </CommentEmailWrap>
             ) : (
               //현재 유저가 쓴 글이면 수정, 삭제 버튼까지 보여준다.
-
               <div>
                 <CommentEmailWrap isModifying={isModifying[idx]}>
-                  <Email>
-                    {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
-                  </Email>
+                  <CommentHeader>
+                    <CreateInform>
+                      {comment?.email}
+                      <CreatedAt>{comment?.createdAt}</CreatedAt>
+                    </CreateInform>
+                    <ButtonWrap isModifying={isModifying[idx]}>
+                      <CustomButton onClick={setModify} idx={idx}>
+                        수정
+                      </CustomButton>
+                      <CustomButton onClick={deleteComment} idx={idx}>
+                        삭제
+                      </CustomButton>
+                    </ButtonWrap>
+                  </CommentHeader>
+
                   <Comments> {comment.comment}</Comments>
                 </CommentEmailWrap>
                 <ModifyInputWrap isModifying={isModifying[idx]}>
@@ -173,21 +188,6 @@ const Comment = (props: any) => {
                 </ModifyInputWrap>
               </div>
             )}
-
-            {comment.createID === user?.uid ? (
-              <ButtonWrap isModifying={isModifying[idx]}>
-                <CustomButton
-                  onClick={setModify}
-                  idx={idx}
-                  commentID={comment?.commentID}
-                >
-                  수정
-                </CustomButton>
-                <CustomButton onClick={deleteComment} idx={idx}>
-                  삭제
-                </CustomButton>
-              </ButtonWrap>
-            ) : null}
           </CommentContainer>
         );
       })}
@@ -228,16 +228,20 @@ const CommentContainer = styled.div`
   border-radius: 10px;
 `;
 
-const Email = styled.div`
+const CommentHeader = styled.div`
   font-size: 12px;
   font-weight: bold;
   height: 30px;
   background-color: #f1ecec;
   align-items: center;
+  justify-content: space-between;
   display: flex;
   padding-left: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+`;
+const CreateInform = styled.div`
+  display: flex;
 `;
 
 const CreatedAt = styled.p`
@@ -271,6 +275,6 @@ const ButtonWrap = styled.div<{ isModifying: boolean }>`
   display: ${(props) => (props.isModifying == true ? 'none' : 'flex')};
 
   /* flex-direction: column; */
-  justify-content: center;
-  margin: auto;
+
+  /* margin: auto; */
 `;
