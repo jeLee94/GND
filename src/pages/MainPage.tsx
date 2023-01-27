@@ -120,6 +120,14 @@ const MainPageWrap = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    width: 700px;
+    padding: 1.2em;
+  }
+  @media screen and (max-width: 500px) {
+    width: 500px;
+    padding: 1.2em;
+  }
 `;
 
 //* 배너
@@ -127,6 +135,9 @@ const MainPageSlideBanner = styled.div`
   background-color: #e3e3e3;
   align-items: center;
   display: flex;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 //* 카테고리
@@ -139,7 +150,12 @@ const Category = styled.div`
   display: flex;
   border-bottom: 1px solid #e3e3e3;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  @media screen and (max-width: 768px) {
+    margin-top: 40px;
+    height: 120px;
+    flex-wrap: wrap;
+  }
 `;
 
 //* 카테고리 버튼
@@ -150,9 +166,13 @@ const CategoryBotton = styled.button`
   border-color: transparent;
   margin-right: 10px;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
   :hover {
     color: white;
     background-color: #5f9c92;
+  }
+  @media screen and (max-width: 768px) {
+    margin-bottom: 10px;
   }
 `;
 
@@ -160,7 +180,11 @@ const CategoryBotton = styled.button`
 const CantentBox = styled.div`
   max-width: 300px;
   height: 300px;
-  margin-top: 20px;
+  margin-top: 2rem;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 //* 컨텐츠컨테이너
@@ -171,14 +195,25 @@ const ContentWrap = styled.div`
   flex-wrap: wrap;
   grid-gap: 40px;
   text-align: center;
+  @media screen and (max-width: 768px) {
+    width: 700px;
+    padding: 1.2em;
+    justify-content: center;
+  }
+  @media screen and (max-width: 500px) {
+    width: 300px;
+    padding: 1.2em;
+  }
 `;
 
 //* 썸네일
 const Thumbnail = styled.img`
   width: 300px;
   height: 70%;
-  box-shadow: 0 10px 4px -4px #e3e3e3;
+  box-shadow: 10px 10px 20px -15px rgba(0, 0, 0, 0.75);
+  /* box-shadow: 0 10px 4px -4px #e3e3e3; */
   display: flex;
+  margin-bottom: 0.6rem;
 `;
 
 //* 강의내용 박스
@@ -202,9 +237,9 @@ const LectureTitle = styled.div`
 `;
 
 //* 강의 주체자
-const Lecturer = styled.span`
-  width: 50px;
-  margin: 10px 10px 0 10px;
+const Lecturer = styled.div`
+  width: 100%;
+  /* margin: 10px 10px 0 10px; */
   font-size: 15px;
   font-weight: bold;
 `;
