@@ -15,7 +15,7 @@ const Header = () => {
   // 검색창 - 검색어 입력시 페이지 이동
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (!event.target.value) {
+    if (search === '') {
       alert('내용을 입력해주세요.');
       return;
     } else {
@@ -166,6 +166,7 @@ const UserInform = styled.div`
   color: #ffffff;
   @media screen and (max-width: 768px) {
     display: none;
+  }
 `;
 // 로그인 버튼
 const LogInButton = styled.button`
