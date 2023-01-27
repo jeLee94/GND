@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { authService } from '../../firebase';
 import { signOut } from '@firebase/auth';
+// import GNDLogo from '../../util/img/GND_logo.png';
 
 const Header = () => {
   const [search, setSearch] = useState('');
@@ -34,7 +35,7 @@ const Header = () => {
     <NavContainer>
       <Nav>
         <NavBarLink to='/'>
-          <NavLogo src='GND_logo.png' alt='로고' />
+          <NavLogo src={'./image/GND_logo.png'} alt='로고' />
         </NavBarLink>
         {/* <NavBarLink to='/lecture'>lectures</NavBarLink>
         <NavBarLink to='/dashboard'>dashboard</NavBarLink> */}
