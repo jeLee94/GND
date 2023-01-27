@@ -92,10 +92,10 @@ const LoginPage = () => {
         <LoginTitle>로그인</LoginTitle>
 
         <Login onSubmit={onSubmit}>
-          <EmailSection>
-            <label htmlFor='email-input'>아이디</label>
+          <IdSection>
+            <label htmlFor='id-input'>아이디</label>
             <input
-              id='email-input'
+              id='id-input'
               type='text'
               value={userEmail}
               placeholder='이메일을 입력하세요.'
@@ -103,7 +103,7 @@ const LoginPage = () => {
                 setUserEmail(e.target.value);
               }}
             />
-          </EmailSection>
+          </IdSection>
           <PasswordSection>
             <label htmlFor='password-input'>비밀번호</label>
             <input
@@ -122,9 +122,8 @@ const LoginPage = () => {
               구글로 로그인
             </GoogleLoginButton>
           </ButtonSection>
-          <RegisterLink>
-            <Link to={`/register`}>회원가입하러가기</Link>
-          </RegisterLink>
+
+          <RegisterLink to={`/register`}>회원가입하러가기</RegisterLink>
         </Login>
       </LoginWrapper>
     </LoginContainer>
@@ -151,6 +150,7 @@ const LoginWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #d9d9d9;
+  box-shadow: 15px 15px 45px -5px rgba(0, 0, 0, 0.3);
 `;
 
 //로그인 타이틀
@@ -186,7 +186,7 @@ const Login = styled.form`
   }
 `;
 
-const EmailSection = styled.div`
+const IdSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -248,27 +248,22 @@ const GoogleLoginButton = styled.button`
 `;
 
 //회원가입 링크
-const RegisterLink = styled.div`
+const RegisterLink = styled(Link)`
   height: 35px;
   width: 80%;
-
+  text-decoration: none;
+  font-size: 1rem;
   font-weight: 400;
-  margin-top: 1rem;
+  color: #478a7d;
   background-color: transparent;
-  border: none;
   border-radius: 7px;
-  outline: none;
+  margin-top: 1rem;
   cursor: pointer;
   transition: all 200ms ease-in-out;
   text-align: center;
   line-height: 2.2rem;
-  a {
-    text-decoration: none;
-    color: #478a7d;
-    font-size: 1rem;
-  }
   &:hover {
     background-color: #ffffff;
-    color: white;
+    color: #f39d2d;
   }
 `;
