@@ -64,7 +64,9 @@ const usePagination = (
     async (loadCount: any) => {
       const queryRef = query(
         collection(dbService, collectionName),
-
+        category !== 'all'
+          ? where('category', '==', category)
+          : where('category', 'in', categorylist.slice(1)),
         orderBy('title', 'desc'),
         startAfter(key), // 마지막 커서 기준으로 추가 요청을 보내도록 쿼리 전송
         limit(loadCount)
