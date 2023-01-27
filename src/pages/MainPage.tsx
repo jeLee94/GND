@@ -24,6 +24,7 @@ const MainPage = () => {
     '내일배움캠프',
   ];
   const [category, setCategory] = useState('all');
+  const [activeTab, setActiveTab] = useState('');
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const INITIAL_FETCH_COUNT = 7;
   const {
