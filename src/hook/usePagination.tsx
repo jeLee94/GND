@@ -1,6 +1,7 @@
-import { dbService } from '../firebase';
+import { authService, dbService } from '../firebase';
 import {
   collection,
+  FieldPath,
   getDocs,
   limit,
   orderBy,
@@ -20,13 +21,15 @@ const usePagination = (
   limitCount: any,
   target: any,
   category: any,
-  categorylist: string[]
+  categorylist: string[],
+  sortby: any
 ) => {
   const [data, setData] = useState<object[]>([]); // 불러온 문서들 상태
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [loadingMore, setLoadingMore] = useState(false); // 추가 요청시 로딩 상태
   const [key, setKey] = useState<QueryDocumentSnapshot>(); // 마지막으로 불러온 스냅샷 상태
   const [noMore, setNoMore] = useState(false); // 추가로 요청할 데이터 없다는 flag
+  const [sort, setSort] = useState<any>(sortby);
 
   // 첫번째 페이지 요청 함수
   const getFirstPage = useCallback(async () => {
@@ -35,7 +38,7 @@ const usePagination = (
       category !== 'all'
         ? where('category', '==', category)
         : where('category', 'in', categorylist.slice(1)),
-      orderBy('title', 'desc'), // 최신 작성순으로 정렬
+      orderBy(sort?.split('&')[0], sort?.split('&')[1]), // 최신 작성순으로 정렬
       limit(limitCount)
     );
     try {
@@ -56,7 +59,7 @@ const usePagination = (
       console.log(err);
     }
     setLoading(false);
-  }, [collectionName, limitCount, category]);
+  }, [collectionName, limitCount, category, sort]);
 
   // 추가 요청 함수
   const loadMore = useCallback(
@@ -66,7 +69,7 @@ const usePagination = (
         category !== 'all'
           ? where('category', '==', category)
           : where('category', 'in', categorylist.slice(1)),
-        orderBy('title', 'desc'),
+        orderBy(sort?.split('&')[0], sort?.split('&')[1]),
         startAfter(key), // 마지막 커서 기준으로 추가 요청을 보내도록 쿼리 전송
         limit(loadCount)
       );
@@ -103,9 +106,20 @@ const usePagination = (
   );
 
   // 처음 화면이 랜더링 되었을때 첫번째 페이지를 문서를 가져오도록 설정
+
   useEffect(() => {
     getFirstPage();
-  }, [category]);
+  }, [category, sort]);
+  // useEffect(() => {
+  //   getFirstPage();
+  // }, [sort]);
+  useEffect(() => {
+    setSort(sortby);
+    getFirstPage();
+  }, [sortby]);
+  // useEffect(() => {
+  //   getFirstPage();
+  // }, [sort]);
 
   // target 요소의 ref가 전달되었을때 해당 요소를 주시할수 있도록 observer 인스턴스 생성후 전달
   useEffect(() => {
