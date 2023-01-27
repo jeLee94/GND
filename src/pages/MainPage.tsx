@@ -271,7 +271,6 @@ const LectureTitle = styled.div`
 //* 강의 주체자
 const Lecturer = styled.div`
   width: 100%;
-  /* margin: 10px 10px 0 10px; */
   font-size: 15px;
   font-weight: bold;
 `;

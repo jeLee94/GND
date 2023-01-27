@@ -208,7 +208,7 @@ const ButtonSection = styled.div`
   align-items: center;
 `;
 
-// //로그인버튼
+// 로그인버튼
 const LoginButton = styled.button`
   height: 35px;
   width: 80%;
@@ -225,7 +225,7 @@ const LoginButton = styled.button`
   }
 `;
 
-// //구글로그인버튼
+// 구글로그인버튼
 const GoogleLoginButton = styled.button`
   height: 35px;
   width: 80%;

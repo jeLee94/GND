@@ -1,31 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
-const ToggleButton = (props: any) => {
+const MoreButton = (props: any) => {
   const { onClick, icon } = props;
   return (
     <>
-      <ToggleBtn
+      <MoreBtn
         onClick={() => {
           onClick();
         }}
       >
-        <ToggleIcon icon={icon == 'minus' ? faSquareMinus : faSquarePlus} />
-      </ToggleBtn>
+        {/* <ToggleIcon icon={icon == 'minus' ? faEllipsis : ''} /> */}
+        <MoreIcon icon={icon === 'more' ? faEllipsis : faEllipsis} />
+      </MoreBtn>
     </>
   );
 };
 
-export default ToggleButton;
+export default MoreButton;
 
-const ToggleBtn = styled.button`
+const MoreBtn = styled.button`
   background-color: transparent;
   border: 0;
 `;
 
-const ToggleIcon = styled(FontAwesomeIcon)`
+const MoreIcon = styled(FontAwesomeIcon)`
   color: #5f9c92;
   cursor: pointer;
   height: 22px;

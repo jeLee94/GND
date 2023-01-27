@@ -14,6 +14,15 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getDate } from '../util/utils';
 import CustomButton from '../components/button/CustomButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleXmark,
+  faEllipsis,
+  faPenToSquare,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
+import MoreButton from '../components/button/MoreButton';
+import { UserInform } from '../components/header/Header';
 
 const Comment = (props: any) => {
   const { classID } = props;
@@ -31,6 +40,17 @@ const Comment = (props: any) => {
   useEffect(() => {
     viewComment();
   }, [classID]);
+
+  const [chagneButton, setChangeButton] = useState('more');
+  const [changeDisplay, setChangeDisplay] = useState('flex');
+
+  const onClickHandler = () => {
+    changeDisplay == 'flex'
+      ? setChangeDisplay('none')
+      : setChangeDisplay('flex');
+
+    chagneButton == 'more' ? setChangeButton('') : setChangeButton('more');
+  };
 
   //댓글 생성
   const createComment = async (e: React.MouseEvent) => {
@@ -138,9 +158,8 @@ const Comment = (props: any) => {
               // 현재 유저가 쓴 글이 아니면 내용만 보여주고
               <CommentEmailWrap isModifying={false}>
                 <CommentHeader>
-                  <CreateInform>
-                    {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
-                  </CreateInform>
+                  <CreateInform>{comment?.email}</CreateInform>
+                  <CreatedAt>{comment?.createdAt}</CreatedAt>
                 </CommentHeader>
                 <Comments> {comment.comment}</Comments>
               </CommentEmailWrap>
@@ -149,17 +168,22 @@ const Comment = (props: any) => {
               <div>
                 <CommentEmailWrap isModifying={isModifying[idx]}>
                   <CommentHeader>
-                    <CreateInform>
-                      {comment?.email}
-                      <CreatedAt>{comment?.createdAt}</CreatedAt>
-                    </CreateInform>
+                    <CreateInform>{comment?.email}</CreateInform>
                     <ButtonWrap isModifying={isModifying[idx]}>
-                      <CustomButton onClick={setModify} idx={idx}>
-                        수정
-                      </CustomButton>
-                      <CustomButton onClick={deleteComment} idx={idx}>
-                        삭제
-                      </CustomButton>
+                      <CreatedAt>{comment?.createdAt}</CreatedAt>
+                      <MoreButton onClick={onClickHandler} />
+                      <InnerButtonWrap display={changeDisplay}>
+                        <ModifyButtonWrapper>
+                          <CustomButton onClick={setModify} idx={idx}>
+                            <EditIcon icon={faPenToSquare} />
+                            수정
+                          </CustomButton>
+                          <CustomButton onClick={deleteComment} idx={idx}>
+                            <DeleteIcon icon={faTrashCan} />
+                            삭제
+                          </CustomButton>
+                        </ModifyButtonWrapper>
+                      </InnerButtonWrap>
                     </ButtonWrap>
                   </CommentHeader>
 
@@ -173,13 +197,14 @@ const Comment = (props: any) => {
                     }}
                     value={modifiedComment}
                   />
-
-                  <CustomButton onClick={ModifidComment} idx={idx}>
-                    완료
-                  </CustomButton>
-                  <CustomButton onClick={setModify} idx={idx}>
-                    취소
-                  </CustomButton>
+                  <CompleteAndCancleBtn>
+                    <CustomButton onClick={ModifidComment} idx={idx}>
+                      완료
+                    </CustomButton>
+                    <CustomButton onClick={setModify} idx={idx}>
+                      취소
+                    </CustomButton>
+                  </CompleteAndCancleBtn>
                 </ModifyInputWrap>
               </div>
             )}
@@ -187,7 +212,13 @@ const Comment = (props: any) => {
         );
       })}
       {/* 입력영역 */}
+      <InputTitle>댓글 작성</InputTitle>
       <InputWrap>
+        <UserInform
+          style={{ color: '#222222', fontWeight: '500', marginBottom: '10px' }}
+        >
+          {authService?.currentUser?.email ?? ''}
+        </UserInform>
         <InputComment
           disabled={user ? false : true}
           //user있으면 이전 내용 없으면 로그인해주세요
@@ -202,8 +233,14 @@ const Comment = (props: any) => {
             }
           }}
           value={newComment}
+          placeholder='내용을 입력해주세요.'
         />
-        <CustomButton onClick={createComment}>등록</CustomButton>
+
+        <div style={{ width: '100%', textAlign: 'right', marginTop: '10px' }}>
+          <CustomButton onClick={createComment}>
+            <p style={{ fontWeight: '600', color: '#222222' }}>등록</p>
+          </CustomButton>
+        </div>
       </InputWrap>
     </Content>
   );
@@ -212,25 +249,25 @@ export default Comment;
 
 const Content = styled.div``;
 const CommentContainer = styled.div`
-  /* border-bottom: 1px solid #3b615b40; */
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
-  /* justify-content: center; */
-  /* align-items: center; */
-  border: 1px solid #c0bebe;
+  border: 1px solid #f1f6f6;
   border-radius: 10px;
+  position: relative;
 `;
 
 const CommentHeader = styled.div`
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: bold;
   height: 30px;
-  background-color: #f1ecec;
+  background-color: #f1f6f6;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  display: flex;
-  padding-left: 10px;
+  line-height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `;
@@ -238,37 +275,84 @@ const CreateInform = styled.div`
   display: flex;
 `;
 
+const EditIcon = styled(FontAwesomeIcon)`
+  width: 20px;
+`;
+
+const DeleteIcon = styled(FontAwesomeIcon)`
+  width: 20px;
+`;
+
 const CreatedAt = styled.p`
-  margin-left: 10px;
-  font-weight: 100;
-  font-size: 10px;
+  margin-right: 20px;
+  font-weight: 200;
+  font-size: 0.6rem;
 `;
 const Comments = styled.div`
   min-height: 60px;
   padding: 10px 5px;
-
   font-size: 15px;
   line-height: 25px;
 `;
+
+const InputTitle = styled.h2`
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 20px;
+`;
+
 const InputWrap = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 700px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 `;
 const InputComment = styled.textarea`
-  width: 610px;
+  width: 100%;
   height: 100px;
-  font-family: 'Pretendard-standard';
+  resize: none;
+  outline: none;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Pretendard Variable';
 `;
 const ModifyInputWrap = styled.div<{ isModifying: boolean }>`
   display: ${(props) => (props.isModifying == false ? 'none' : 'flex')};
 `;
 const CommentEmailWrap = styled.div<{ isModifying: boolean }>`
   display: ${(props) => (props.isModifying == true ? 'none' : '')};
-  /* width: 600px; */
 `;
 const ButtonWrap = styled.div<{ isModifying: boolean }>`
   display: ${(props) => (props.isModifying == true ? 'none' : 'flex')};
+`;
 
-  /* flex-direction: column; */
+const ModifyButtonWrapper = styled.div`
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0px;
+  top: 35px;
+  border-radius: 10px;
+  padding: 5px 0px;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
+  box-shadow: 7px 7px 10px -10px rgba(0, 0, 0, 0.3);
+`;
 
-  /* margin: auto; */
+const InnerButtonWrap = styled.div<{ display: string }>`
+  width: 0px;
+  display: ${(props) => props.display};
+`;
+
+const CompleteAndCancleBtn = styled.div`
+  width: 120px;
+  text-align: right;
+  padding: 20px;
+  margin: auto;
 `;

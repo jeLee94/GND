@@ -51,7 +51,7 @@ function Dashboard() {
     <>
       <Main>
         <ClassTitle>{data?.title}</ClassTitle>
-        <Lecturer>{data?.channelTitle}</Lecturer>
+        <ChannelName>{data?.channelTitle}</ChannelName>
         <ThumbNailImg src={data?.thumbnail[0]} />
 
         <LectureCotents>{data?.description}</LectureCotents>
@@ -88,72 +88,74 @@ const Main = styled.div`
   width: 700px;
   display: flex;
   flex-direction: column;
-  margin: 50px auto;
+  margin: 60px auto;
 `;
 
 const ThumbNailImg = styled.img`
-  height: 500px;
-  background-color: gray;
+  width: 700px;
   justify-content: center;
   align-items: center;
   display: flex;
 `;
 const ClassTitle = styled.div`
   margin: 30px 0 5px 0;
-  font-weight: bold;
-  font-size: 30px;
+  font-weight: 900;
+  font-size: 1.8rem;
 `;
 
-const Lecturer = styled.div`
-  margin: 5px 0 30px 0;
+const ChannelName = styled.div`
+  margin: 10px 0 20px 0;
+  font-weight: 500;
+  font-size: 1rem;
 `;
 const LectureCotents = styled.div`
-  /* background-color: gray; */
   width: 700px;
   margin: auto;
   height: auto;
-  line-height: 35px;
+  font-size: 1rem;
+  line-height: 32px;
   margin: 20px auto;
   text-overflow: ellipsis;
-  /* overflow: hidden; */
-  /* white-space: nowrap; */
 `;
 const ToggleHeader = styled.div`
   width: 700px;
   margin: 10px auto;
   height: 40px;
-  border-top: 5px solid #3b615b;
-  border-bottom: 5px solid #3b615b;
+  border-top: 2px solid #5f9c92;
+  border-bottom: 2px solid #5f9c92;
   display: flex;
   align-items: center;
-  /* justify-items: center; */
   justify-content: space-between;
 `;
-const ToggleTitle = styled.div`
-  font-weight: bold;
-`;
 
+const ToggleTitle = styled.div`
+  font-weight: 700;
+  font-size: 1rem;
+`;
 const LectureList = styled.div<{ display: string }>`
   width: 700px;
-  margin: 10px auto;
   display: ${(props) => props.display};
   flex-direction: column;
 `;
 const VideoOne = styled.div`
-  /* background-color:  */
-  width: 660px;
+  width: 700px;
   padding: 20px;
-  margin: 10px auto;
-  box-shadow: 1px 1px 5px gray;
+  margin: 7px auto;
+  border: 1px solid #f1f6f6;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1rem;
   a {
     text-decoration: none;
     color: black;
   }
   &:hover {
-    background-color: #3b615b;
-    a {
+    border: 1px solid #f8f9fa;
+    background-color: #f8f9fa;
+    box-shadow: 7px 7px 10px -10px rgba(0, 0, 0, 0.2);
+    /* a {
       color: white;
-    }
+    } */
   }
 `;
 const LectureTitle = styled.div``;
