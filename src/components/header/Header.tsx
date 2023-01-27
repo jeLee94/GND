@@ -35,7 +35,10 @@ const Header = () => {
     <NavContainer>
       <Nav>
         <NavBarLink to='/'>
-          <NavLogo src={'./image/GND_logo.png'} alt='로고' />
+          <NavLogo
+            src={process.env.PUBLIC_URL + 'image/GND_logo.png'}
+            alt='로고'
+          />
         </NavBarLink>
         {/* <NavBarLink to='/lecture'>lectures</NavBarLink>
         <NavBarLink to='/dashboard'>dashboard</NavBarLink> */}
