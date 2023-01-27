@@ -107,18 +107,22 @@ const RegisterPage = () => {
               }}
             />
           </IdSection>
-          <label htmlFor='password-confirm-input'>비밀번호 확인</label>
-          <input
-            id='password-confirm-input'
-            type='password'
-            value={userPwConfirm}
-            placeholder='비밀번호를 한번 더 입력하세요.'
-            onChange={(e) => {
-              setUserPwConfirm(e.target.value);
-            }}
-          />
-          <RegisterButton onClick={handleRegister}>등록</RegisterButton>
-          <LoginLink to={`/login`}> 로그인 하러가기</LoginLink>
+          <PwSection>
+            <label htmlFor='password-confirm-input'>비밀번호 확인</label>
+            <input
+              id='password-confirm-input'
+              type='password'
+              value={userPwConfirm}
+              placeholder='비밀번호를 한번 더 입력하세요.'
+              onChange={(e) => {
+                setUserPwConfirm(e.target.value);
+              }}
+            />
+          </PwSection>
+          <ButtonSection>
+            <RegisterButton onClick={handleRegister}>등록</RegisterButton>
+            <LoginLink to={`/login`}> 로그인 하러가기</LoginLink>
+          </ButtonSection>
         </Register>
       </RegisterContainer>
     </ResisterContainer>
@@ -190,23 +194,22 @@ const IdSection = styled.div`
   margin-bottom: 20px;
 `;
 
-// //이메일 인풋
-// const EmailInput = styled.input`
-//   width: 90%;
-//   padding: 10px 15px;
-// `;
+const PwSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 300px;
+  margin-bottom: 20px;
+`;
 
-// //비번 인풋
-// const PasswordInput = styled.input`
-//   width: 90%;
-//   padding: 10px 15px;
-// `;
-
-// //비번 확인 인풋
-// const PasswordAgainInput = styled.input`
-//   width: 90%;
-//   padding: 10px 15px;
-// `;
+const ButtonSection = styled.div`
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 //등록버튼
 const RegisterButton = styled.button`
