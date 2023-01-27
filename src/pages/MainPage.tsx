@@ -211,7 +211,6 @@ const Thumbnail = styled.img`
   width: 300px;
   height: 70%;
   box-shadow: 10px 10px 20px -15px rgba(0, 0, 0, 0.75);
-  /* box-shadow: 0 10px 4px -4px #e3e3e3; */
   display: flex;
   margin-bottom: 0.6rem;
 `;

@@ -75,16 +75,32 @@ const SearchResultContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 7rem;
+  @media screen and (max-width: 768px) {
+    width: 700px;
+    padding: 1.2em;
+  }
+  @media screen and (max-width: 500px) {
+    width: 500px;
+    padding: 1.2em;
+  }
 `;
 
 //* 컨텐츠컨테이너
 const ContentWrap = styled.div`
   width: 1320px;
-  /* padding-bottom: 20px; */
   display: flex;
   flex-wrap: wrap;
   grid-gap: 30px;
   text-align: center;
+  @media screen and (max-width: 768px) {
+    width: 700px;
+    padding: 1.2em;
+    justify-content: center;
+  }
+  @media screen and (max-width: 500px) {
+    width: 300px;
+    padding: 1.2em;
+  }
 `;
 
 //* 단일강의컨텐츠박스
@@ -92,6 +108,7 @@ const CantentBox = styled.div`
   max-width: 300px;
   height: 300px;
   margin-top: 10px;
+  flex-wrap: wrap;
 `;
 
 //* 썸네일
@@ -99,7 +116,7 @@ const Thumbnail = styled.img`
   width: 300px;
   height: 70%;
   display: flex;
-  box-shadow: 14px 14px 37px -25px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 20px -15px rgba(0, 0, 0, 0.75);
 `;
 
 //* 강의내용 박스
