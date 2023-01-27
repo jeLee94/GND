@@ -87,7 +87,7 @@ const MainPage = () => {
               <div ref={setTarget} />
               <NoMoreFeeds>
                 {noMore && (
-                  <NoMoreFeeds>더 이상 불러올 피드가 없어요</NoMoreFeeds>
+                  <NoMoreFeeds>더 이상 불러올 영상이 없어요</NoMoreFeeds>
                 )}
               </NoMoreFeeds>
               <div>{loadingMore}</div>
