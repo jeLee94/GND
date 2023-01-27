@@ -22,7 +22,7 @@ const InsertData = () => {
     e.preventDefault();
     axios
       .get(
-        //단일 영상용
+        //단일 영상용 q=검색하고 싶은 단어
         'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
         //플레이리스트용
         // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
@@ -30,7 +30,6 @@ const InsertData = () => {
         // 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
       )
       .then((res) => {
-        console.log('API요청 완료', res);
         setPlaylist(res.data.items);
       })
       .catch((err) => {
@@ -40,8 +39,8 @@ const InsertData = () => {
     {
       playlist &&
         playlist.map((i: any, idx) => {
-          console.log(i, idx);
           if (i?.id?.playlistId) {
+            //플레이리스트일때
             addDoc(collection(dbService, 'CLASS'), {
               category: 'react',
               channelId: i?.snippet?.channelId,
@@ -51,6 +50,7 @@ const InsertData = () => {
               thumbnail: i?.snippet?.thumbnails.high.url,
             });
           } else if (i?.id?.videoId || i?.id) {
+            //단일 영상일떄
             addDoc(collection(dbService, 'CLASS'), {
               category: 'cs',
               channelId: i?.snippet?.channelId,
@@ -85,7 +85,6 @@ const InsertData = () => {
   const getPlaylistId = async () => {
     await promise.then((data: any) => {
       setPlaylistIdList(data);
-      // setPlaylistIdList(data.map((d: any) => d.playlistId));
     });
   };
   console.log('d', playlistIdList);
@@ -95,11 +94,11 @@ const InsertData = () => {
     let k = 0;
     while (k < playlistIdList.length) {
       setvideoItems([]);
-      console.log('k', k);
-      console.log(
-        `playlistIdList[${k}].playlistId`,
-        playlistIdList[k].playlistId
-      );
+
+      // console.log(
+      //   `playlistIdList[${k}].playlistId`,
+      //   playlistIdList[k].playlistId
+      // );
       await axios
         .get(
           //플레이리스트 아이디를 통해 videoId가 있는 리스트 가져오기
@@ -152,7 +151,7 @@ const InsertData = () => {
             updateDoc(docRef, {
               videotitle: arrayUnion(i?.snippet?.title),
               description: arrayUnion(i?.snippet?.description ?? '없음'),
-              videoId: arrayUnion(i?.id?.videoId),
+              videoId: arrayUnion(i?.id?.videoId), //내배캠용은 인자 다름 주의
               thumbnail: arrayUnion(i?.snippet?.thumbnails?.high.url ?? '없음'),
             })
               .then(() => console.log('완료!'))

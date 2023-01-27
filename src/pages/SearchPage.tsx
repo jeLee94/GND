@@ -17,7 +17,6 @@ const SearchPage = () => {
 
   // 현재 URL에서 title의 값 가져오기
   let search = getQuery.get('title');
-  // console.log('search', search);
 
   // FB에서 검색 영상 데이터 가져오기
   const searchVideoRequest = async (search: any) => {
@@ -27,15 +26,14 @@ const SearchPage = () => {
       where('title', '>=', search),
       where('title', '<=', search + '\uf8ff')
     );
-    console.log('q', q);
+
     const querySnapshot = await getDocs(q);
-    console.log('querySnapshot', querySnapshot);
+
     const searchItem: any[] = [];
     querySnapshot.docs.forEach((doc) => {
-      console.log('doc', doc);
       searchItem.push({ id: doc.id, ...doc.data() });
     });
-    console.log('searchItem', searchItem);
+
     setData(searchItem);
 
     return searchItem;

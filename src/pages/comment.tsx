@@ -19,6 +19,7 @@ const Comment = (props: any) => {
   const { classID } = props;
   const [newComment, setNewComment] = useState('');
   const [modifiedComment, setModifiedComment] = useState('');
+  const [prevComment, setPrevComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
   const [isModifying, setIsModifying] = useState<any[]>([]);
   const user = authService?.currentUser;
@@ -47,7 +48,7 @@ const Comment = (props: any) => {
         classID: classID,
       })
         .then(() => {
-          console.log('댓완료');
+          setNewComment('');
         })
         .catch(console.error);
     }
@@ -62,7 +63,6 @@ const Comment = (props: any) => {
       try {
         await deleteDoc(doc(dbService, 'comment', commentList[idx]?.id));
         setCommentList(commentList.splice(idx, 1));
-        console.log('삭제완료!');
       } catch (err) {
         console.error(err);
       }
@@ -72,8 +72,6 @@ const Comment = (props: any) => {
 
   //댓글 보기
   const viewComment = async () => {
-    console.log('view!');
-
     //classID가 좀 늦게 호출돼서 if로 예외처리
     if (classID) {
       const q = query(
@@ -94,30 +92,37 @@ const Comment = (props: any) => {
     }
   };
 
-  //댓글 수정
+  //댓글 수정, 수정 취소
   const setModify = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
+
     isModifying[idx] == true
       ? (isModifying[idx] = false)
-      : (isModifying[idx] = true);
+      : (isModifying[idx] = true) &&
+        setPrevComment(
+          e.currentTarget.parentNode?.parentNode?.parentNode?.childNodes[1]
+            .textContent as string
+        );
+
     setIsModifying([...isModifying]);
   };
 
   //댓글 수정 완료 버튼 클릭시
   const ModifidComment = async (e: React.MouseEvent, idx: number) => {
-    // console.log(isModifying);
     e.preventDefault();
-    isModifying[idx] == true
-      ? (isModifying[idx] = false)
-      : (isModifying[idx] = true);
+
+    isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
     setIsModifying([...isModifying]);
     const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
-    // console.log('modified', idx);
+
     try {
       await updateDoc(commentRef, {
         comment: modifiedComment,
       });
+
       viewComment();
+      setModifiedComment('');
+      setPrevComment('');
     } catch (err) {
       console.error(err);
     }
@@ -126,26 +131,47 @@ const Comment = (props: any) => {
   return (
     <Content>
       {commentList?.map((comment: any, idx: any) => {
-        // console.log('comment', comment);
-        // console.log(test);
         return (
           <CommentContainer key={comment.id}>
-            {comment.createID !== user?.uid ? (
+            {/* 현재 user가 쓴 글인지 판별 */}
+            {comment?.createID !== user?.uid ? (
+              // 현재 유저가 쓴 글이 아니면 내용만 보여주고
               <CommentEmailWrap isModifying={false}>
-                <Email> {comment.email}</Email>
+                <CommentHeader>
+                  <CreateInform>
+                    {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
+                  </CreateInform>
+                </CommentHeader>
                 <Comments> {comment.comment}</Comments>
               </CommentEmailWrap>
             ) : (
+              //현재 유저가 쓴 글이면 수정, 삭제 버튼까지 보여준다.
               <div>
                 <CommentEmailWrap isModifying={isModifying[idx]}>
-                  <Email> {comment.email}</Email>
+                  <CommentHeader>
+                    <CreateInform>
+                      {comment?.email}
+                      <CreatedAt>{comment?.createdAt}</CreatedAt>
+                    </CreateInform>
+                    <ButtonWrap isModifying={isModifying[idx]}>
+                      <CustomButton onClick={setModify} idx={idx}>
+                        수정
+                      </CustomButton>
+                      <CustomButton onClick={deleteComment} idx={idx}>
+                        삭제
+                      </CustomButton>
+                    </ButtonWrap>
+                  </CommentHeader>
+
                   <Comments> {comment.comment}</Comments>
                 </CommentEmailWrap>
                 <ModifyInputWrap isModifying={isModifying[idx]}>
                   <InputComment
+                    placeholder={prevComment}
                     onChange={(e) => {
-                      setModifiedComment(e.target.value);
+                      setModifiedComment(e.target?.value);
                     }}
+                    value={modifiedComment}
                   />
 
                   <CustomButton onClick={ModifidComment} idx={idx}>
@@ -157,32 +183,17 @@ const Comment = (props: any) => {
                 </ModifyInputWrap>
               </div>
             )}
-
-            {comment.createID === user?.uid ? (
-              <ButtonWrap isModifying={isModifying[idx]}>
-                <CustomButton
-                  onClick={setModify}
-                  idx={idx}
-                  commentID={comment?.commentID}
-                >
-                  수정
-                </CustomButton>
-                <CustomButton onClick={deleteComment} idx={idx}>
-                  삭제
-                </CustomButton>
-              </ButtonWrap>
-            ) : null}
           </CommentContainer>
         );
       })}
       {/* 입력영역 */}
       <InputWrap>
         <InputComment
-          onClick={() => {
-            if (!user) {
-              alert('로그인 해주세요!');
-            }
-          }}
+          disabled={user ? false : true}
+          //user있으면 이전 내용 없으면 로그인해주세요
+          // placeholder={}
+          // onClick={(e) => {
+          // }}
           onChange={(e) => {
             if (user) {
               setNewComment(e.target.value);
@@ -190,6 +201,7 @@ const Comment = (props: any) => {
               alert('로그인 해주세요!');
             }
           }}
+          value={newComment}
         />
         <CustomButton onClick={createComment}>등록</CustomButton>
       </InputWrap>
@@ -210,16 +222,26 @@ const CommentContainer = styled.div`
   border-radius: 10px;
 `;
 
-const Email = styled.div`
+const CommentHeader = styled.div`
   font-size: 12px;
   font-weight: bold;
   height: 30px;
   background-color: #f1ecec;
   align-items: center;
+  justify-content: space-between;
   display: flex;
   padding-left: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+`;
+const CreateInform = styled.div`
+  display: flex;
+`;
+
+const CreatedAt = styled.p`
+  margin-left: 10px;
+  font-weight: 100;
+  font-size: 10px;
 `;
 const Comments = styled.div`
   min-height: 60px;
@@ -247,6 +269,6 @@ const ButtonWrap = styled.div<{ isModifying: boolean }>`
   display: ${(props) => (props.isModifying == true ? 'none' : 'flex')};
 
   /* flex-direction: column; */
-  justify-content: center;
-  margin: auto;
+
+  /* margin: auto; */
 `;

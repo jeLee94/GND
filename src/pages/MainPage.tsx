@@ -38,9 +38,7 @@ const MainPage = () => {
     categorylist
   );
 
-  useEffect(() => {
-    // console.log(datas);
-  }, [category]);
+  useEffect(() => {}, [category]);
 
   return (
     <Container>

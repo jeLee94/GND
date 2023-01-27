@@ -16,7 +16,6 @@ const LecturePage = () => {
   const parameters = useParams<string>();
   const parameter = parameters?.id as string;
   const param = parameter.split('&'); //param[0]=videoId param[1]=title
-  console.log(param);
 
   return (
     <Container>

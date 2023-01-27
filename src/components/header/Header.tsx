@@ -29,7 +29,6 @@ const Header = () => {
     if (!!authService.currentUser?.uid) {
       signOut(authService)
         .then(() => {
-          console.log('로그아웃 성공');
           navigate('/login');
         })
         .catch((err: any) => alert(err));
