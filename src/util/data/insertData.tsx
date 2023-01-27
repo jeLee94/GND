@@ -30,7 +30,6 @@ const InsertData = () => {
         // 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
       )
       .then((res) => {
-        console.log('API요청 완료', res);
         setPlaylist(res.data.items);
       })
       .catch((err) => {
@@ -40,7 +39,6 @@ const InsertData = () => {
     {
       playlist &&
         playlist.map((i: any, idx) => {
-          console.log(i, idx);
           if (i?.id?.playlistId) {
             //플레이리스트일때
             addDoc(collection(dbService, 'CLASS'), {
@@ -96,11 +94,11 @@ const InsertData = () => {
     let k = 0;
     while (k < playlistIdList.length) {
       setvideoItems([]);
-      console.log('k', k);
-      console.log(
-        `playlistIdList[${k}].playlistId`,
-        playlistIdList[k].playlistId
-      );
+
+      // console.log(
+      //   `playlistIdList[${k}].playlistId`,
+      //   playlistIdList[k].playlistId
+      // );
       await axios
         .get(
           //플레이리스트 아이디를 통해 videoId가 있는 리스트 가져오기

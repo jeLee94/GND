@@ -30,7 +30,6 @@ const usePagination = (
 
   // 첫번째 페이지 요청 함수
   const getFirstPage = useCallback(async () => {
-    // console.log('통과1', category);
     const queryRef = query(
       collection(dbService, collectionName),
       category !== 'all'
@@ -105,7 +104,6 @@ const usePagination = (
 
   // 처음 화면이 랜더링 되었을때 첫번째 페이지를 문서를 가져오도록 설정
   useEffect(() => {
-    // console.log('update!', category);
     getFirstPage();
   }, [category]);
 

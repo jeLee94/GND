@@ -76,7 +76,6 @@ const RegisterPage = () => {
           alert('이미 사용중인 아이디입니다.');
         }
       });
-    console.log(userEmail, userPassword);
   };
   return (
     <ResisterContainer>

@@ -48,7 +48,6 @@ const Comment = (props: any) => {
         classID: classID,
       })
         .then(() => {
-          console.log('댓완료');
           setNewComment('');
         })
         .catch(console.error);
@@ -64,7 +63,6 @@ const Comment = (props: any) => {
       try {
         await deleteDoc(doc(dbService, 'comment', commentList[idx]?.id));
         setCommentList(commentList.splice(idx, 1));
-        console.log('삭제완료!');
       } catch (err) {
         console.error(err);
       }
@@ -74,8 +72,6 @@ const Comment = (props: any) => {
 
   //댓글 보기
   const viewComment = async () => {
-    console.log('view!');
-
     //classID가 좀 늦게 호출돼서 if로 예외처리
     if (classID) {
       const q = query(
@@ -113,13 +109,12 @@ const Comment = (props: any) => {
 
   //댓글 수정 완료 버튼 클릭시
   const ModifidComment = async (e: React.MouseEvent, idx: number) => {
-    // console.log(isModifying);
     e.preventDefault();
 
     isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
     setIsModifying([...isModifying]);
     const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
-    // console.log('modified', idx);
+
     try {
       await updateDoc(commentRef, {
         comment: modifiedComment,
@@ -198,7 +193,6 @@ const Comment = (props: any) => {
           //user있으면 이전 내용 없으면 로그인해주세요
           // placeholder={}
           // onClick={(e) => {
-          //   console.log(e.target);
           // }}
           onChange={(e) => {
             if (user) {
