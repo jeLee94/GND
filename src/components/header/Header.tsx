@@ -15,8 +15,13 @@ const Header = () => {
   // 검색창 - 검색어 입력시 페이지 이동
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    navigate(`/search?title=${search}`);
-    setSearch('');
+    if (!event.target.value) {
+      alert('내용을 입력해주세요.');
+      return;
+    } else {
+      navigate(`/search?title=${search}`);
+      setSearch('');
+    }
   };
 
   // 로그아웃 요청
@@ -24,7 +29,6 @@ const Header = () => {
     if (!!authService.currentUser?.uid) {
       signOut(authService)
         .then(() => {
-          console.log('로그아웃 성공');
           navigate('/login');
         })
         .catch((err: any) => alert(err));
@@ -159,6 +163,9 @@ const SearchIcon = styled(FontAwesomeIcon)`
 const UserInform = styled.div`
   margin-right: 30px;
   font-size: 15px;
+  color: #ffffff;
+  @media screen and (max-width: 768px) {
+    display: none;
 `;
 // 로그인 버튼
 const LogInButton = styled.button`
