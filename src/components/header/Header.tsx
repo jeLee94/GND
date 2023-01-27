@@ -33,9 +33,11 @@ const Header = () => {
   return (
     <NavContainer>
       <Nav>
-        <NavBarLink to='/'>GND</NavBarLink>
-        <NavBarLink to='/lecture'>lectures</NavBarLink>
-        <NavBarLink to='/dashboard'>dashboard</NavBarLink>
+        <NavBarLink to='/'>
+          <NavLogo src='GND_logo.png' alt='로고' />
+        </NavBarLink>
+        {/* <NavBarLink to='/lecture'>lectures</NavBarLink>
+        <NavBarLink to='/dashboard'>dashboard</NavBarLink> */}
         <RightSection>
           <SearchForm onSubmit={handleSubmit}>
             <SeachInput
@@ -71,7 +73,7 @@ const NavContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index:2;
+  z-index: 2;
 `;
 
 const Nav = styled.nav`
@@ -86,6 +88,10 @@ const Nav = styled.nav`
 const NavBarLink = styled(NavLink)`
   text-decoration: none;
   color: white;
+`;
+
+const NavLogo = styled.img`
+  width: 140px;
 `;
 
 const RightSection = styled.section`
@@ -107,6 +113,11 @@ const SeachInput = styled.input`
   margin-right: 8px;
   padding: 5px;
   border-radius: 2px;
+  background-color: #bfccc7;
+  font-size: 0.8rem;
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const SearchIcon = styled(FontAwesomeIcon)`
@@ -124,4 +135,8 @@ const LogInButton = styled.button`
   color: #ffffff;
   font-size: 0.8rem;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
+  &:hover {
+    background-color: #2b5049;
+  }
 `;
