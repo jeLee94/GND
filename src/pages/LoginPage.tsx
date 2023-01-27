@@ -122,7 +122,6 @@ const LoginPage = () => {
               구글로 로그인
             </GoogleLoginButton>
           </ButtonSection>
-
           <RegisterLink to={`/register`}>회원가입하러가기</RegisterLink>
         </Login>
       </LoginWrapper>

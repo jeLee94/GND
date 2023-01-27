@@ -37,8 +37,7 @@ const Header = () => {
         <NavBarLink to='/'>
           <NavLogo src={'./image/GND_logo.png'} alt='로고' />
         </NavBarLink>
-        {/* <NavBarLink to='/lecture'>lectures</NavBarLink>
-        <NavBarLink to='/dashboard'>dashboard</NavBarLink> */}
+
         <RightSection>
           <SearchForm onSubmit={handleSubmit}>
             <SeachInput
@@ -75,6 +74,12 @@ const NavContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 2;
+
+  @media screen and (max-width: 768px) {
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 `;
 
 const Nav = styled.nav`
@@ -84,6 +89,12 @@ const Nav = styled.nav`
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
 `;
 
 const NavBarLink = styled(NavLink)`
@@ -93,24 +104,34 @@ const NavBarLink = styled(NavLink)`
 
 const NavLogo = styled.img`
   width: 140px;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const RightSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 // 검색창
 const SearchForm = styled.form`
   margin-right: 30px;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    margin-right: 0;
+  }
 `;
 
 const SeachInput = styled.input`
   border: none;
   outline: none;
   width: 200px;
-  max-height: 22px;
   margin-right: 8px;
   padding: 5px;
   border-radius: 2px;
@@ -119,11 +140,17 @@ const SeachInput = styled.input`
   &:focus {
     background-color: white;
   }
+  @media screen and (max-width: 768px) {
+    min-width: 350px;
+  }
 `;
 
 const SearchIcon = styled(FontAwesomeIcon)`
   color: #ffffff;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 // 로그인 버튼
@@ -139,5 +166,8 @@ const LogInButton = styled.button`
   transition: all 200ms ease-in-out;
   &:hover {
     background-color: #2b5049;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
