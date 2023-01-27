@@ -21,9 +21,8 @@ const Comment = (props: any) => {
   const [modifiedComment, setModifiedComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
   const [isModifying, setIsModifying] = useState<any[]>([]);
-  const [test, setTest] = useState(false);
   const user = authService?.currentUser;
-  let testlist: boolean[] = [];
+
   // todo: input창 제출 후 지우기
   // form으로 수정해서 엔터 가능하도록
   //수정기능 추가
@@ -35,6 +34,7 @@ const Comment = (props: any) => {
   //댓글 생성
   const createComment = async (e: React.MouseEvent) => {
     e.preventDefault();
+
     if (newComment === '') {
       alert('내용을 입력하세요');
     } else {
@@ -95,7 +95,7 @@ const Comment = (props: any) => {
   };
 
   //댓글 수정
-  const setModify = (e: React.MouseEvent, idx: number, commentID: any) => {
+  const setModify = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
     isModifying[idx] == true
       ? (isModifying[idx] = false)
@@ -105,24 +105,29 @@ const Comment = (props: any) => {
 
   //댓글 수정 완료 버튼 클릭시
   const ModifidComment = async (e: React.MouseEvent, idx: number) => {
-    console.log(isModifying);
+    // console.log(isModifying);
     e.preventDefault();
-    // const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
-    // try {
-    //   await updateDoc(commentRef, {
-    //     comment: modifiedComment,
-    //   });
-    //   viewComment();
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    isModifying[idx] == true
+      ? (isModifying[idx] = false)
+      : (isModifying[idx] = true);
+    setIsModifying([...isModifying]);
+    const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
+    // console.log('modified', idx);
+    try {
+      await updateDoc(commentRef, {
+        comment: modifiedComment,
+      });
+      viewComment();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <Content>
       {commentList?.map((comment: any, idx: any) => {
-        console.log('comment', comment);
-        console.log(test);
+        // console.log('comment', comment);
+        // console.log(test);
         return (
           <CommentContainer key={comment.id}>
             {comment.createID !== user?.uid ? (
@@ -143,7 +148,9 @@ const Comment = (props: any) => {
                     }}
                   />
 
-                  <CustomButton onClick={ModifidComment}>완료</CustomButton>
+                  <CustomButton onClick={ModifidComment} idx={idx}>
+                    완료
+                  </CustomButton>
                   <CustomButton onClick={setModify} idx={idx}>
                     취소
                   </CustomButton>
@@ -171,8 +178,17 @@ const Comment = (props: any) => {
       {/* 입력영역 */}
       <InputWrap>
         <InputComment
+          onClick={() => {
+            if (!user) {
+              alert('로그인 해주세요!');
+            }
+          }}
           onChange={(e) => {
-            setNewComment(e.target.value);
+            if (user) {
+              setNewComment(e.target.value);
+            } else {
+              alert('로그인 해주세요!');
+            }
           }}
         />
         <CustomButton onClick={createComment}>등록</CustomButton>

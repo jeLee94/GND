@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import React from 'react';
 
 const CustomButton = (props: any): any => {
-  const { onClick, children, idx, commentID } = props;
+  const { onClick, children, idx } = props;
   return (
     <>
-      <Button onClick={(e) => onClick(e, idx, commentID)}>{children}</Button>
+      <Button onClick={(e) => onClick(e, idx)}>{children}</Button>
     </>
   );
 };
