@@ -19,6 +19,7 @@ const Comment = (props: any) => {
   const { classID } = props;
   const [newComment, setNewComment] = useState('');
   const [modifiedComment, setModifiedComment] = useState('');
+  const [prevComment, setPrevComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
   const [isModifying, setIsModifying] = useState<any[]>([]);
   const user = authService?.currentUser;
@@ -48,6 +49,7 @@ const Comment = (props: any) => {
       })
         .then(() => {
           console.log('댓완료');
+          setNewComment('');
         })
         .catch(console.error);
     }
@@ -97,6 +99,11 @@ const Comment = (props: any) => {
   //댓글 수정
   const setModify = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
+    setPrevComment(
+      e.currentTarget.parentElement?.parentElement?.childNodes[0].childNodes[0]
+        .childNodes[1].textContent as string
+    );
+
     isModifying[idx] == true
       ? (isModifying[idx] = false)
       : (isModifying[idx] = true);
@@ -107,9 +114,8 @@ const Comment = (props: any) => {
   const ModifidComment = async (e: React.MouseEvent, idx: number) => {
     // console.log(isModifying);
     e.preventDefault();
-    isModifying[idx] == true
-      ? (isModifying[idx] = false)
-      : (isModifying[idx] = true);
+
+    isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
     setIsModifying([...isModifying]);
     const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
     // console.log('modified', idx);
@@ -117,35 +123,45 @@ const Comment = (props: any) => {
       await updateDoc(commentRef, {
         comment: modifiedComment,
       });
+
       viewComment();
+      setModifiedComment('');
     } catch (err) {
       console.error(err);
     }
   };
-
+  console.log('prev', prevComment);
   return (
     <Content>
       {commentList?.map((comment: any, idx: any) => {
-        // console.log('comment', comment);
-        // console.log(test);
         return (
           <CommentContainer key={comment.id}>
-            {comment.createID !== user?.uid ? (
+            {/* 현재 user가 쓴 글인지 판별 */}
+            {comment?.createID !== user?.uid ? (
+              // 현재 유저가 쓴 글이 아니면 내용만 보여주고
               <CommentEmailWrap isModifying={false}>
-                <Email> {comment.email}</Email>
+                <Email>
+                  {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
+                </Email>
                 <Comments> {comment.comment}</Comments>
               </CommentEmailWrap>
             ) : (
+              //현재 유저가 쓴 글이면 수정, 삭제 버튼까지 보여준다.
+
               <div>
                 <CommentEmailWrap isModifying={isModifying[idx]}>
-                  <Email> {comment.email}</Email>
+                  <Email>
+                    {comment?.email} <CreatedAt>{comment?.createdAt}</CreatedAt>
+                  </Email>
                   <Comments> {comment.comment}</Comments>
                 </CommentEmailWrap>
                 <ModifyInputWrap isModifying={isModifying[idx]}>
                   <InputComment
+                    placeholder={prevComment}
                     onChange={(e) => {
-                      setModifiedComment(e.target.value);
+                      setModifiedComment(e.target?.value);
                     }}
+                    value={modifiedComment}
                   />
 
                   <CustomButton onClick={ModifidComment} idx={idx}>
@@ -178,11 +194,12 @@ const Comment = (props: any) => {
       {/* 입력영역 */}
       <InputWrap>
         <InputComment
-          onClick={() => {
-            if (!user) {
-              alert('로그인 해주세요!');
-            }
-          }}
+          disabled={user ? false : true}
+          //user있으면 이전 내용 없으면 로그인해주세요
+          // placeholder={}
+          // onClick={(e) => {
+          //   console.log(e.target);
+          // }}
           onChange={(e) => {
             if (user) {
               setNewComment(e.target.value);
@@ -190,6 +207,7 @@ const Comment = (props: any) => {
               alert('로그인 해주세요!');
             }
           }}
+          value={newComment}
         />
         <CustomButton onClick={createComment}>등록</CustomButton>
       </InputWrap>
@@ -220,6 +238,12 @@ const Email = styled.div`
   padding-left: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+`;
+
+const CreatedAt = styled.p`
+  margin-left: 10px;
+  font-weight: 100;
+  font-size: 10px;
 `;
 const Comments = styled.div`
   min-height: 60px;
