@@ -5,6 +5,7 @@ import Myslide from '../components/slide/Myslide';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
 import DropDownList from '../components/dropdown/DropdownList';
+import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
 
 const MainPage = () => {
   const categorylist = [
