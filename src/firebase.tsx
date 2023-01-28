@@ -10,20 +10,20 @@ import { getStorage } from 'firebase/storage';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   //gnd-project
-  // apiKey: 'AIzaSyClfU4LhUElDLP2_d_wiCDiX5JKS_OzCk8',
-  // authDomain: 'gnd-project-864c1.firebaseapp.com',
-  // projectId: 'gnd-project-864c1',
-  // storageBucket: 'gnd-project-864c1.appspot.com',
-  // messagingSenderId: '962932000525',
-  // appId: '1:962932000525:web:6eebfc8c01c1c188985244',
+  apiKey: 'AIzaSyClfU4LhUElDLP2_d_wiCDiX5JKS_OzCk8',
+  authDomain: 'gnd-project-864c1.firebaseapp.com',
+  projectId: 'gnd-project-864c1',
+  storageBucket: 'gnd-project-864c1.appspot.com',
+  messagingSenderId: '962932000525',
+  appId: '1:962932000525:web:6eebfc8c01c1c188985244',
 
   //gnd-project2
-  apiKey: 'AIzaSyBQ2kRtpLyecybtv5tz61NdNfpb-5SG8Ok',
-  authDomain: 'gnd-project-02.firebaseapp.com',
-  projectId: 'gnd-project-02',
-  storageBucket: 'gnd-project-02.appspot.com',
-  messagingSenderId: '444827852717',
-  appId: '1:444827852717:web:7d9cc25e6500a1487d4b24',
+  // apiKey: 'AIzaSyBQ2kRtpLyecybtv5tz61NdNfpb-5SG8Ok',
+  // authDomain: 'gnd-project-02.firebaseapp.com',
+  // projectId: 'gnd-project-02',
+  // storageBucket: 'gnd-project-02.appspot.com',
+  // messagingSenderId: '444827852717',
+  // appId: '1:444827852717:web:7d9cc25e6500a1487d4b24',
 
   //정은 테스트용
   // apiKey: 'AIzaSyBHkll_gywcnDGyOYrcqDHgSZsI54YgYCY',
