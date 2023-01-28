@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import Myslide from '../components/slide/Myslide';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import usePagination from '../hook/usePagination';
 import DropDownList from '../components/dropdown/DropdownList';
@@ -40,8 +39,6 @@ const MainPage = () => {
     categorylist,
     sortby
   );
-
-  // useEffect(() => {}, [category, sortby]);
 
   const list = [
     '제목 오름차순',
@@ -112,7 +109,7 @@ const MainPage = () => {
               <div ref={setTarget} />
               <NoMoreFeeds>
                 {noMore && (
-                  <NoMoreFeeds>더 이상 불러올 영상이 없어요</NoMoreFeeds>
+                  <NoMoreFeeds>더 이상 불러올 영상이 없어요:O(</NoMoreFeeds>
                 )}
               </NoMoreFeeds>
               <div>{loadingMore}</div>

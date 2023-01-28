@@ -27,9 +27,7 @@ const LecturePage = () => {
     <Container>
       <LectureHeader>
         <LectureTitle>{param[1]}</LectureTitle>
-        <Link to={`/dashboard/${param[0]}`}>
-          <BackButton onClick={BackToCourse}>Back to Course</BackButton>
-        </Link>
+        <BackButton onClick={BackToCourse}>Back to Course</BackButton>
       </LectureHeader>
       <YouTube
         videoId={param[0]}
