@@ -31,33 +31,25 @@ const Comment = (props: any) => {
   const [prevComment, setPrevComment] = useState('');
   const [commentList, setCommentList] = useState<any[]>([]);
   const [isModifying, setIsModifying] = useState<any[]>([]);
+  const [changeDisplay, setChangeDisplay] = useState('none');
   const user = authService?.currentUser;
 
-  // todo: input창 제출 후 지우기
-  // form으로 수정해서 엔터 가능하도록
-  //수정기능 추가
-  // createAt 활용
   useEffect(() => {
-    viewComment();
+    viewCommentHandler();
   }, [classID]);
 
-  const [chagneButton, setChangeButton] = useState('more');
-  const [changeDisplay, setChangeDisplay] = useState('flex');
-
-  const onClickHandler = () => {
+  const changeDisplayHandler = () => {
     changeDisplay == 'flex'
       ? setChangeDisplay('none')
       : setChangeDisplay('flex');
-
-    chagneButton == 'more' ? setChangeButton('') : setChangeButton('more');
   };
 
   //댓글 생성
-  const createComment = async (e: React.MouseEvent) => {
+  const createCommentHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (newComment === '') {
-      alert('내용을 입력하세요');
+    if (newComment.trim() === '') {
+      alert('내용을 입력해 주세요.');
     } else {
       await addDoc(collection(dbService, 'comment'), {
         commentID: Date.now(),
@@ -72,11 +64,11 @@ const Comment = (props: any) => {
         })
         .catch(console.error);
     }
-    viewComment();
+    viewCommentHandler();
   };
 
   //댓글 삭제
-  const deleteComment = async (e: React.MouseEvent, idx: number) => {
+  const deleteCommentHandler = async (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
     const ok = window.confirm('정말 삭제하시겠습니까?');
     if (ok) {
@@ -87,11 +79,11 @@ const Comment = (props: any) => {
         console.error(err);
       }
     }
-    viewComment();
+    viewCommentHandler();
   };
 
   //댓글 보기
-  const viewComment = async () => {
+  const viewCommentHandler = async () => {
     //classID가 좀 늦게 호출돼서 if로 예외처리
     if (classID) {
       const q = query(
@@ -113,38 +105,41 @@ const Comment = (props: any) => {
   };
 
   //댓글 수정, 수정 취소
-  const setModify = (e: React.MouseEvent, idx: number) => {
+  const setModifyHandler = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
 
     isModifying[idx] == true
       ? (isModifying[idx] = false)
       : (isModifying[idx] = true) &&
         setPrevComment(
-          e.currentTarget.parentNode?.parentNode?.parentNode?.childNodes[1]
-            .textContent as string
+          e.currentTarget.parentNode?.parentNode?.parentNode?.parentNode
+            ?.parentNode?.childNodes[1].textContent as string
         );
 
     setIsModifying([...isModifying]);
   };
 
   //댓글 수정 완료 버튼 클릭시
-  const ModifidComment = async (e: React.MouseEvent, idx: number) => {
+  const ModifiedCommentHandler = async (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
 
     isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
     setIsModifying([...isModifying]);
     const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
+    if (modifiedComment.trim() === '') {
+      alert('내용을 입력해 주세요.');
+    } else {
+      try {
+        await updateDoc(commentRef, {
+          comment: modifiedComment,
+        });
 
-    try {
-      await updateDoc(commentRef, {
-        comment: modifiedComment,
-      });
-
-      viewComment();
-      setModifiedComment('');
-      setPrevComment('');
-    } catch (err) {
-      console.error(err);
+        viewCommentHandler();
+        setModifiedComment('');
+        setPrevComment('');
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -171,14 +166,17 @@ const Comment = (props: any) => {
                     <CreateInform>{comment?.email}</CreateInform>
                     <ButtonWrap isModifying={isModifying[idx]}>
                       <CreatedAt>{comment?.createdAt}</CreatedAt>
-                      <MoreButton onClick={onClickHandler} />
+                      <MoreButton onClick={changeDisplayHandler} />
                       <InnerButtonWrap display={changeDisplay}>
-                        <ModifyButtonWrapper>
-                          <CustomButton onClick={setModify} idx={idx}>
+                        <ModifyButtonWrapper onClick={changeDisplayHandler}>
+                          <CustomButton onClick={setModifyHandler} idx={idx}>
                             <EditIcon icon={faPenToSquare} />
                             수정
                           </CustomButton>
-                          <CustomButton onClick={deleteComment} idx={idx}>
+                          <CustomButton
+                            onClick={deleteCommentHandler}
+                            idx={idx}
+                          >
                             <DeleteIcon icon={faTrashCan} />
                             삭제
                           </CustomButton>
@@ -198,10 +196,10 @@ const Comment = (props: any) => {
                     value={modifiedComment}
                   />
                   <CompleteAndCancleBtn>
-                    <CustomButton onClick={ModifidComment} idx={idx}>
+                    <CustomButton onClick={ModifiedCommentHandler} idx={idx}>
                       완료
                     </CustomButton>
-                    <CustomButton onClick={setModify} idx={idx}>
+                    <CustomButton onClick={setModifyHandler} idx={idx}>
                       취소
                     </CustomButton>
                   </CompleteAndCancleBtn>
@@ -219,28 +217,27 @@ const Comment = (props: any) => {
         >
           {authService?.currentUser?.email ?? ''}
         </UserInform>
-        <InputComment
-          disabled={user ? false : true}
-          //user있으면 이전 내용 없으면 로그인해주세요
-          // placeholder={}
-          // onClick={(e) => {
-          // }}
-          onChange={(e) => {
-            if (user) {
-              setNewComment(e.target.value);
-            } else {
-              alert('로그인 해주세요!');
-            }
-          }}
-          value={newComment}
-          placeholder='내용을 입력해주세요.'
-        />
+        <form onSubmit={(e) => createCommentHandler}>
+          <InputComment
+            required
+            disabled={user ? false : true}
+            onChange={(e) => {
+              if (user) {
+                setNewComment(e.target.value);
+              } else {
+                alert('로그인 해주세요!');
+              }
+            }}
+            value={newComment}
+            placeholder={user ? '내용을 입력해 주세요.' : '로그인 해주세요!'}
+          />
 
-        <div style={{ width: '100%', textAlign: 'right', marginTop: '10px' }}>
-          <CustomButton onClick={createComment}>
-            <p style={{ fontWeight: '600', color: '#222222' }}>등록</p>
-          </CustomButton>
-        </div>
+          <div style={{ width: '100%', textAlign: 'right', marginTop: '10px' }}>
+            <CustomButton onClick={createCommentHandler}>
+              <p style={{ fontWeight: '600', color: '#222222' }}>등록</p>
+            </CustomButton>
+          </div>
+        </form>
       </InputWrap>
     </Content>
   );

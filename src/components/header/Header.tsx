@@ -15,7 +15,7 @@ const Header = () => {
   // 검색창 - 검색어 입력시 페이지 이동
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (search === '') {
+    if (search.trim() === '') {
       alert('내용을 입력해주세요.');
       return;
     } else {

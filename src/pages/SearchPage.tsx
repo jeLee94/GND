@@ -38,30 +38,34 @@ const SearchPage = () => {
 
     return searchItem;
   };
-
+  console.log(data);
   useEffect(() => {
     searchVideoRequest(search);
   }, [search]);
 
   return (
     <SearchResultContainer>
-      <ContentWrap>
-        {Object.keys(data).map((i) => (
-          <Link
-            key={data[i]}
-            to={`/dashboard/${data[i]}`}
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <CantentBox key={data[i].title}>
-              <Thumbnail src={data[i]['thumbnail'][0]} />
-              <LectureWrap>
-                <LectureTitle>{data[i].title}</LectureTitle>
-              </LectureWrap>
-              <Lecture>{data[i].channelTitle}</Lecture>
-            </CantentBox>
-          </Link>
-        ))}
-      </ContentWrap>
+      {data.length === 0 ? (
+        '검색 결과가 없습니다'
+      ) : (
+        <ContentWrap>
+          {Object.keys(data).map((i) => (
+            <Link
+              key={data[i]}
+              to={`/dashboard/${data[i]}`}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <CantentBox key={data[i].title}>
+                <Thumbnail src={data[i]['thumbnail'][0]} />
+                <LectureWrap>
+                  <LectureTitle>{data[i].title}</LectureTitle>
+                </LectureWrap>
+                <Lecture>{data[i].channelTitle}</Lecture>
+              </CantentBox>
+            </Link>
+          ))}
+        </ContentWrap>
+      )}
     </SearchResultContainer>
   );
 };
