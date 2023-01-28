@@ -5,7 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../firebase';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Comment from './comment';
+import Comment from '../components/comment/Comment';
 
 function Dashboard() {
   const location = useLocation();

@@ -1,4 +1,4 @@
-import { dbService, authService } from '../firebase';
+import { dbService, authService } from '../../firebase';
 import {
   collection,
   addDoc,
@@ -12,8 +12,8 @@ import {
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getDate } from '../util/utils';
-import CustomButton from '../components/button/CustomButton';
+import { getDate } from '../../util/utils';
+import CustomButton from '../button/CustomButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleXmark,
@@ -21,8 +21,8 @@ import {
   faPenToSquare,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import MoreButton from '../components/button/MoreButton';
-import { UserInform } from '../components/header/Header';
+import MoreButton from '../button/MoreButton';
+import { UserInform } from '../header/Header';
 
 const Comment = (props: any) => {
   const { classID } = props;
