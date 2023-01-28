@@ -1,20 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: "Pretendard-Regular";
+  /* @font-face {
+    font-family: "Pretendard-Regular","Pretendard-Black";
     src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
       format("woff");
     font-weight: 100,200,300,400,500,600,700,800,900;
     font-style: normal;
-  }
+  } */
+
 
   *{
     box-sizing: border-box;
   }
 
   body{
-    font-family: "Pretendard-Regular";
+    /* font-family: "Pretendard-Regular"; */
+    font-family: "Pretendard Variable";
     html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
