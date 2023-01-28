@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -29,15 +29,13 @@ const Header = () => {
   const handleAuth = () => {
     if (!!authService.currentUser?.uid) {
       signOut(authService)
-        .then(() => {
-        })
+        .then(() => {})
         .catch((err: any) => alert(err));
     }
   };
   //헤더 로그인 상태관리
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      console.log(user);
       if (user) {
         // 로그인 된 상태일 경우
         setLogInchecked(true);
