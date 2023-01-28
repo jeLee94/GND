@@ -74,27 +74,8 @@ setPersistence(auth, browserSessionPersistence)
     if (error.message.includes('wrong-password')) {
       alert('비밀번호가 틀렸습니다.');
     }
-    console.log('error: ', error);
-
   });
 }
-    // 로그인 요청
-  //   signInWithEmailAndPassword(authService, userEmail, userPassword)
-  //     .then(() => {
-  //       setUserEmail('');
-  //       setUserPassword('');
-  //       navigate('/');
-  //     })
-  //     .catch((err) => {
-  //       if (err.message.includes('user-not-found')) {
-  //         alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
-  //       }
-  //       if (err.message.includes('wrong-password')) {
-  //         alert('비밀번호가 틀렸습니다.');
-  //       }
-  //     });
-  // };
-
   //구글 로그인
   function handleGoogleLogin() {
     const provider = new GoogleAuthProvider();
