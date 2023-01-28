@@ -104,11 +104,7 @@ const InsertData = () => {
       await axios
         .get(
           //플레이리스트 아이디를 통해 videoId가 있는 리스트 가져오기
-          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistIdList[k]?.playlistId}&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ`
-
-          // 'https://www.googleapis.com/youtube/v3/search?part=snippet&&key=AIzaSyBInemS4UAbNOJHtXpG0OW1neY96YqyGmQ'
-          // 'localhost:3000/dashboard'
-          //i.id.videoId
+          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistIdList[k]?.playlistId}&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4`
         )
         .then((res) => {
           console.log('API요청 완료', k, res?.data?.items);
