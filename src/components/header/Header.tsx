@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { signOut } from '@firebase/auth';
 const Header = () => {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const [logInchecked, setLogInchecked] = useState(false);
 
   // 검색창 - 검색어 입력시 페이지 이동
   const handleSubmit = (event: any) => {
@@ -29,12 +30,23 @@ const Header = () => {
     if (!!authService.currentUser?.uid) {
       signOut(authService)
         .then(() => {
-          navigate('/login');
         })
         .catch((err: any) => alert(err));
     }
   };
-
+  //헤더 로그인 상태관리
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        // 로그인 된 상태일 경우
+        setLogInchecked(true);
+      } else {
+        // 로그아웃 된 상태일 경우
+        setLogInchecked(false);
+      }
+    });
+  }, []);
   return (
     <NavContainer>
       <Nav>

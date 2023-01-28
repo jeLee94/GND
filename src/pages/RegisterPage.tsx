@@ -46,9 +46,7 @@ const RegisterPage = () => {
       //pwRef.current;
       return true;
     }
-    if (userPassword === userPwConfirm) {
-      alert('가입 완료.');
-    } else {
+    if (userPassword !== userPwConfirm) {
       alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
       return true;
     }
@@ -70,7 +68,8 @@ const RegisterPage = () => {
       .then(() => {
         setUserEmail('');
         setUserPassword('');
-        navigate('/login');
+        navigate('/');
+        alert('개나두 회원이 되신걸 환영합니다!');
       })
       .catch((err) => {
         console.log('err.message:', err.message);
