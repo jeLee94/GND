@@ -18,16 +18,18 @@ const InsertData = () => {
   const [playlist, setPlaylist] = useState([]);
   const [videoItems, setvideoItems] = useState<any>([]);
   // let playlist: string[];
+  const YOUTUBEKEY = process.env.REACT_APP_YOUTUBE_API_KEY;
   const getPlaylistIdHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
       .get(
         //단일 영상용 q=검색하고 싶은 단어
-        'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=${YOUTUBEKEY}`
         //플레이리스트용
-        // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        // `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=${YOUTUBEKEY}`
         //내배캠용
-        // 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
+        // `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=${YOUTUBEKEY}`
       )
       .then((res) => {
         setPlaylist(res.data.items);
