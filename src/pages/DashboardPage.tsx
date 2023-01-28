@@ -62,7 +62,7 @@ function Dashboard() {
         <ChannelName>{data?.channelTitle}</ChannelName>
         <ThumbNailImg src={data?.thumbnail[0]} />
 
-        <LectureCotents>{data?.description}</LectureCotents>
+        <LectureCotents>{data?.description[0]}</LectureCotents>
         <ToggleHeader>
           <ToggleTitle>강의 목록</ToggleTitle>
           <ToggleButton onClick={onClickHandler} icon={chagneButton} />
