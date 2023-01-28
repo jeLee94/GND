@@ -23,7 +23,7 @@ const RegisterPage = () => {
 
     if (!userEmail) {
       alert('이메일을 입력해주세요.');
-      //emailRef.current
+      // emailRef.current.focus();
       return true;
     }
     if (matchedEmail === null) {
