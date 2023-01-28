@@ -2,8 +2,8 @@
 
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
-import { useParams } from 'react-router-dom';
-import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // import ReactPlayer from 'react-player';
@@ -13,10 +13,16 @@ const BackToCourse = (e: React.MouseEvent) => {
 };
 
 const LecturePage = () => {
+  const location = useLocation();
   const parameters = useParams<string>();
   const parameter = parameters?.id as string;
   const param = parameter.split('&'); //param[0]=videoId param[1]=title
 
+  useEffect(() => {
+    if (location.pathname.split('/')[1] === 'lecture') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, []);
   return (
     <Container>
       <LectureHeader>
