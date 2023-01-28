@@ -52,6 +52,8 @@ const RegisterPage = () => {
       alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
       return true;
     }
+
+    console.log('matchedPw: ', matchedPw);
   };
 
   const onSubmit = (e: { preventDefault: () => void }) => {

@@ -12,4 +12,4 @@ export const getDate = () => {
 // 정규식 파트
 export const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 export const pwRegex =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/;
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
