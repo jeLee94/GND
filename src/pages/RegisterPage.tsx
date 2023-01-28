@@ -1,24 +1,20 @@
-import { useState } from 'react';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { authService } from '../firebase';
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  getAuth,
-  setPersistence,
-  browserSessionPersistence,
-} from '@firebase/auth';
 import { emailRegex, pwRegex } from '../util/utils';
 import { Link } from 'react-router-dom';
 
-//로그인 화면
-const LoginPage = () => {
+//회원가입 화면
+const RegisterPage = () => {
   let navigate = useNavigate();
+  const emailRef = useRef(null);
+  //const pwRef = useRef(null);
+
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userPwConfirm, setUserPwConfirm] = useState('');
 
   //유효성 검사 함수
   const validateInputs = () => {
@@ -27,7 +23,7 @@ const LoginPage = () => {
 
     if (!userEmail) {
       alert('이메일을 입력해주세요.');
-      //emailRef.current
+      // emailRef.current.focus();
       return true;
     }
     if (matchedEmail === null) {
@@ -40,63 +36,53 @@ const LoginPage = () => {
       //pwRef.current;
       return true;
     }
-
     if (matchedPw === null) {
       alert('비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.');
       //pwRef.current;
       return true;
     }
+    if (!userPwConfirm) {
+      alert('비밀번호를 한번 더 입력해주세요.');
+      //pwRef.current;
+      return true;
+    }
+    if (userPassword !== userPwConfirm) {
+      alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
+      return true;
+    }
+
+    console.log('matchedPw: ', matchedPw);
   };
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
   };
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     //유효성 검사
-    window.history.back();
     if (validateInputs()) {
       return;
     }
-
-    //세션관리
-    const auth = getAuth();
-    setPersistence(auth, browserSessionPersistence)
+    //회원가입 요청
+    createUserWithEmailAndPassword(authService, userEmail, userPassword)
       .then(() => {
         setUserEmail('');
         setUserPassword('');
         navigate('/');
-        return signInWithEmailAndPassword(auth, userEmail, userPassword);
-      })
-      .catch((error) => {
-        if (error.message.includes('wrong-password')) {
-          alert('비밀번호가 틀렸습니다.');
-        }
-        if (error.message.includes('user-not-found')) {
-          alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
-          navigate('/register');
-        }
-        console.log(error);
-      });
-  };
-  //구글 로그인
-  function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(authService, provider)
-      .then((data) => {
-        setUserData(userData);
-        navigate('/');
+        alert('개나두 회원이 되신걸 환영합니다!');
       })
       .catch((err) => {
-        console.log(err);
+        console.log('err.message:', err.message);
+        if (err.message.includes('already-in-use')) {
+          alert('이미 사용중인 아이디입니다.');
+        }
       });
-  }
+  };
   return (
-    <LoginContainer>
-      <LoginWrapper>
-        <LoginTitle>로그인</LoginTitle>
-
-        <Login onSubmit={onSubmit}>
+    <ResisterContainer>
+      <RegisterContainer>
+        <RegisteTitle>회원가입</RegisteTitle>
+        <Register onSubmit={onSubmit}>
           <IdSection>
             <label htmlFor='id-input'>아이디</label>
             <input
@@ -109,7 +95,7 @@ const LoginPage = () => {
               }}
             />
           </IdSection>
-          <PasswordSection>
+          <IdSection>
             <label htmlFor='password-input'>비밀번호</label>
             <input
               id='password-input'
@@ -120,29 +106,38 @@ const LoginPage = () => {
                 setUserPassword(e.target.value);
               }}
             />
-          </PasswordSection>
+          </IdSection>
+          <PwSection>
+            <label htmlFor='password-confirm-input'>비밀번호 확인</label>
+            <input
+              id='password-confirm-input'
+              type='password'
+              value={userPwConfirm}
+              placeholder='비밀번호를 한번 더 입력하세요.'
+              onChange={(e) => {
+                setUserPwConfirm(e.target.value);
+              }}
+            />
+          </PwSection>
           <ButtonSection>
-            <LoginButton onClick={handleLogin}>로그인</LoginButton>
-            <GoogleLoginButton onClick={handleGoogleLogin}>
-              구글로 로그인
-            </GoogleLoginButton>
+            <RegisterButton onClick={handleRegister}>등록</RegisterButton>
+            <LoginLink to={`/login`}> 로그인 하러가기</LoginLink>
           </ButtonSection>
-          <RegisterLink to={`/register`}>회원가입하러가기</RegisterLink>
-        </Login>
-      </LoginWrapper>
-    </LoginContainer>
+        </Register>
+      </RegisterContainer>
+    </ResisterContainer>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
 
-const LoginContainer = styled.div`
+const ResisterContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-//로그인 전체
-const LoginWrapper = styled.div`
+//회원가입 전체
+const RegisterContainer = styled.div`
   width: 35%;
   min-width: 350px;
   height: 50%;
@@ -157,16 +152,16 @@ const LoginWrapper = styled.div`
   box-shadow: 15px 15px 45px -5px rgba(0, 0, 0, 0.3);
 `;
 
-//로그인 타이틀
-const LoginTitle = styled.h2`
+//회원가입 타이틀
+const RegisteTitle = styled.h2`
   font-size: 1.8rem;
   font-weight: 800;
   color: #222222;
   margin-bottom: 2rem;
 `;
 
-// 로그인 전체입력부분
-const Login = styled.form`
+//회원가입 전체입력부분
+const Register = styled.form`
   width: 100%;
   min-width: 300px;
   display: flex;
@@ -199,13 +194,13 @@ const IdSection = styled.div`
   margin-bottom: 20px;
 `;
 
-const PasswordSection = styled.div`
+const PwSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   min-width: 300px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const ButtonSection = styled.div`
@@ -216,10 +211,11 @@ const ButtonSection = styled.div`
   align-items: center;
 `;
 
-// 로그인버튼
-const LoginButton = styled.button`
+//등록버튼
+const RegisterButton = styled.button`
   height: 35px;
   width: 80%;
+  margin-top: 2rem;
   border: none;
   border-radius: 7px;
   background-color: #5f9c92;
@@ -233,26 +229,8 @@ const LoginButton = styled.button`
   }
 `;
 
-// 구글로그인버튼
-const GoogleLoginButton = styled.button`
-  height: 35px;
-  width: 80%;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 7px;
-  background-color: #5f9c92;
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 200ms ease-in-out;
-  &:hover {
-    background-color: #478a7d;
-  }
-`;
-
-//회원가입 링크
-const RegisterLink = styled(Link)`
+//로그인 링크
+const LoginLink = styled(Link)`
   height: 35px;
   width: 80%;
   text-decoration: none;
