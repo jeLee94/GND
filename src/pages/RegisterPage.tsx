@@ -47,7 +47,7 @@ const RegisterPage = () => {
       return true;
     }
     if (userPassword === userPwConfirm) {
-      alert('가입 완료.');
+      alert('개나두 회원이 되신걸 환영합니다!');
     } else {
       alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
       return true;
@@ -75,7 +75,7 @@ const RegisterPage = () => {
       .catch((err) => {
         console.log('err.message:', err.message);
         if (err.message.includes('already-in-use')) {
-          alert('이미 사용중인 아이디입니다.');
+          alert('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
         }
       });
   };

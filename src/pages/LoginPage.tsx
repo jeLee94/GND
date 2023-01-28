@@ -64,12 +64,14 @@ setPersistence(auth, browserSessionPersistence)
   .then(() => {
     setUserEmail('');
     setUserPassword('');
-    navigate('/');
     return signInWithEmailAndPassword(auth, userEmail, userPassword);
   })
   .catch((error) => {
     if (error.message.includes('user-not-found')) {
       alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
+      navigate('/register')
+    }else{
+      navigate('/');
     }
     if (error.message.includes('wrong-password')) {
       alert('비밀번호가 틀렸습니다.');
