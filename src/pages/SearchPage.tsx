@@ -18,13 +18,30 @@ const SearchPage = () => {
   // 현재 URL에서 title의 값 가져오기
   let search = getQuery.get('title');
 
+  // 검색 단어, DB의 카테고리와 매칭하기
+  const changeSearchWord = (search: any) => {
+    search = search.toLowerCase();
+    if (search === '리액트') {
+      search = 'react';
+    } else if (search === '자바스크립트') {
+      search = 'javascript';
+    } else if (search === '타입스크립트') {
+      search = 'typescript';
+    } else if (search === '내배캠' || search === '내일배움캠프') {
+      search = '내배캠';
+    } else {
+      search = search;
+    }
+    searchVideoRequest(search);
+    return search;
+  };
+
   // FB에서 검색 영상 데이터 가져오기
   const searchVideoRequest = async (search: any) => {
     const q = query(
       collection(dbService, 'CLASS'),
-      // where('channelTitle', '>=', text),
-      where('title', '>=', search),
-      where('title', '<=', search + '\uf8ff')
+      where('category', '>=', search),
+      where('category', '<=', search + '\uf8ff')
     );
 
     const querySnapshot = await getDocs(q);
@@ -38,9 +55,10 @@ const SearchPage = () => {
 
     return searchItem;
   };
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
-    searchVideoRequest(search);
+    changeSearchWord(search);
+    // searchVideoRequest(search);
   }, [search]);
 
   return (
@@ -51,7 +69,7 @@ const SearchPage = () => {
         <ContentWrap>
           {Object.keys(data).map((i) => (
             <Link
-              key={data[i]}
+              key={data[i].title}
               to={`/dashboard/${data[i]}`}
               style={{ textDecoration: 'none', color: 'black' }}
             >
