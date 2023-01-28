@@ -123,12 +123,12 @@ const Comment = (props: any) => {
   const ModifiedCommentHandler = async (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
 
-    isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
-    setIsModifying([...isModifying]);
     const commentRef = doc(dbService, 'comment', commentList[idx]?.id);
     if (modifiedComment.trim() === '') {
       alert('내용을 입력해 주세요.');
     } else {
+      isModifying[idx] ? (isModifying[idx] = false) : (isModifying[idx] = true);
+      setIsModifying([...isModifying]);
       try {
         await updateDoc(commentRef, {
           comment: modifiedComment,
