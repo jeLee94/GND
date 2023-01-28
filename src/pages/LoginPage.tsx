@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   getAuth,
   setPersistence,
-  browserSessionPersistence
+  browserSessionPersistence,
 } from '@firebase/auth';
 import { emailRegex, pwRegex } from '../util/utils';
 import { Link } from 'react-router-dom';
@@ -54,30 +54,31 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     //유효성 검사
+    window.history.back();
     if (validateInputs()) {
       return;
     }
-    
-      //세션관리
-const auth = getAuth();
-setPersistence(auth, browserSessionPersistence)
-  .then(() => {
-    setUserEmail('');
-    setUserPassword('');
-    return signInWithEmailAndPassword(auth, userEmail, userPassword);
-  })
-  .catch((error) => {
-    if (error.message.includes('user-not-found')) {
-      alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
-      navigate('/register')
-    }else{
-      navigate('/');
-    }
-    if (error.message.includes('wrong-password')) {
-      alert('비밀번호가 틀렸습니다.');
-    }
-  });
-}
+
+    //세션관리
+    const auth = getAuth();
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        setUserEmail('');
+        setUserPassword('');
+        navigate('/');
+        return signInWithEmailAndPassword(auth, userEmail, userPassword);
+      })
+      .catch((error) => {
+        if (error.message.includes('wrong-password')) {
+          alert('비밀번호가 틀렸습니다.');
+        }
+        if (error.message.includes('user-not-found')) {
+          alert('회원이 아닙니다. 회원가입을 먼저 진행해 주세요.');
+          navigate('/register');
+        }
+        console.log(error);
+      });
+  };
   //구글 로그인
   function handleGoogleLogin() {
     const provider = new GoogleAuthProvider();

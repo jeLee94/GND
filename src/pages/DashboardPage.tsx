@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import ToggleButton from '../components/button/ToggleButton';
 import { useLocation, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { dbService } from '../firebase';
+import { dbService, authService } from '../firebase';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Comment from '../components/comment/Comment';
 
 function Dashboard() {
@@ -13,6 +13,9 @@ function Dashboard() {
   const [data, setData] = useState<any>();
   const [chagneButton, setChangeButton] = useState('minus');
   const [changeDisplay, setChangeDisplay] = useState('flex');
+  const user = authService?.currentUser;
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (location.pathname.split('/')[1] === 'dashboard') {
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -47,6 +50,11 @@ function Dashboard() {
     get();
   }, []);
 
+  const loginCheck = () => {
+    if (user === null) {
+      alert('영상 시청은 로그인 후 이용 가능합니다.');
+    }
+  };
   return (
     <>
       <Main>
@@ -62,13 +70,28 @@ function Dashboard() {
         <LectureList display={changeDisplay}>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <VideoOne key={idx}>
-                <Link
-                  to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
-                >
-                  <LectureTitle>{vTitle}</LectureTitle>
-                </Link>
-              </VideoOne>
+              <ListWrap>
+                {authService?.currentUser ? (
+                  <Link
+                    to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
+                  >
+                    <VideoOne key={idx}>
+                      <img
+                        src={process.env.PUBLIC_URL + '/playBtn.png'}
+                        alt='playBtn'
+                      />
+
+                      <LectureTitle>{vTitle}</LectureTitle>
+                    </VideoOne>
+                  </Link>
+                ) : (
+                  <Link to={`/login`} onClick={loginCheck}>
+                    <VideoOne key={idx}>
+                      <LectureTitle>{vTitle}</LectureTitle>
+                    </VideoOne>
+                  </Link>
+                )}
+              </ListWrap>
             );
           })}
         </LectureList>
@@ -132,27 +155,39 @@ const ToggleTitle = styled.div`
   font-weight: 700;
   font-size: 1rem;
 `;
+
 const LectureList = styled.div<{ display: string }>`
   width: 700px;
   display: ${(props) => props.display};
   flex-direction: column;
 `;
-const VideoOne = styled.div`
+const VideoOne = styled.label`
   width: 700px;
-  padding: 20px;
+  height: 70px;
   margin: 7px auto;
-  border: 1px solid #f1f6f6;
+  border: 1px solid #e3e3e3;
   border-radius: 10px;
   font-weight: 500;
   font-size: 1rem;
-  a {
-    text-decoration: none;
-    color: black;
-  }
+  display: flex;
+  align-items: center;
+
   &:hover {
     border: 1px solid #f8f9fa;
     background-color: #f8f9fa;
     box-shadow: 7px 7px 10px -10px rgba(0, 0, 0, 0.2);
   }
 `;
-const LectureTitle = styled.div``;
+const LectureTitle = styled.span``;
+const ListWrap = styled.div`
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+`;

@@ -46,9 +46,7 @@ const RegisterPage = () => {
       //pwRef.current;
       return true;
     }
-    if (userPassword === userPwConfirm) {
-      alert('개나두 회원이 되신걸 환영합니다!');
-    } else {
+    if (userPassword !== userPwConfirm) {
       alert('비밀번호가 일치하지 않아요. 다시 입력해주세요.');
       return true;
     }
@@ -70,12 +68,13 @@ const RegisterPage = () => {
       .then(() => {
         setUserEmail('');
         setUserPassword('');
-        navigate('/login');
+        navigate('/');
+        alert('개나두 회원이 되신걸 환영합니다!');
       })
       .catch((err) => {
         console.log('err.message:', err.message);
         if (err.message.includes('already-in-use')) {
-          alert('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
+          alert('이미 사용중인 아이디입니다.');
         }
       });
   };

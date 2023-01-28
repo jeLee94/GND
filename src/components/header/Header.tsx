@@ -30,7 +30,6 @@ const Header = () => {
     if (!!authService.currentUser?.uid) {
       signOut(authService)
         .then(() => {
-          navigate('/login');
         })
         .catch((err: any) => alert(err));
     }
