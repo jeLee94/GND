@@ -153,9 +153,6 @@ const VideoOne = styled.div`
     border: 1px solid #f8f9fa;
     background-color: #f8f9fa;
     box-shadow: 7px 7px 10px -10px rgba(0, 0, 0, 0.2);
-    /* a {
-      color: white;
-    } */
   }
 `;
 const LectureTitle = styled.div``;
