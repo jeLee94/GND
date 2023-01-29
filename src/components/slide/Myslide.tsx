@@ -17,11 +17,14 @@ const Slide = () => {
         navigation
         spaceBetween={50}
         slidesPerView={1}
-        autoplay={{ delay: 3000 }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         loop={true}
         observer={true}
         observeParents={true}
-        resistance={false}
         autoHeight={true}
       >
         <SlideBanner>
