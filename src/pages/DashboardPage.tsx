@@ -54,7 +54,6 @@ function Dashboard() {
       alert('영상 시청은 로그인 후 이용 가능합니다.');
     }
   };
-  console.log(param);
   return (
     <>
       <Main>
