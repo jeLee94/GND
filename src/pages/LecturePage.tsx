@@ -13,9 +13,7 @@ const BackToCourse = (e: React.MouseEvent) => {
 
 const LecturePage = () => {
   const location = useLocation();
-  const parameters = useParams<string>();
-  const parameter = parameters?.id as string;
-  const param = parameter.split('&'); //param[0]=videoId param[1]=title
+  const param = useParams<string>();
 
   useEffect(() => {
     if (location.pathname.split('/')[1] === 'lecture') {
@@ -25,11 +23,11 @@ const LecturePage = () => {
   return (
     <Container>
       <LectureHeader>
-        <LectureTitle>{param[1]}</LectureTitle>
+        <LectureTitle>{param.title}</LectureTitle>
         <BackButton onClick={BackToCourse}>Back to Course</BackButton>
       </LectureHeader>
       <YouTube
-        videoId={param[0]}
+        videoId={param.videoId}
         opts={{
           width: 900,
           height: 510,

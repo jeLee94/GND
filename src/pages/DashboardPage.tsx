@@ -14,7 +14,6 @@ function Dashboard() {
   const [chagneButton, setChangeButton] = useState('minus');
   const [changeDisplay, setChangeDisplay] = useState('flex');
   const user = authService?.currentUser;
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname.split('/')[1] === 'dashboard') {
@@ -23,7 +22,7 @@ function Dashboard() {
   }, []);
 
   const SnapDoc = async () => {
-    const docRef = doc(dbService, 'CLASS', param.id as string);
+    const docRef = doc(dbService, 'CLASS', param.docId as string);
     const docSnap = await getDoc(docRef);
     const ob = docSnap.data();
     return ob as any;
@@ -55,6 +54,7 @@ function Dashboard() {
       alert('영상 시청은 로그인 후 이용 가능합니다.');
     }
   };
+  console.log(param);
   return (
     <>
       <Main>
@@ -73,7 +73,7 @@ function Dashboard() {
               <ListWrap key={idx}>
                 {authService?.currentUser ? (
                   <Link
-                    to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
+                    to={`/lecture/${data?.videoId[idx]}/${data?.videotitle[idx]}`}
                   >
                     <VideoOne>
                       <img
