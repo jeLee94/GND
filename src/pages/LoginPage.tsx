@@ -54,7 +54,7 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     //유효성 검사
-    window.history.back();
+    // window.history.back(); //비동기 이슈
     if (validateInputs()) {
       return;
     }

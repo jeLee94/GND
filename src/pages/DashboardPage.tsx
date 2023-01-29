@@ -76,16 +76,20 @@ function Dashboard() {
                   >
                     <VideoOne>
                       <img
-                        src={process.env.PUBLIC_URL + '/playBtn.png'}
+                        src={process.env.PUBLIC_URL + `/playBtn.png`}
                         alt='playBtn'
                       />
 
-                      <LectureTitle>{vTitle}</LectureTitle>
+                      <LectureTitle>{vTitle}asdfasdf</LectureTitle>
                     </VideoOne>
                   </Link>
                 ) : (
                   <Link to={`/login`} onClick={loginCheck}>
                     <VideoOne key={idx}>
+                      <img
+                        src={process.env.PUBLIC_URL + `/playBtn.png`}
+                        alt='playBtn'
+                      />
                       <LectureTitle>{vTitle}</LectureTitle>
                     </VideoOne>
                   </Link>
@@ -160,7 +164,7 @@ const LectureList = styled.div<{ display: string }>`
   display: ${(props) => props.display};
   flex-direction: column;
 `;
-const VideoOne = styled.label`
+const VideoOne = styled.div`
   width: 700px;
   height: 70px;
   margin: 7px auto;
@@ -188,5 +192,6 @@ const ListWrap = styled.div`
   a {
     text-decoration: none;
     color: black;
+    cursor: pointer;
   }
 `;
