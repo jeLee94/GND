@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 //회원가입 화면
 const RegisterPage = () => {
   let navigate = useNavigate();
-  const emailRef = useRef(null);
+  // const emailRef = useRef(null);
   //const pwRef = useRef(null);
 
   const [userEmail, setUserEmail] = useState('');

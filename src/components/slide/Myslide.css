@@ -1,7 +1,7 @@
 /* 슬라이드 CSS */
 
 .swiper-slide {
-  height: 200px;
+  height: 280px;
 }
 
 .swiper-button-next {
@@ -11,8 +11,8 @@
   background-size: 50% auto;
   background-position: center;
 }
-.swiper-button-next:hover{
-  opacity: 1.0;
+.swiper-button-next:hover {
+  opacity: 1;
 }
 
 .swiper-button-prev {
@@ -22,8 +22,8 @@
   background-position: center;
   opacity: 0.5;
 }
-.swiper-button-prev:hover{
-  opacity: 1.0;
+.swiper-button-prev:hover {
+  opacity: 1;
 }
 .swiper-button-next::after,
 .swiper-button-prev::after {

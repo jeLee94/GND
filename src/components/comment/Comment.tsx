@@ -15,12 +15,7 @@ import styled from 'styled-components';
 import { getDate } from '../../util/utils';
 import CustomButton from '../button/CustomButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircleXmark,
-  faEllipsis,
-  faPenToSquare,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import MoreButton from '../button/MoreButton';
 import { UserInform } from '../header/Header';
 

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import { useLocation, useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 // import ReactPlayer from 'react-player';
 const BackToCourse = (e: React.MouseEvent) => {
