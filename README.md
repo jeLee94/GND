@@ -1,7 +1,7 @@
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/99702761/215339490-0a4b255c-cac3-4384-aa21-f4d842442db1.gif)
 # GaeNaDoo | 개나두
 
-<p><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://www.notion.so/e47d9765fa854a98add99c778a6f2df1'>🔗 S.A </a> </p>
+<p><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://slash-quiver-80f.notion.site/e47d9765fa854a98add99c778a6f2df1'>🔗 S.A </a> </p>
 <br/>
 
 
@@ -75,10 +75,10 @@
 
 | 역할 | 이름 | 이메일 주소 |
 | --- | --- | --- |
-| 팀장 | 이정은 | mailto:jungwn9494@gmail.com |
-| 팀원 | 박상우 | mailto:qtd950@gmail.com |
-| 팀원 | 이태현 | mailto:xogus72453659@gmail.com |
-| 팀원 | 남동현 | mailto:pvc9610@gmail.com |
-| 팀원 | 지회수 | mailto:newasborn@gmail.com |
+| 팀장 | 이정은 | jungwn9494@gmail.com |
+| 팀원 | 박상우 | qtd950@gmail.com |
+| 팀원 | 이태현 | xogus72453659@gmail.com |
+| 팀원 | 남동현 | pvc9610@gmail.com |
+| 팀원 | 지회수 | newasborn@gmail.com |
 
 
