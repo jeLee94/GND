@@ -70,12 +70,12 @@ function Dashboard() {
         <LectureList display={changeDisplay}>
           {data?.videotitle?.map((vTitle: any, idx: number) => {
             return (
-              <ListWrap>
+              <ListWrap key={idx}>
                 {authService?.currentUser ? (
                   <Link
                     to={`/lecture/${data?.videoId[idx]}&${data?.videotitle[idx]}`}
                   >
-                    <VideoOne key={idx}>
+                    <VideoOne>
                       <img
                         src={process.env.PUBLIC_URL + '/playBtn.png'}
                         alt='playBtn'
@@ -177,17 +177,17 @@ const VideoOne = styled.label`
     background-color: #f8f9fa;
     box-shadow: 7px 7px 10px -10px rgba(0, 0, 0, 0.2);
   }
+  img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
 `;
 const LectureTitle = styled.span``;
 const ListWrap = styled.div`
   a {
     text-decoration: none;
     color: black;
-  }
-  img {
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    margin-left: 10px;
   }
 `;

@@ -5,7 +5,6 @@ import {
   arrayUnion,
   collection,
   doc,
-  getCountFromServer,
   getDocs,
   query,
   updateDoc,
@@ -16,20 +15,17 @@ import styled from 'styled-components';
 
 const InsertData = () => {
   const [playlist, setPlaylist] = useState([]);
-  const [videoItems, setvideoItems] = useState<any>([]);
-  // let playlist: string[];
-  const YOUTUBEKEY = process.env.REACT_APP_YOUTUBE_API_KEY;
   const getPlaylistIdHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
       .get(
         //단일 영상용 q=검색하고 싶은 단어
         // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4'
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=${YOUTUBEKEY}`
+        // `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=cs전공지식&order=relevance&type=video&key=${process.env.REACT_APP_YOUTUBE_KEY1}`
         //플레이리스트용
-        // `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=${YOUTUBEKEY}`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=리액트&order=relevance&type=playlist&key=${process.env.REACT_APP_YOUTUBE_KEY1}`
         //내배캠용
-        // `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=${YOUTUBEKEY}`
+        // `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=Zck22jkGPNA&key=${process.env.REACT_APP_YOUTUBE_KEY1}`
       )
       .then((res) => {
         setPlaylist(res.data.items);
@@ -95,8 +91,6 @@ const InsertData = () => {
     e.preventDefault();
     let k = 0;
     while (k < playlistIdList.length) {
-      setvideoItems([]);
-
       // console.log(
       //   `playlistIdList[${k}].playlistId`,
       //   playlistIdList[k].playlistId
@@ -104,7 +98,7 @@ const InsertData = () => {
       await axios
         .get(
           //플레이리스트 아이디를 통해 videoId가 있는 리스트 가져오기
-          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistIdList[k]?.playlistId}&key=AIzaSyBFGvK1hpr4U1u6BArtxPAwiUJ90Qt99x4`
+          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistIdList[k]?.playlistId}&key=${process.env.REACT_APP_YOUTUBE_KEY1}`
         )
         .then((res) => {
           console.log('API요청 완료', k, res?.data?.items);
