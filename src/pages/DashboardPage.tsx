@@ -79,8 +79,7 @@ function Dashboard() {
                         src={process.env.PUBLIC_URL + `/playBtn.png`}
                         alt='playBtn'
                       />
-
-                      <LectureTitle>{vTitle}asdfasdf</LectureTitle>
+                      <LectureTitle>{vTitle}</LectureTitle>
                     </VideoOne>
                   </Link>
                 ) : (
