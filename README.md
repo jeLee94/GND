@@ -2,6 +2,8 @@
 # GaeNaDoo | 개나두
 
 <p><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://www.notion.so/e47d9765fa854a98add99c778a6f2df1'>🔗 S.A </a> </p>
+<br/>
+
 
 ## 1. 프로젝트 소개
 
@@ -9,7 +11,9 @@
 - 무료 웹개발 강의 사이트 (로그인만 하면 모든 강의 무료!)
 - 웹개발 공부를 하는 학생들이 강의를 듣기 편하도록 카테고리 별로 나누어 유튜브 강의를 제공한다.
 
----
+
+<br/>
+
 
 ## 2. 프로젝트 실행
 
@@ -20,13 +24,17 @@
   npm start
   ```
 
----
+
+<br/>
+
 
 ## 3. 기술 스텍
 
 <p align="center"><img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4da56ad1-2b6f-404f-9e1b-1a3829e0d2d0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230129T145713Z&X-Amz-Expires=86400&X-Amz-Signature=13549d8cd1040b37b5fa1751dcbb9e461f84a022f5dc0e4fcfda7e97a1a1fdd1&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject" alt="logo"></p>
 
----
+
+<br/>
+
 
 ## 4. 구현 기능
 
@@ -60,7 +68,8 @@
   - 단일 강의 조회
     (유튜브 API 사용)
 
----
+<br/>
+
 
 ## 5. 팀 구성
 
