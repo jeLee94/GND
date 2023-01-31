@@ -1,7 +1,7 @@
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/99702761/215339490-0a4b255c-cac3-4384-aa21-f4d842442db1.gif)
 # GaeNaDoo | 개나두
 
-<p><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://slash-quiver-80f.notion.site/e47d9765fa854a98add99c778a6f2df1'>🔗 기술문서 </a> </p>
+<p ><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://slash-quiver-80f.notion.site/e47d9765fa854a98add99c778a6f2df1'>🔗 기술문서 </a> </p>
 <br/>
 
 
@@ -31,8 +31,9 @@
 
 
 ## 3. 기술 스택
+ 
+<img src="https://user-images.githubusercontent.com/88365786/215708897-dff91322-186c-4c7c-9582-080357d1e760.png"  width="800" height="500"/>
 
-![image](https://user-images.githubusercontent.com/88365786/215708897-dff91322-186c-4c7c-9582-080357d1e760.png)
 
 <br/>
 
