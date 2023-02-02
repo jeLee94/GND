@@ -2,15 +2,18 @@
 
 # GaeNaDoo | 개나두
 
-<p><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://www.notion.so/e47d9765fa854a98add99c778a6f2df1'>🔗 S.A </a> </p>
+<p ><a href='https://gnd-project.vercel.app/'>🔗 웹 사이트 </a> · <a href='https://www.figma.com/file/fC3JHJ1fwaoNHlQmM2VU73/ProjectB4?node-id=0%3A1'>🔗 와이어 프레임 </a> · <a href='https://slash-quiver-80f.notion.site/e47d9765fa854a98add99c778a6f2df1'>🔗 기술문서 </a> </p>
+<br/>
 
 ## 1. 프로젝트 소개
 
 - 개발자 나두 할 수 있어!
+- 유튜브로 공부하기엔 유혹이 너무 많다..! 방해 없는 공부 사이트
 - 무료 웹개발 강의 사이트 (로그인만 하면 모든 강의 무료!)
 - 웹개발 공부를 하는 학생들이 강의를 듣기 편하도록 카테고리 별로 나누어 유튜브 강의를 제공한다.
+- 유튜브 API사용 및 영상 재생을 위한 <YouTube> from ‘react-youtube’ 패키지 사용
 
----
+<br/>
 
 ## 2. 프로젝트 실행
 
@@ -21,13 +24,13 @@
   npm start
   ```
 
----
+<br/>
 
-## 3. 기술 스텍
+## 3. 기술 스택
 
-<p align="center"><img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4da56ad1-2b6f-404f-9e1b-1a3829e0d2d0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230129T145713Z&X-Amz-Expires=86400&X-Amz-Signature=13549d8cd1040b37b5fa1751dcbb9e461f84a022f5dc0e4fcfda7e97a1a1fdd1&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject" alt="logo"></p>
+<img src="https://user-images.githubusercontent.com/88365786/215708897-dff91322-186c-4c7c-9582-080357d1e760.png"  width="800" height="500"/>
 
----
+<br/>
 
 ## 4. 구현 기능
 
@@ -59,14 +62,14 @@
   - 단일 강의 조회
     (유튜브 API 사용)
 
----
+<br/>
 
 ## 5. 팀 구성
 
-| 역할 | 이름   | 이메일 주소                    |
-| ---- | ------ | ------------------------------ |
-| 팀장 | 이정은 | mailto:jungwn9494@gmail.com    |
-| 팀원 | 박상우 | mailto:qtd950@gmail.com        |
-| 팀원 | 이태현 | mailto:xogus72453659@gmail.com |
-| 팀원 | 남동현 | mailto:pvc9610@gmail.com       |
-| 팀원 | 지회수 | mailto:newasborn@gmail.com     |
+| 역할 | 이름   | 이메일 주소             |
+| ---- | ------ | ----------------------- |
+| 팀장 | 이정은 | jungwn9494@gmail.com    |
+| 팀원 | 박상우 | qtd950@gmail.com        |
+| 팀원 | 이태현 | xogus72453659@gmail.com |
+| 팀원 | 남동현 | pvc9610@gmail.com       |
+| 팀원 | 지회수 | newasborn@gmail.com     |

@@ -15,12 +15,12 @@ const Slide = () => {
         modules={[Navigation, Pagination, Autoplay]}
         pagination={{ clickable: true }}
         navigation
-        spaceBetween={50}
+        spaceBetween={0}
         slidesPerView={1}
         autoplay={{
           delay: 3000,
-          // disableOnInteraction: false,
-          // pauseOnMouseEnter: false,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
         }}
         loop={true}
         observer={true}
