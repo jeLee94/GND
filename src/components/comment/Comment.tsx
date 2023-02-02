@@ -163,7 +163,7 @@ const Comment = (props: any) => {
                       <CreatedAt>{comment?.createdAt}</CreatedAt>
                       <MoreButton onClick={changeDisplayHandler} />
                       <InnerButtonWrap display={changeDisplay}>
-                        <ModifyButtonWrapper onClick={changeDisplayHandler}>
+                        <ModifyButtonWrapper>
                           <CustomButton onClick={setModifyHandler} idx={idx}>
                             <EditIcon icon={faPenToSquare} />
                             수정
