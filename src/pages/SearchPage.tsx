@@ -58,7 +58,6 @@ const SearchPage = () => {
   // console.log(data);
   useEffect(() => {
     changeSearchWord(search);
-    // searchVideoRequest(search);
   }, [search]);
 
   return (
@@ -70,10 +69,10 @@ const SearchPage = () => {
           {Object.keys(data).map((i) => (
             <Link
               key={data[i].title}
-              to={`/dashboard/${data[i]}`}
+              to={`/dashboard/${data[i].id}`}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              <CantentBox key={data[i].title}>
+              <CantentBox key={data[i].videoId}>
                 <Thumbnail src={data[i]['thumbnail'][0]} />
                 <LectureWrap>
                   <LectureTitle>{data[i].title}</LectureTitle>
