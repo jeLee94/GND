@@ -62,6 +62,7 @@ const Slide = () => {
     </>
   );
 };
+
 export default Slide;
 
 const SlideBanner = styled(SwiperSlide)`
