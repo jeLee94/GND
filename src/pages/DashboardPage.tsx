@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { dbService, authService } from '../firebase';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Comment from '../components/comment/Comment';
 
 function Dashboard() {
@@ -61,7 +61,7 @@ function Dashboard() {
         <ChannelName>{data?.channelTitle}</ChannelName>
         <ThumbNailImg src={data?.thumbnail[0]} />
 
-        <LectureCotents>{data?.description[0]}</LectureCotents>
+        <LectureContents>{data?.description[0]}</LectureContents>
         <ToggleHeader>
           <ToggleTitle>강의 목록</ToggleTitle>
           <ToggleButton onClick={onClickHandler} icon={chagneButton} />
@@ -76,7 +76,7 @@ function Dashboard() {
                   >
                     <VideoOne>
                       <img
-                        src={process.env.PUBLIC_URL + `/playBtn.png`}
+                        src={process.env.PUBLIC_URL + `/image/playBtn.png`}
                         alt='playBtn'
                       />
                       <LectureTitle>{vTitle}</LectureTitle>
@@ -86,7 +86,7 @@ function Dashboard() {
                   <Link to={`/login`} onClick={loginCheck}>
                     <VideoOne key={idx}>
                       <img
-                        src={process.env.PUBLIC_URL + `/playBtn.png`}
+                        src={process.env.PUBLIC_URL + `/image/playBtn.png`}
                         alt='playBtn'
                       />
                       <LectureTitle>{vTitle}</LectureTitle>
@@ -133,7 +133,7 @@ const ChannelName = styled.div`
   font-weight: 500;
   font-size: 1rem;
 `;
-const LectureCotents = styled.div`
+const LectureContents = styled.div`
   width: 700px;
   margin: auto;
   height: auto;

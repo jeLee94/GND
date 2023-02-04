@@ -12,7 +12,7 @@ const ToggleButton = (props: any) => {
           onClick();
         }}
       >
-        <ToggleIcon icon={icon == 'minus' ? faSquareMinus : faSquarePlus} />
+        <ToggleIcon icon={icon === 'minus' ? faSquareMinus : faSquarePlus} />
       </ToggleBtn>
     </>
   );

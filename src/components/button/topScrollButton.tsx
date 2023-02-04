@@ -8,7 +8,7 @@ const TopButton = () => {
 
   // TopButton
   const handleScrollToTop = () => {
-    if (location.pathname == '/') {
+    if (location.pathname === '/') {
       window.scrollTo({ top: 200, behavior: 'smooth' });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -32,7 +32,10 @@ const TopButton = () => {
     <>
       {showTopButton && (
         <TopScrollButton onClick={handleScrollToTop}>
-          <img src={process.env.PUBLIC_URL + '/TopBtn.png'} alt='topScroll' />
+          <img
+            src={process.env.PUBLIC_URL + '/image/TopBtn.png'}
+            alt='topScroll'
+          />
         </TopScrollButton>
       )}
     </>
